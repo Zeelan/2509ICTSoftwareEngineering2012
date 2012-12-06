@@ -9,8 +9,7 @@
         DataContext="{Binding Application, Source={StaticResource Locator}}"
         Width="{DynamicResource ViewWidth}" 
         Height="{DynamicResource ViewHeight}" 
-        WindowState="Maximized" 
-        ResizeMode="CanMinimize">
+        WindowState="Maximized">
     <DockPanel>
         
         <ContentControl Content="{Binding CurrentViewModel}"></ContentControl>

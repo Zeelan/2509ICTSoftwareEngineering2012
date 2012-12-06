@@ -1,4 +1,5 @@
-﻿using COES.Models;
+﻿using System;
+using COES.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -17,6 +18,7 @@ namespace COES.ViewModels
         #region --- Fields ---
         //----------------------------------------------------------------------
         private Customer _customer;
+        private bool _phoneNumberSearchSuccessful = true;
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
@@ -29,6 +31,12 @@ namespace COES.ViewModels
         {
             get { return _customer; }
             set { Set(() => Customer, ref _customer, value); }
+        }
+
+        public bool PhoneNumberSearchSuccessful
+        {
+            get { return _phoneNumberSearchSuccessful; }
+            set { Set(() => PhoneNumberSearchSuccessful, ref _phoneNumberSearchSuccessful, value); }
         }
         //----------------------------------------------------------------------
         #endregion
@@ -77,10 +85,35 @@ namespace COES.ViewModels
         /// </summary>
         private void SearchPhoneNumber()
         {
-            int result;
-            if (int.TryParse(Customer.PhoneNumber, out result))
+            long result;
+            if (long.TryParse(Customer.PhoneNumber, out result))
             {
                 // DATABASE LOGIC GOES HERE
+                // Search database for phone number entered, if a result is returned the Customer object will be filled
+                // If nothing exists, a new customer is created and the appropriate textboxes are filled.
+                PhoneNumberSearchSuccessful = true;
+
+                // TEST CUSTOMER OBJECT
+                Customer = new Customer
+                {
+                    FirstName = "Michael",
+                    LastName = "Cripps",
+                    Address = new Address
+                    {
+                        Number = 83,
+                        PostCode = 4164,
+                        Street = "Morris Circuit",
+                        Suburb = "Thornlands"
+                    },
+                    Comments = "Test comment",
+                    Id = 1,
+                    CreditCard = new CreditCard
+                    {
+                        Number = 21438124,
+                        Name = Customer.Name
+                    },
+                    Status = "Y"
+                };
             }
             else
             {
