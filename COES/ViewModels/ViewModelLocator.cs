@@ -39,6 +39,7 @@ namespace COES.ViewModels
             }
             SimpleIoc.Default.Register<ApplicationViewModel>();
             SimpleIoc.Default.Register<HomeViewModel>();
+            SimpleIoc.Default.Register<CustomerViewModel>();
             SimpleIoc.Default.Register<CreateOrderViewModel>();
             SimpleIoc.Default.Register<EditOrderViewModel>();
             
@@ -56,7 +57,7 @@ namespace COES.ViewModels
         }
 
         /// <summary>
-        /// Gets the Main property.
+        /// Gets the Home property.
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
@@ -66,6 +67,17 @@ namespace COES.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<HomeViewModel>();
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+        "CA1822:MarkMembersAsStatic",
+        Justification = "This non-static member is needed for data binding purposes.")]
+        public CustomerViewModel Customer
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<CustomerViewModel>();
             }
         }
 

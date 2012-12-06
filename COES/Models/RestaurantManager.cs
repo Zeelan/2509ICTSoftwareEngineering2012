@@ -31,6 +31,7 @@ namespace COES.Models
             get { return _customers; }
             set { Set(() => Customers, ref _customers, value); }
         }
+
         /// <summary>
         /// Gets or sets the list orders.
         /// </summary>

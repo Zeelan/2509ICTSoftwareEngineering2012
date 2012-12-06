@@ -1,4 +1,7 @@
-﻿using GalaSoft.MvvmLight;
+﻿using COES.Models;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace COES.ViewModels
 {
@@ -8,20 +11,12 @@ namespace COES.ViewModels
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class ApplicationViewModel : ViewModelBase
+    public class CustomerViewModel : ViewModelBase
     {
         //----------------------------------------------------------------------
         #region --- Fields ---
         //----------------------------------------------------------------------
-        private ViewModelBase _currentViewModel;
-
-        // TESTING
-        readonly static HomeViewModel _homeViewModel = new HomeViewModel();
-        readonly static CreateOrderViewModel _createOrderViewModel = new CreateOrderViewModel();
-        readonly static EditOrderViewModel _editOrderViewModel = new EditOrderViewModel();
-        readonly static CustomerViewModel _customerViewModel = new CustomerViewModel();
-        //
-        
+        private Customer _customer;
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
@@ -30,13 +25,22 @@ namespace COES.ViewModels
         //----------------------------------------------------------------------
         #region --- Properties ---
         //----------------------------------------------------------------------
-        /// <summary>
-        /// Gets or sets the current ViewModel associated with the current View.
-        /// </summary>
-        public ViewModelBase CurrentViewModel
+        public Customer Customer
         {
-            get { return _currentViewModel; }
-            set { Set(() => CurrentViewModel, ref _currentViewModel, value); }
+            get { return _customer; }
+            set { Set(() => Customer, ref _customer, value); }
+        }
+        //----------------------------------------------------------------------
+        #endregion
+        //----------------------------------------------------------------------
+
+        //----------------------------------------------------------------------
+        #region --- Commands ---
+        //----------------------------------------------------------------------
+        public RelayCommand SearchPhoneNumberCommand
+        {
+            get;
+            private set;
         }
         //----------------------------------------------------------------------
         #endregion
@@ -47,11 +51,13 @@ namespace COES.ViewModels
         #region --- Constructor ---
         //----------------------------------------------------------------------
         /// <summary>
-        /// Initializes a new instance of the ApplicationViewModel class.
+        /// Initializes a new instance of the CustomerViewModel class.
         /// </summary>
-        public ApplicationViewModel()
+        public CustomerViewModel()
         {
-            CurrentViewModel = _customerViewModel;
+            InitializeCommands();
+
+            Customer = new Customer();
         }
         //----------------------------------------------------------------------
         #endregion
@@ -61,7 +67,27 @@ namespace COES.ViewModels
         //----------------------------------------------------------------------
         #region --- Methods ---
         //----------------------------------------------------------------------
+        private void InitializeCommands()
+        {
+            SearchPhoneNumberCommand = new RelayCommand(SearchPhoneNumber);
+        }
 
+        /// <summary>
+        /// Searches the given phone number to see if a <see cref="Customer"/> already exists.
+        /// </summary>
+        private void SearchPhoneNumber()
+        {
+            int result;
+            if (int.TryParse(Customer.PhoneNumber, out result))
+            {
+                // DATABASE LOGIC GOES HERE
+            }
+            else
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("PhoneNumber"));
+            }
+            
+        }
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------

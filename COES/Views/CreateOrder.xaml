@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              DataContext="{Binding CreateOrder, Source={StaticResource Locator}}"
              Height="{DynamicResource ViewHeight}" 
-             Width="{DynamicResource ViewWidth}">
+             Width="{DynamicResource ViewWidth}" VerticalAlignment="Top">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -23,12 +23,18 @@
         <Button Content="Button" HorizontalAlignment="Left" Height="68" VerticalAlignment="Top" Width="161" Grid.Row="1" Grid.Column="1"/>
         <TextBlock HorizontalAlignment="Center" Grid.ColumnSpan="2" FontSize="40"><Run Language="en-au" Text="Create"/><Run Text=" Order"/></TextBlock>
         <GroupBox Header="First Name" 
-                  Grid.Row="2">
+                  Grid.Row="2" 
+                  FontSize="{DynamicResource GroupBoxHeaderSize}">
             <TextBox/>
         </GroupBox>
         <GroupBox Header="Last Name" 
                   Grid.Row="2"
-                  Grid.Column="1">
+                  Grid.Column="1" FontSize="{DynamicResource GroupBoxHeaderSize}">
+            <TextBox></TextBox>
+        </GroupBox>
+        <GroupBox Header="Last Name" 
+                  Grid.Row="3"
+                  FontSize="{DynamicResource GroupBoxHeaderSize}">
             <TextBox></TextBox>
         </GroupBox>
 

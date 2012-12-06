@@ -19,7 +19,7 @@ namespace COES.Models
         private string _lastName;
         private Address _address;
         private CreditCard _creditCard;
-        private int _phoneNumber;
+        private string _phoneNumber;
         private string _status;
         private string _comments;
         //----------------------------------------------------------------------
@@ -86,7 +86,7 @@ namespace COES.Models
         /// <summary>
         /// Gets or sets the phone number.
         /// </summary>
-        public int PhoneNumber
+        public string PhoneNumber
         {
             get { return _phoneNumber; }
             set { Set(() => PhoneNumber, ref _phoneNumber, value); }

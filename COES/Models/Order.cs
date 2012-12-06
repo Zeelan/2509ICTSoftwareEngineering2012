@@ -16,7 +16,9 @@ namespace COES.Models
         private DateTime _dateCreated;
         private List<MenuItem> _menuItems;
         private double _cost;
+        private bool _delivery;
         private string _status;
+        private bool _paid;
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
@@ -71,13 +73,33 @@ namespace COES.Models
         }
 
         /// <summary>
-        /// Gets or sets the status.
+        /// Gets or sets whether the <see cref="Order"/> is delivery or not.
+        /// </summary>
+        public bool Delivery
+        {
+            get { return _delivery;}
+            set { Set(() => Delivery, ref _delivery, value);}
+        }
+
+        /// <summary>
+        /// Gets or sets whether the <see cref="Order"/> is complete.
         /// </summary>
         public string Status
         {
             get { return _status; }
             set { Set(() => Status, ref _status, value); }
         }
+
+        /// <summary>
+        /// Gets or sets whether the <see cref="Order"/> has been paid.
+        /// </summary>
+        public bool Paid
+        {
+            get { return _paid; }
+            set { Set(() => Paid, ref _paid, value); }
+        }
+
+
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------

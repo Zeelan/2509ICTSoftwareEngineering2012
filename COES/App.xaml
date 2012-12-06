@@ -16,6 +16,9 @@
         <DataTemplate DataType="{x:Type vm:HomeViewModel}">
             <views:Home />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CustomerViewModel}">
+            <views:Customer />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:CreateOrderViewModel}">
             <views:CreateOrder />
         </DataTemplate>
@@ -24,6 +27,9 @@
         </DataTemplate>
         <System:Double x:Key="ViewWidth">1024</System:Double>
         <System:Double x:Key="ViewHeight">768</System:Double>
+        <System:Double x:Key="GroupBoxHeaderSize">20</System:Double>
+        <System:Double x:Key="HeaderSize">40</System:Double>
+        <System:Int32 x:Key="PhoneNumberMaxLength">10</System:Int32>
     </Application.Resources>
 
 </Application>

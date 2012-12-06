@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="COES.Views.Customer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             DataContext="{Binding Customer, Source={StaticResource Locator}}"
+             Height="{DynamicResource ViewHeight}"
+             Width="{DynamicResource ViewWidth}" VerticalAlignment="Top">
+    <Grid>
+        <TextBlock Text="Customer" 
+                       HorizontalAlignment="Center" 
+                       Grid.ColumnSpan="2" 
+                       FontSize="{DynamicResource HeaderSize}">
+        </TextBlock>
+        <GroupBox VerticalAlignment="Center" Margin="50,0" Header="Phone Number" FontSize="{DynamicResource GroupBoxHeaderSize}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBox Text="{Binding Customer.PhoneNumber, Mode=TwoWay}"
+                         VerticalAlignment="Center" 
+                         FontSize="30" 
+                         Margin="0,50,0,0" MaxLength="{DynamicResource PhoneNumberMaxLength}">
+                </TextBox>
+                <Button Content="Search" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Bottom"
+                        Grid.Row="1" 
+                        Height="50" 
+                        Margin="0,25" 
+                        Width="200"
+                        Command="{Binding SearchPhoneNumberCommand}">
+                </Button>
+            </Grid>
+        </GroupBox>
+
+        <Grid Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+        
+            <GroupBox Header="First Name" 
+                      Grid.Row="2" 
+                      FontSize="{DynamicResource GroupBoxHeaderSize}">
+                <TextBox/>
+            </GroupBox>
+            <GroupBox Header="Last Name" 
+                      Grid.Row="2"
+                      Grid.Column="1" FontSize="{DynamicResource GroupBoxHeaderSize}">
+                <TextBox></TextBox>
+            </GroupBox>
+            <GroupBox Header="Last Name" 
+                      Grid.Row="3"
+                      FontSize="{DynamicResource GroupBoxHeaderSize}">
+                <TextBox></TextBox>
+            </GroupBox>
+
+        </Grid>
+    </Grid>
+</UserControl>
