@@ -19,11 +19,8 @@
         <DataTemplate DataType="{x:Type vm:CustomerViewModel}">
             <views:Customer />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:CreateOrderViewModel}">
-            <views:CreateOrder />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:EditOrderViewModel}">
-            <views:EditOrder />
+        <DataTemplate DataType="{x:Type vm:OrderViewModel}">
+            <views:Order />
         </DataTemplate>
         <System:Double x:Key="ViewWidth">1024</System:Double>
         <System:Double x:Key="ViewHeight">768</System:Double>

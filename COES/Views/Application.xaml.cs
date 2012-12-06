@@ -16,14 +16,14 @@ namespace COES.Views
         {
             InitializeComponent();
 
-            Messenger.Default.Register<NotificationMessage>(this, m => NotificationMessage(m));
+            Messenger.Default.Register<NotificationMessage>(this, "Error", m => NotificationMessage(m));
         }
 
         private void NotificationMessage(NotificationMessage msg)
         {
             switch (msg.Notification)
             {
-                case "PhoneNumber":
+                case "ErrorPhoneNumber":
                     MessageBoxResult result = MessageBox.Show("Incorrect format, phone number must be 10 digit whole number.", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     break;
             }

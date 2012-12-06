@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+﻿using COES.Models;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
 
-namespace COES.Models
+namespace COES.ViewModels
 {
-    public class RestaurantManager : ObservableObject
+    /// <summary>
+    /// This class contains properties that a View can data bind to.
+    /// <para>
+    /// See http://www.galasoft.ch/mvvm
+    /// </para>
+    /// </summary>
+    public class OrderViewModel : ViewModelBase
     {
         //----------------------------------------------------------------------
         #region --- Fields ---
         //----------------------------------------------------------------------
-        private ObservableCollection<Customer> _customers;
-        private ObservableCollection<Order> _orders;
-        private Customer _currentCustomer;
-        private Order _currentOrder;
+        private Order _order;
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
@@ -25,40 +25,12 @@ namespace COES.Models
         #region --- Properties ---
         //----------------------------------------------------------------------
         /// <summary>
-        /// Gets or sets the list of customers. When a customer has an active order they will be added to the list, 
-        /// when their order is no longer active they will be removed.
-        /// </summary>
-        public ObservableCollection<Customer> Customers
-        {
-            get { return _customers; }
-            set { Set(() => Customers, ref _customers, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the list orders.
-        /// </summary>
-        public ObservableCollection<Order> Orders
-        {
-            get { return _orders; }
-            set { Set(() => Orders, ref _orders, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the current <see cref="Customer"/>.
-        /// </summary>
-        public Customer CurrentCustomer
-        {
-            get { return _currentCustomer; }
-            set { Set(() => CurrentCustomer, ref _currentCustomer, value); }
-        }
-
-        /// <summary>
         /// Gets or sets the current <see cref="Order"/>.
         /// </summary>
-        public Order CurrentOrder
+        public Order Order
         {
-            get { return _currentOrder; }
-            set { Set(() => CurrentOrder, ref _currentOrder, value); }
+            get { return _order; }
+            set { Set(() => Order, ref _order, value); }
         }
         //----------------------------------------------------------------------
         #endregion
@@ -68,10 +40,12 @@ namespace COES.Models
         //----------------------------------------------------------------------
         #region --- Constructor ---
         //----------------------------------------------------------------------
-        public RestaurantManager() :base()
+        /// <summary>
+        /// Initializes a new instance of the AddOrderViewModel class.
+        /// </summary>
+        public OrderViewModel()
         {
-            Customers = new ObservableCollection<Customer>();
-            Orders = new ObservableCollection<Order>();
+            RegisterMessages();
         }
         //----------------------------------------------------------------------
         #endregion
@@ -81,9 +55,13 @@ namespace COES.Models
         //----------------------------------------------------------------------
         #region --- Methods ---
         //----------------------------------------------------------------------
-
+        private void RegisterMessages()
+        {
+            Messenger.Default.Register<GenericMessage<Order>>(this, m => this.Order = m.Content);
+        }
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
+
     }
 }

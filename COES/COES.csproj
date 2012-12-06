@@ -116,20 +116,16 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\RestaurantManager.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="ViewModels\CreateOrderViewModel.cs" />
+    <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
-    <Compile Include="Views\CreateOrder.xaml.cs">
-      <DependentUpon>CreateOrder.xaml</DependentUpon>
+    <Compile Include="Views\Order.xaml.cs">
+      <DependentUpon>Order.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\EditOrderViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\Customer.xaml.cs">
       <DependentUpon>Customer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\EditOrder.xaml.cs">
-      <DependentUpon>EditOrder.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Application.xaml.cs">
       <DependentUpon>Application.xaml</DependentUpon>
@@ -145,15 +141,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\CreateOrder.xaml">
+    <Page Include="Views\Order.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Customer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\EditOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

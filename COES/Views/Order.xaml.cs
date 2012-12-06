@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace COES.Views
 {
     /// <summary>
-    /// Interaction logic for EditOrder.xaml
+    /// Interaction logic for CreateOrder.xaml
     /// </summary>
-    public partial class EditOrder : UserControl
+    public partial class Order : UserControl
     {
-        public EditOrder()
+        public Order()
         {
             InitializeComponent();
         }

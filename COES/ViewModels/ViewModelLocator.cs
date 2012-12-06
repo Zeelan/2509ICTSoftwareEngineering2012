@@ -25,85 +25,117 @@ namespace COES.ViewModels
     /// </summary>
     public class ViewModelLocator
     {
+        private static ApplicationViewModel _application;
+        private static HomeViewModel _home;
+        private static CustomerViewModel _customer;
+        private static OrderViewModel _order;
+
         static ViewModelLocator()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            //ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            if (ViewModelBase.IsInDesignModeStatic)
-            {
-                SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
-            }
-            else
-            {
-                SimpleIoc.Default.Register<IDataService, DataService>();
-            }
-            SimpleIoc.Default.Register<ApplicationViewModel>();
-            SimpleIoc.Default.Register<HomeViewModel>();
-            SimpleIoc.Default.Register<CustomerViewModel>();
-            SimpleIoc.Default.Register<CreateOrderViewModel>();
-            SimpleIoc.Default.Register<EditOrderViewModel>();
+            //if (ViewModelBase.IsInDesignModeStatic)
+            //{
+            //    SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
+            //}
+            //else
+            //{
+            //    SimpleIoc.Default.Register<IDataService, DataService>();
+            //}
+            //SimpleIoc.Default.Register<ApplicationViewModel>();
+            //SimpleIoc.Default.Register<HomeViewModel>();
+            //SimpleIoc.Default.Register<CustomerViewModel>();
+            //SimpleIoc.Default.Register<OrderViewModel>();
             
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-        "CA1822:MarkMembersAsStatic",
-        Justification = "This non-static member is needed for data binding purposes.")]
         public ApplicationViewModel Application
         {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<ApplicationViewModel>();
-            }
+            get { return ApplicationStatic; }
         }
 
-        /// <summary>
-        /// Gets the Home property.
-        /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-            "CA1822:MarkMembersAsStatic",
-            Justification = "This non-static member is needed for data binding purposes.")]
+        public static ApplicationViewModel ApplicationStatic
+        {
+            get { return _application ?? (_application = new ApplicationViewModel()); }
+        }
+
         public HomeViewModel Home
         {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<HomeViewModel>();
-            }
+            get { return HomeStatic; }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-        "CA1822:MarkMembersAsStatic",
-        Justification = "This non-static member is needed for data binding purposes.")]
+        public static HomeViewModel HomeStatic
+        {
+            get { return _home ?? (_home = new HomeViewModel()); }
+        }
+
         public CustomerViewModel Customer
         {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<CustomerViewModel>();
-            }
+            get { return CustomerStatic; }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-        "CA1822:MarkMembersAsStatic",
-        Justification = "This non-static member is needed for data binding purposes.")]
-        public CreateOrderViewModel CreateOrder
+        public static CustomerViewModel CustomerStatic
         {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<CreateOrderViewModel>();
-            }
+            get { return _customer ?? (_customer = new CustomerViewModel()); }
         }
 
-
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
-        "CA1822:MarkMembersAsStatic",
-        Justification = "This non-static member is needed for data binding purposes.")]
-        public EditOrderViewModel EditOrder
+        public OrderViewModel Order
         {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<EditOrderViewModel>();
-            }
+            get { return OrderStatic; }
         }
+
+        public static OrderViewModel OrderStatic
+        {
+            get { return _order ?? (_order = new OrderViewModel()); }
+        }
+
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+        //"CA1822:MarkMembersAsStatic",
+        //Justification = "This non-static member is needed for data binding purposes.")]
+        //public ApplicationViewModel Application
+        //{
+        //    get
+        //    {
+        //        return ServiceLocator.Current.GetInstance<ApplicationViewModel>();
+        //    }
+        //}
+
+        ///// <summary>
+        ///// Gets the Home property.
+        ///// </summary>
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+        //    "CA1822:MarkMembersAsStatic",
+        //    Justification = "This non-static member is needed for data binding purposes.")]
+        //public HomeViewModel Home
+        //{
+        //    get
+        //    {
+        //        return ServiceLocator.Current.GetInstance<HomeViewModel>();
+        //    }
+        //}
+
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+        //"CA1822:MarkMembersAsStatic",
+        //Justification = "This non-static member is needed for data binding purposes.")]
+        //public CustomerViewModel Customer
+        //{
+        //    get
+        //    {
+        //        return ServiceLocator.Current.GetInstance<CustomerViewModel>();
+        //    }
+        //}
+
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+        //"CA1822:MarkMembersAsStatic",
+        //Justification = "This non-static member is needed for data binding purposes.")]
+        //public OrderViewModel CreateOrder
+        //{
+        //    get
+        //    {
+        //        return ServiceLocator.Current.GetInstance<OrderViewModel>();
+        //    }
+        //}
+
 
         /// <summary>
         /// Cleans up all the resources.

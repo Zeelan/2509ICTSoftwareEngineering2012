@@ -18,7 +18,8 @@ namespace COES.ViewModels
         #region --- Fields ---
         //----------------------------------------------------------------------
         private Customer _customer;
-        private bool _phoneNumberSearchSuccessful = true;
+        private Order _order;
+        
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
@@ -33,23 +34,40 @@ namespace COES.ViewModels
             set { Set(() => Customer, ref _customer, value); }
         }
 
-        public bool PhoneNumberSearchSuccessful
+        public Order Order
         {
-            get { return _phoneNumberSearchSuccessful; }
-            set { Set(() => PhoneNumberSearchSuccessful, ref _phoneNumberSearchSuccessful, value); }
+            get { return _order; }
+            set { Set(() => Order, ref _order, value); }
         }
+
+
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
 
+
         //----------------------------------------------------------------------
         #region --- Commands ---
         //----------------------------------------------------------------------
-        public RelayCommand SearchPhoneNumberCommand
+        /// <summary>
+        /// Called when the Create Order button is clicked.
+        /// </summary>
+        public RelayCommand CreateOrderCommand
         {
             get;
             private set;
         }
+
+        /// <summary>
+        /// Called when the Cancel button is clicked.
+        /// </summary>
+        public RelayCommand CancelCommand
+        {
+            get;
+            private set;
+        }
+
+
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
@@ -64,8 +82,28 @@ namespace COES.ViewModels
         public CustomerViewModel()
         {
             InitializeCommands();
+            RegisterMessages();
 
-            Customer = new Customer();
+            // TEST CUSTOMER OBJECT
+            //Customer = new Customer
+            //{
+            //    FirstName = "Michael",
+            //    LastName = "Cripps",
+            //    Address = new Address
+            //    {
+            //        Number = 83,
+            //        PostCode = 4164,
+            //        Street = "Morris Circuit",
+            //        Suburb = "Thornlands"
+            //    },
+            //    Comments = "Test comment",
+            //    Id = 1,
+            //    CreditCard = new CreditCard
+            //    {
+            //        Number = 21438124,
+            //    },
+            //    Status = "Y"
+            //};
         }
         //----------------------------------------------------------------------
         #endregion
@@ -77,49 +115,81 @@ namespace COES.ViewModels
         //----------------------------------------------------------------------
         private void InitializeCommands()
         {
-            SearchPhoneNumberCommand = new RelayCommand(SearchPhoneNumber);
+            CreateOrderCommand = new RelayCommand(CreateOrder);
+            CancelCommand = new RelayCommand(Cancel);
+        }
+
+        private void RegisterMessages()
+        {
+            // Registers a message to update the customer when it has been created.
+            Messenger.Default.Register<GenericMessage<Customer>>(this, "CustomerCreated", m => this.Customer = m.Content);
         }
 
         /// <summary>
-        /// Searches the given phone number to see if a <see cref="Customer"/> already exists.
+        /// Creates a new <see cref="Order"/> then uses the <see cref="Messenger"/> to notify the main ViewModel that th
         /// </summary>
-        private void SearchPhoneNumber()
+        private void CreateOrder()
         {
-            long result;
-            if (long.TryParse(Customer.PhoneNumber, out result))
+            if (CheckCustomerInfo())
             {
-                // DATABASE LOGIC GOES HERE
-                // Search database for phone number entered, if a result is returned the Customer object will be filled
-                // If nothing exists, a new customer is created and the appropriate textboxes are filled.
-                PhoneNumberSearchSuccessful = true;
-
-                // TEST CUSTOMER OBJECT
-                Customer = new Customer
+                Order = new Order
                 {
-                    FirstName = "Michael",
-                    LastName = "Cripps",
-                    Address = new Address
-                    {
-                        Number = 83,
-                        PostCode = 4164,
-                        Street = "Morris Circuit",
-                        Suburb = "Thornlands"
-                    },
-                    Comments = "Test comment",
-                    Id = 1,
-                    CreditCard = new CreditCard
-                    {
-                        Number = 21438124,
-                        Name = Customer.Name
-                    },
-                    Status = "Y"
+                    CustomerId = Customer.Id
                 };
+
+                // Sends a message to navigate to the Order View.
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("NavigateOrder"), "Navigate");
+                // Sends message with the newly created order, the Order ViewModel will listen for this message.
+                Messenger.Default.Send<GenericMessage<Order>>(new GenericMessage<Order>(Order), "OrderCreated");
+                this.Cleanup();
+            }
+        }
+
+        /// <summary>
+        /// Checks if the appropriate <see cref="Customer"/> information is available.
+        /// </summary>
+        /// <returns>True if all information is available, else returns false.</returns>
+        private bool CheckCustomerInfo()
+        {
+            if (Customer.FirstName == null)
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorFirstName"), "Error");
+                return false;
+            }
+            else if (Customer.LastName == null)
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorLastName"), "Error");
+                return false;
+            }
+            // NOTE: FIX THIS SO IT ERROR CHECKS FOR NON INT
+            else if (Customer.Address.Number == 0)
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorAddressNumber"), "Error");
+                return false;
+            }
+            else if (Customer.Address.Street == null)
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorAddressStreet"), "Error");
+                return false;
+            }
+            else if (Customer.Address.Suburb == null)
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorAddressSuburb"), "Error");
+                return false;
+            }
+            // NOTE: FIX THIS SO IT ERRO CHECKS FOR NON INT
+            else if (Customer.Address.PostCode == 0)
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorAddressPostCode"), "Error");
+                return false;
             }
             else
-            {
-                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("PhoneNumber"));
-            }
-            
+                return true;
+        }
+
+        private void Cancel()
+        {
+
         }
         //----------------------------------------------------------------------
         #endregion
