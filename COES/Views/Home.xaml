@@ -50,7 +50,8 @@
                              Grid.Row="1"
                              VerticalAlignment="Center" 
                              FontSize="30" 
-                             Margin="0,15,0,0" MaxLength="{DynamicResource PhoneNumberMaxLength}">
+                             Margin="0,15,0,0" MaxLength="{DynamicResource PhoneNumberMaxLength}" 
+                             PreviewKeyDown="NumericTextBox_KeyDown">
                     </TextBox>
                     <Button Content="Search" 
                             HorizontalAlignment="Center" 
