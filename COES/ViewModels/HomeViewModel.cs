@@ -1,4 +1,5 @@
-﻿using COES.Models;
+﻿using System;
+using COES.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -110,12 +111,13 @@ namespace COES.ViewModels
                     },
                     Status = "Y"
                 };
-                //
-
+                
+                // Sends a message notifying that the current customer has changed (been created).
+                Messenger.Default.Send<Customer>(RestaurantManager.CurrentCustomer, "CreateCustomer");
                 // Sends a message to navigate to the Customer View.
                 Messenger.Default.Send <NotificationMessage>(new NotificationMessage("NavigateCustomer"), "Navigate");
-                // Sends a message notifying that the current customer has changed (been created).
-                Messenger.Default.Send<GenericMessage<Customer>>(new GenericMessage<Customer>(RestaurantManager.CurrentCustomer), "CustomerCreated");
+                NavigatedFrom();
+                
                 // if (database returns result)
                 
                 // else
@@ -124,6 +126,11 @@ namespace COES.ViewModels
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorPhoneNumber"), "Error");
             }
+        }
+
+        private void NavigatedFrom()
+        {
+            PhoneNumber = String.Empty;
         }
                 
         //----------------------------------------------------------------------
