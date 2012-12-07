@@ -17,9 +17,7 @@ namespace COES.ViewModels
         //----------------------------------------------------------------------
         #region --- Fields ---
         //----------------------------------------------------------------------
-        private Customer _customer;
-        private Order _order;
-        
+        private Customer _customer;  
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
@@ -28,18 +26,14 @@ namespace COES.ViewModels
         //----------------------------------------------------------------------
         #region --- Properties ---
         //----------------------------------------------------------------------
+        /// <summary>
+        /// Gets or sets the current <see cref="Customer"/>.
+        /// </summary>
         public Customer Customer
         {
             get { return _customer; }
             set { Set(() => Customer, ref _customer, value); }
         }
-
-        public Order Order
-        {
-            get { return _order; }
-            set { Set(() => Order, ref _order, value); }
-        }
-
 
         //----------------------------------------------------------------------
         #endregion
@@ -83,27 +77,6 @@ namespace COES.ViewModels
         {
             InitializeCommands();
             RegisterMessages();
-
-            // TEST CUSTOMER OBJECT
-            //Customer = new Customer
-            //{
-            //    FirstName = "Michael",
-            //    LastName = "Cripps",
-            //    Address = new Address
-            //    {
-            //        Number = 83,
-            //        PostCode = 4164,
-            //        Street = "Morris Circuit",
-            //        Suburb = "Thornlands"
-            //    },
-            //    Comments = "Test comment",
-            //    Id = 1,
-            //    CreditCard = new CreditCard
-            //    {
-            //        Number = 21438124,
-            //    },
-            //    Status = "Y"
-            //};
         }
         //----------------------------------------------------------------------
         #endregion
@@ -122,7 +95,7 @@ namespace COES.ViewModels
         private void RegisterMessages()
         {
             // Registers a message to update the customer when it has been created.
-            Messenger.Default.Register<GenericMessage<Customer>>(this, "CustomerCreated", m => this.Customer = m.Content);
+            Messenger.Default.Register<Customer>(this, "CustomerCreated", m => this.Customer = m);
         }
 
         /// <summary>
@@ -132,16 +105,11 @@ namespace COES.ViewModels
         {
             if (CheckCustomerInfo())
             {
-                Order = new Order
-                {
-                    CustomerId = Customer.Id
-                };
-
+                // Sends message with the customer id to create the new Order.
+                Messenger.Default.Send<int>(Customer.Id, "CreateOrder");
                 // Sends a message to navigate to the Order View.
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("NavigateOrder"), "Navigate");
-                // Sends message with the newly created order, the Order ViewModel will listen for this message.
-                Messenger.Default.Send<GenericMessage<Order>>(new GenericMessage<Order>(Order), "OrderCreated");
-                this.Cleanup();
+                //this.Cleanup();
             }
         }
 
@@ -151,12 +119,12 @@ namespace COES.ViewModels
         /// <returns>True if all information is available, else returns false.</returns>
         private bool CheckCustomerInfo()
         {
-            if (Customer.FirstName == null)
+            if (Customer.FirstName == null || Customer.FirstName == String.Empty)
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorFirstName"), "Error");
                 return false;
             }
-            else if (Customer.LastName == null)
+            else if (Customer.LastName == null || Customer.LastName == String.Empty)
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorLastName"), "Error");
                 return false;
@@ -167,12 +135,12 @@ namespace COES.ViewModels
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorAddressNumber"), "Error");
                 return false;
             }
-            else if (Customer.Address.Street == null)
+            else if (Customer.Address.Street == null || Customer.Address.Street == String.Empty)
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorAddressStreet"), "Error");
                 return false;
             }
-            else if (Customer.Address.Suburb == null)
+            else if (Customer.Address.Suburb == null || Customer.Address.Suburb == String.Empty)
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorAddressSuburb"), "Error");
                 return false;
@@ -189,7 +157,13 @@ namespace COES.ViewModels
 
         private void Cancel()
         {
+            NavigatedFrom();
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Cancel"), "Navigate");
+        }
 
+        private void NavigatedFrom()
+        {
+            Customer = null;
         }
         //----------------------------------------------------------------------
         #endregion
