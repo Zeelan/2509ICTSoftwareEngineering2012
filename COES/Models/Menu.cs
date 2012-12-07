@@ -36,7 +36,7 @@ namespace COES.Models
         /// </summary>
         public List<MenuItem> MenuItems
         {
-            get { return _menuItems; }
+            get { return _menuItems ?? (_menuItems = new List<MenuItem>()); }
             set { Set(() => MenuItems, ref _menuItems, value); }
         }
 
