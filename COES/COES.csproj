@@ -104,6 +104,7 @@
     <Compile Include="Converters\BooleanConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Design\DesignDataService.cs" />
+    <Compile Include="Helpers\NumericTextHelper.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\CreditCard.cs" />
     <Compile Include="Models\Customer.cs" />
