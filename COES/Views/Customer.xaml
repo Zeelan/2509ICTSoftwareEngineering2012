@@ -59,7 +59,8 @@
                     </Border>
                     <TextBox Text="{Binding Customer.FirstName, Mode=TwoWay}"
                              Grid.Row="1" 
-                             FontSize="{DynamicResource GroupBoxHeaderSize}">
+                             FontSize="{DynamicResource GroupBoxHeaderSize}" 
+                             MaxLength="500">
                     </TextBox>
                 </Grid>
             </Border>
@@ -81,7 +82,8 @@
                     </Border>
                     <TextBox Text="{Binding Customer.LastName, Mode=TwoWay}"
                              Grid.Row="1" 
-                             FontSize="{DynamicResource GroupBoxHeaderSize}">
+                             FontSize="{DynamicResource GroupBoxHeaderSize}" 
+                             MaxLength="500">
                     </TextBox>
                 </Grid>
             </Border>
@@ -106,12 +108,14 @@
                     <TextBox Text="{Binding Customer.Address.Number, Mode=TwoWay}"
                              Grid.Row="1" 
                              FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                             Margin="0,0,0,5">
+                             Margin="0,0,0,5" 
+                             PreviewKeyDown="NumericTextBox_KeyDown">
                     </TextBox>
                     <TextBox Text="{Binding Customer.Address.Street, Mode=TwoWay}"
                              Grid.Row="2" 
                              FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                             Margin="0,5,0,0">
+                             Margin="0,5,0,0" 
+                             MaxLength="500">
                     </TextBox>
                 </Grid>
             </Border>
@@ -157,7 +161,8 @@
                     </Border>
                     <TextBox Text="{Binding Customer.Address.PostCode, Mode=TwoWay}"
                              Grid.Row="1" 
-                             FontSize="{DynamicResource GroupBoxHeaderSize}">
+                             FontSize="{DynamicResource GroupBoxHeaderSize}"
+                             PreviewKeyDown="NumericTextBox_KeyDown">
                     </TextBox>
                 </Grid>
             </Border>
@@ -234,7 +239,9 @@
                     <TextBox Text="{Binding Customer.Comments, Mode=TwoWay}"
                              Grid.Row="1" 
                              FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                             Height="126" TextWrapping="Wrap">
+                             Height="126" 
+                             TextWrapping="Wrap" 
+                             MaxLength="500">
                     </TextBox>
                 </Grid>
             </Border>
@@ -247,10 +254,11 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="Cancel (NYI)">
+            <Button Content="Cancel"
+                    Command="{Binding CancelCommand}">
                 
             </Button>
-            <Button Content="Create Order (NYI)"
+            <Button Content="Create Order"
                     Grid.Column="1"
                     Command="{Binding CreateOrderCommand}"/>
 
