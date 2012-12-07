@@ -12,8 +12,9 @@ namespace COES.Models
         //----------------------------------------------------------------------
         #region --- Fields ---
         //----------------------------------------------------------------------
-        private ObservableCollection<Customer> _customers;
+        //private ObservableCollection<Customer> _customers;
         private ObservableCollection<Order> _orders;
+        private Menu _menu;
         private Customer _currentCustomer;
         private Order _currentOrder;
         //----------------------------------------------------------------------
@@ -28,19 +29,28 @@ namespace COES.Models
         /// Gets or sets the list of customers. When a customer has an active order they will be added to the list, 
         /// when their order is no longer active they will be removed.
         /// </summary>
-        public ObservableCollection<Customer> Customers
-        {
-            get { return _customers; }
-            set { Set(() => Customers, ref _customers, value); }
-        }
+        //public ObservableCollection<Customer> Customers
+        //{
+        //    get { return _customers; }
+        //    set { Set(() => Customers, ref _customers, value); }
+        //}
 
         /// <summary>
         /// Gets or sets the list orders.
         /// </summary>
         public ObservableCollection<Order> Orders
         {
-            get { return _orders; }
+            get { return _orders ?? (_orders = new ObservableCollection<Order>()); }
             set { Set(() => Orders, ref _orders, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the current <see cref="Menu"/>.
+        /// </summary>
+        public Menu Menu
+        {
+            get { return _menu ?? (_menu = new Menu()); }
+            set { Set(() => Menu, ref _menu, value); }
         }
 
         /// <summary>
@@ -48,7 +58,7 @@ namespace COES.Models
         /// </summary>
         public Customer CurrentCustomer
         {
-            get { return _currentCustomer; }
+            get { return _currentCustomer ?? (_currentCustomer = new Customer()); }
             set { Set(() => CurrentCustomer, ref _currentCustomer, value); }
         }
 
@@ -57,7 +67,7 @@ namespace COES.Models
         /// </summary>
         public Order CurrentOrder
         {
-            get { return _currentOrder; }
+            get { return _currentOrder ?? (_currentOrder = new Order()); }
             set { Set(() => CurrentOrder, ref _currentOrder, value); }
         }
         //----------------------------------------------------------------------
@@ -68,10 +78,8 @@ namespace COES.Models
         //----------------------------------------------------------------------
         #region --- Constructor ---
         //----------------------------------------------------------------------
-        public RestaurantManager() :base()
+        public RestaurantManager()
         {
-            Customers = new ObservableCollection<Customer>();
-            Orders = new ObservableCollection<Order>();
         }
         //----------------------------------------------------------------------
         #endregion
