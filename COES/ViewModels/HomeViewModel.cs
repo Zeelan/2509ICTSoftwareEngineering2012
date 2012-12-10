@@ -73,6 +73,9 @@ namespace COES.ViewModels
         //----------------------------------------------------------------------
         #region --- Methods ---
         //----------------------------------------------------------------------
+        /// <summary>
+        /// Initializes the commands associated with this ViewModel.
+        /// </summary>
         private void InitializeCommands()
         {
             SearchPhoneNumberCommand = new RelayCommand(SearchPhoneNumber);
@@ -86,11 +89,19 @@ namespace COES.ViewModels
             long result;
             if (long.TryParse(PhoneNumber, out result))
             {
-                // DATABASE LOGIC GOES HERE
-                // Search database for phone number entered, if a result is returned the Customer object will be filled
-                // If nothing exists, a new customer is created and the appropriate textboxes are filled.
+                // TODO: Database logic, search for existing phone number.
+ 
+                // If exists
+                //
 
-                //testing
+                // else
+                //
+
+
+
+                //
+                // Testing
+                //
                 RestaurantManager.CurrentCustomer = new Customer
                 {
                     FirstName = "Michael",
@@ -111,18 +122,18 @@ namespace COES.ViewModels
                     },
                     Status = "Y"
                 };
+                RestaurantManager.CurrentCustomer.CreditCard.Name = RestaurantManager.CurrentCustomer.Name;
+                //
+                // Testing
+                //
                 
                 // Sends a message notifying that the current customer has changed (been created).
                 Messenger.Default.Send<Customer>(RestaurantManager.CurrentCustomer, "CreateCustomer");
                 // Sends a message to navigate to the Customer View.
                 Messenger.Default.Send <NotificationMessage>(new NotificationMessage("NavigateCustomer"), "Navigate");
                 NavigatedFrom();
-                
-                // if (database returns result)
-                
-                // else
             }
-            else
+            else // Incorect number format.
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorPhoneNumber"), "Error");
             }
