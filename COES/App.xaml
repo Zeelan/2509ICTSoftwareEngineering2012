@@ -5,71 +5,194 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:COES.ViewModels"
              xmlns:views="clr-namespace:COES.Views"
-             xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="COES.App"
+             xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" x:Class="COES.App"
              StartupUri="Views/Application.xaml"
              mc:Ignorable="d">
 
     <Application.Resources>
-        <!--Global View Model Locator-->
-        <vm:ViewModelLocator x:Key="Locator"
-                             d:IsDataSource="True" />
-        <DataTemplate DataType="{x:Type vm:HomeViewModel}">
-            <views:Home />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:CustomerViewModel}">
-            <views:Customer />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:OrderViewModel}">
-            <views:Order />
-        </DataTemplate>
-        <System:Double x:Key="ViewWidth">1024</System:Double>
-        <System:Double x:Key="ViewHeight">768</System:Double>
-        <System:Double x:Key="GroupBoxHeaderSize">30</System:Double>
-        <System:Double x:Key="HeaderSize">40</System:Double>
-        <System:Int32 x:Key="PhoneNumberMaxLength">10</System:Int32>
-        <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
-        <Style x:Key="GroupBoxStyle" TargetType="{x:Type GroupBox}">
-            <Setter Property="BorderBrush" Value="#D5DFE5"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type GroupBox}">
-                        <Grid SnapsToDevicePixels="true">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="6"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="6"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="6"/>
-                            </Grid.RowDefinitions>
-                            <Border BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.ColumnSpan="4" Grid.Column="0" CornerRadius="0" Grid.Row="1" Grid.RowSpan="3"/>
-                            <Border x:Name="Header" Grid.Column="1" Padding="3,1,3,0" Grid.Row="0" Grid.RowSpan="2">
-                                <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            </Border>
-                            <ContentPresenter Grid.ColumnSpan="2" Grid.Column="1" Margin="{TemplateBinding Padding}" Grid.Row="2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            <Border BorderBrush="White" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="4" CornerRadius="4" Grid.Row="1" Grid.RowSpan="3">
-                                <Border.OpacityMask>
-                                    <MultiBinding ConverterParameter="7" Converter="{StaticResource BorderGapMaskConverter}">
-                                        <Binding ElementName="Header" Path="ActualWidth"/>
-                                        <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
-                                        <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
-                                    </MultiBinding>
-                                </Border.OpacityMask>
-                                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0">
-                                    <Border BorderBrush="White" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0"/>
-                                </Border>
-                            </Border>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <SolidColorBrush x:Key="HeaderBrush" Color="Black"/>
+    	<ResourceDictionary>
+    		<ResourceDictionary.MergedDictionaries>
+    			<ResourceDictionary Source="Simple Styles.xaml"/>
+    		</ResourceDictionary.MergedDictionaries>
+    		<!--Global View Model Locator-->
+    		<vm:ViewModelLocator x:Key="Locator"
+    			d:IsDataSource="True" />
+    		<DataTemplate DataType="{x:Type vm:HomeViewModel}">
+    			<views:Home />
+    		</DataTemplate>
+    		<DataTemplate DataType="{x:Type vm:CustomerViewModel}">
+    			<views:Customer />
+    		</DataTemplate>
+    		<DataTemplate DataType="{x:Type vm:OrderViewModel}">
+    			<views:Order />
+    		</DataTemplate>
+            
+            <!--Double-->
+    		<System:Double x:Key="ViewWidth">1200</System:Double>
+    		<System:Double x:Key="ViewHeight">938</System:Double>
+    		<System:Double x:Key="GroupBoxHeaderSize">27</System:Double>
+    		<System:Double x:Key="HeaderSize">40</System:Double>
+    		<System:Double x:Key="TextBoxWidthSmall">280</System:Double>
+            <System:Double x:Key="ButtonHeight">120</System:Double>
+            <System:Double x:Key="ButtonWidth">275</System:Double>
+            
+            <!--Int-->
+    		<System:Int32 x:Key="PhoneNumberMaxLength">10</System:Int32>
+            
+            <!--SolidColorBrushes-->
+    		<SolidColorBrush x:Key="HeaderBrush" Color="Black"/>
+            <SolidColorBrush x:Key="ButtonNormalBorder" Color="#FF707070"/>
+            <SolidColorBrush x:Key="ButtonBackgroundClear" Color="#00000000"/>
+            <SolidColorBrush x:Key="ButtonMouseoverBrush" Color="{DynamicResource ButtonMouseover}"/>
+            <SolidColorBrush x:Key="ButtonPressedBrush" Color="#59FFF500"/>
+
+            <!--Thickness-->
+            <Thickness x:Key="FooterMargin">0,0,0,15</Thickness>
+    		
+    		<!--LinearGradientBrush-->
+    		<LinearGradientBrush x:Key="TextBoxBorder" EndPoint="0,20" MappingMode="Absolute" StartPoint="0,0">
+    			<GradientStop Color="#ABADB3" Offset="0.05"/>
+    			<GradientStop Color="#E2E3EA" Offset="0.07"/>
+    			<GradientStop Color="#E3E9EF" Offset="1"/>
+    		</LinearGradientBrush>
+    		<LinearGradientBrush x:Key="ButtonNormalBackground" EndPoint="0,1" StartPoint="0,0">
+    			<GradientStop Color="#F3F3F3" Offset="0"/>
+    			<GradientStop Color="#EBEBEB" Offset="0.5"/>
+    			<GradientStop Color="#DDDDDD" Offset="0.5"/>
+    			<GradientStop Color="#CDCDCD" Offset="1"/>
+    		</LinearGradientBrush>
+    		
+            <!--Color-->
+    		<Color x:Key="ButtonMouseover">#26FFF500</Color>
+
+            <!--Style-->
+    		<Style x:Key="ButtonStyle" TargetType="{x:Type Button}" BasedOn="{x:Null}">
+    			<Setter Property="FocusVisualStyle" Value="{DynamicResource SimpleButtonFocusVisual}"/>
+    			<Setter Property="Background" Value="{DynamicResource NormalBrush}"/>
+    			<Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}"/>
+    			<Setter Property="Template">
+    				<Setter.Value>
+    					<ControlTemplate TargetType="{x:Type Button}">
+					
+					<!-- We use Grid as a root because it is easy to add more elements to customize the button -->
+    						<Grid x:Name="Grid">
+    							<Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" Background="#00000000"/>
+						
+    							<!-- Content Presenter is where the text content etc is placed by the control -->
+						<!-- The bindings are useful so that the control can be parameterized without editing the template -->
+    							<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
+    						</Grid>
+					
+					<!--Each state sets a brush on the Border in the template -->
+    						<ControlTemplate.Triggers>
+    							<Trigger Property="IsKeyboardFocused" Value="true"/>
+    							<Trigger Property="IsMouseOver" Value="true">
+    								<Setter Property="Background" TargetName="Border" Value="{DynamicResource ButtonMouseoverBrush}"/>
+    							</Trigger>
+    							<Trigger Property="IsPressed" Value="true">
+    								<Setter Property="Background" TargetName="Border" Value="{DynamicResource ButtonPressedBrush}"/>
+    							</Trigger>
+    							<Trigger Property="IsEnabled" Value="true"/>
+    							<Trigger Property="IsEnabled" Value="false">
+    								<Setter Property="Background" Value="{DynamicResource DisabledBackgroundBrush}" TargetName="Border"/>
+    								<Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}"/>
+    							</Trigger>
+    						</ControlTemplate.Triggers>
+    					</ControlTemplate>
+    				</Setter.Value>
+    			</Setter>
+    		</Style>
+    		<Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+    			<Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+    			<Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    			<Setter Property="AllowDrop" Value="true"/>
+    			<Setter Property="Template">
+    				<Setter.Value>
+    					<ControlTemplate TargetType="{x:Type TextBox}">
+    						<Grid>
+    							<Border x:Name="Border" BorderThickness="1" Padding="2" CornerRadius="2">
+							
+							<!-- The implementation places the Content into the ScrollViewer. It must be named PART_ContentHost for the control to function -->
+    								<ScrollViewer Margin="0" x:Name="PART_ContentHost" Style="{DynamicResource SimpleScrollViewer}"/>
+						
+    							</Border>
+    						</Grid>
+    						<ControlTemplate.Triggers>
+    							<Trigger Property="IsEnabled" Value="False">
+    								<Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}"/>
+    							</Trigger>
+    						</ControlTemplate.Triggers>
+    					</ControlTemplate>
+    				</Setter.Value>
+    			</Setter>
+    		</Style>
+    		<SolidColorBrush x:Key="ListBorder" Color="#828790"/>
+    		<Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">
+    			<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+    			<Setter Property="BorderBrush" Value="{StaticResource ListBorder}"/>
+    			<Setter Property="BorderThickness" Value="1"/>
+    			<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+    			<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+    			<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+    			<Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+    			<Setter Property="VerticalContentAlignment" Value="Center"/>
+    			<Setter Property="Template">
+    				<Setter.Value>
+    					<ControlTemplate TargetType="{x:Type ListBox}">
+    						<Border x:Name="Bd" BorderThickness="{TemplateBinding BorderThickness}" Padding="1" SnapsToDevicePixels="true">
+    							<ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}">
+    								<ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+    							</ScrollViewer>
+    						</Border>
+    						<ControlTemplate.Triggers>
+    							<Trigger Property="IsEnabled" Value="false">
+    								<Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+    							</Trigger>
+    							<Trigger Property="IsGrouping" Value="true">
+    								<Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+    							</Trigger>
+    						</ControlTemplate.Triggers>
+    					</ControlTemplate>
+    				</Setter.Value>
+    			</Setter>
+    		</Style>
+    		<Style x:Key="AddButtonStyle" TargetType="{x:Type Button}" BasedOn="{x:Null}">
+    			<Setter Property="FocusVisualStyle" Value="{DynamicResource SimpleButtonFocusVisual}"/>
+    			<Setter Property="Background" Value="{DynamicResource NormalBrush}"/>
+    			<Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}"/>
+    			<Setter Property="Template">
+    				<Setter.Value>
+    					<ControlTemplate TargetType="{x:Type Button}">
+					
+					<!-- We use Grid as a root because it is easy to add more elements to customize the button -->
+    						<Grid x:Name="Grid">
+    							<Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" Background="#00000000" CornerRadius="5"/>
+						
+    							<!-- Content Presenter is where the text content etc is placed by the control -->
+						<!-- The bindings are useful so that the control can be parameterized without editing the template -->
+    							<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
+    						</Grid>
+					
+					<!--Each state sets a brush on the Border in the template -->
+    						<ControlTemplate.Triggers>
+    							<Trigger Property="IsKeyboardFocused" Value="true"/>
+    							<Trigger Property="IsMouseOver" Value="true">
+    								<Setter Property="Background" TargetName="Border" Value="{DynamicResource ButtonMouseoverBrush}"/>
+    							</Trigger>
+    							<Trigger Property="IsPressed" Value="true">
+    								<Setter Property="Background" TargetName="Border" Value="{DynamicResource ButtonPressedBrush}"/>
+    							</Trigger>
+    							<Trigger Property="IsEnabled" Value="true"/>
+    							<Trigger Property="IsEnabled" Value="false">
+    								<Setter Property="Background" Value="{DynamicResource DisabledBackgroundBrush}" TargetName="Border"/>
+    								<Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}"/>
+    							</Trigger>
+    						</ControlTemplate.Triggers>
+    					</ControlTemplate>
+    				</Setter.Value>
+    			</Setter>
+    		</Style>
+    	</ResourceDictionary>
     </Application.Resources>
 
 </Application>
