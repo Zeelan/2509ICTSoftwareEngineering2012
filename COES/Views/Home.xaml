@@ -16,68 +16,46 @@
                                                  True="Collapsed"
                                                  False="Visible"/>
     </UserControl.Resources>
-    <Grid Margin="10,0,10,10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="w/e the place is called" 
-                       HorizontalAlignment="Center" 
-                       Grid.ColumnSpan="2" 
-                       FontSize="{DynamicResource HeaderSize}">
-        </TextBlock>
+    <UserControl.Background>
+        <ImageBrush ImageSource="/COES;component/Images/home_page.jpg" Stretch="UniformToFill"/>
+    </UserControl.Background>
+    <Canvas>
         <!--Phone Number Grid-->
-        <Border Grid.Row="1" 
-                VerticalAlignment="Center" 
-                BorderThickness="2"  
-                Padding="15" 
-                BorderBrush="{DynamicResource HeaderBrush}">
-            <Grid Visibility="{Binding PhoneNumberSearchSuccessful, Converter={StaticResource reverseBoolToVisibilityConverter}}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Border Background="Black" Margin="-15,-15,-15,0">
-                        <TextBlock Text="Phone Number" 
-                                   FontSize="{DynamicResource GroupBoxHeaderSize}" Foreground="White">
-                        </TextBlock>
-                    </Border>
-                    <TextBox Text="{Binding PhoneNumber, Mode=TwoWay}"
-                             Grid.Row="1"
-                             VerticalAlignment="Center" 
-                             FontSize="30" 
-                             Margin="0,15,0,0" MaxLength="{DynamicResource PhoneNumberMaxLength}" 
-                             PreviewKeyDown="NumericTextBox_KeyDown">
-                    </TextBox>
-                    <Button Content="Search" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Bottom"
-                            Grid.Row="2" 
-                            Height="50" 
-                            Margin="0,25" 
-                            Width="200"
-                            Command="{Binding SearchPhoneNumberCommand}">
-                    </Button>
-                </Grid>
-            </Grid>
-        </Border>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Content="Something (NYI)"></Button>
-            <Button Content="Menu (NYI)"
-                    Grid.Column="1"></Button>
-            <Button Content="Manager (NYI)"
-                    Grid.Column="2"></Button>
+        <TextBlock Text="2" 
+                   HorizontalAlignment="Right" 
+                   FontSize="{DynamicResource GroupBoxHeaderSize}" Canvas.Left="955.223" Canvas.Top="135.82"/>
+        <TextBlock Text="3"
+                   HorizontalAlignment="Right" 
+                   FontSize="{DynamicResource GroupBoxHeaderSize}" Canvas.Left="1095.521" Canvas.Top="135.82"/>
+        <TextBox Text="{Binding PhoneNumber, Mode=TwoWay}"
+                 FontSize="30" 
+                 MaxLength="{DynamicResource PhoneNumberMaxLength}" 
+                 PreviewKeyDown="NumericTextBox_KeyDown" 
+                 Width="315"
+                 BorderThickness="0" 
+                 Canvas.Left="305" 
+                 Canvas.Top="365" Style="{DynamicResource TextBoxStyle}"/>
+        <Button Height="64" 
+                Width="248"
+                Command="{Binding SearchPhoneNumberCommand}" 
+                Canvas.Left="641" 
+                Canvas.Top="353.492" 
+                BorderBrush="#00000000" Style="{DynamicResource ButtonStyle}" Background="{x:Null}"/>
 
-        </Grid>
-
-    </Grid>
+        <!--Footer-->
+        <Button Height="{DynamicResource ButtonHeight}" 
+                Canvas.Left="112.332" 
+                Canvas.Top="550" 
+                Width="{DynamicResource ButtonWidth}" Background="{DynamicResource ButtonBackgroundClear}" Style="{DynamicResource ButtonStyle}"/>
+        <Button Height="{DynamicResource ButtonHeight}" 
+                Canvas.Left="462.999" 
+                Canvas.Top="550" 
+                Background="{DynamicResource ButtonBackgroundClear}" 
+                Width="{DynamicResource ButtonWidth}" Style="{DynamicResource ButtonStyle}"/>
+        <Button Height="{DynamicResource ButtonHeight}" 
+                Canvas.Left="812.999" 
+                Canvas.Top="550" 
+                Width="{DynamicResource ButtonWidth}" 
+                Background="{DynamicResource ButtonBackgroundClear}" Style="{DynamicResource ButtonStyle}"/>
+    </Canvas>
 </UserControl>

@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              DataContext="{Binding Order, Source={StaticResource Locator}}"
              Height="{DynamicResource ViewHeight}" 
-             Width="{DynamicResource ViewWidth}" VerticalAlignment="Top">
+             Width="{DynamicResource ViewWidth}" VerticalAlignment="Center">
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"
                                                  True="Visible"
@@ -17,124 +17,29 @@
                                                  False="Visible"/>
         <Thickness x:Key="BoxMargin">0,0,10,10</Thickness>
     </UserControl.Resources>
-    <Grid Margin="10,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="Order" 
-                       HorizontalAlignment="Center" 
-                       Grid.ColumnSpan="2" 
-                       FontSize="{DynamicResource HeaderSize}">
-        </TextBlock>
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <!--Items in Menu-->
-            <Border BorderThickness="2"
-                    Grid.RowSpan="4"
-                    BorderBrush="{DynamicResource HeaderBrush}" 
-                    Margin="{DynamicResource BoxMargin}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="500"/>
-                    </Grid.RowDefinitions>
-                    <Border Background="{DynamicResource HeaderBrush}">
-                        <TextBlock Text="Items in Menu" 
-                                   FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                                   Foreground="White">
-                        </TextBlock>
-                    </Border>
-                    <ListBox Grid.Row="1"
-                             ItemsSource="{Binding Menu.MenuItems}"
-                             SelectedItem="{Binding CurrentMenuItem,Mode=TwoWay}">
-
-                    </ListBox>
-                </Grid>
-            </Border>
-            <!--Items in Order-->
-            <Border Grid.Column="1"
-                    BorderThickness="2" 
-                    BorderBrush="{DynamicResource HeaderBrush}" 
-                    Margin="{DynamicResource BoxMargin}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="400"/>
-                    </Grid.RowDefinitions>
-                    <Border Background="{DynamicResource HeaderBrush}">
-                        <TextBlock Text="Items in Order" 
-                                   FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                                   Foreground="White">
-                        </TextBlock>
-                    </Border>
-                    <ListBox Grid.Row="1"
-                             ItemsSource="{Binding Order.MenuItems}"
-                             SelectedItem="{Binding CurrentOrderitem, Mode=TwoWay}">
-                        
-                    </ListBox>
-                </Grid>
-            </Border>
-
-            <!--Total-->
-            <Border Grid.Column="1"
-                    Grid.Row="1"
-                    BorderThickness="2" 
-                    BorderBrush="{DynamicResource HeaderBrush}" 
-                    Margin="{DynamicResource BoxMargin}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Border Background="{DynamicResource HeaderBrush}">
-                        <TextBlock Text="Total" 
-                                   FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                                   Foreground="White">
-                        </TextBlock>
-                    </Border>
-                    <TextBlock Text="{Binding Order.Total}"
-                             Grid.Row="1" 
-                             FontSize="{DynamicResource GroupBoxHeaderSize}">
-                    </TextBlock>
-                </Grid>
-            </Border>
-            
-            <Button Content="Add to Order (NYI)" 
-                    Grid.Row="2">
-            </Button>
-            <Button Content="Remove from Order (NYI)"
-                    Grid.Row="2"
-                    Grid.Column="1"></Button>
-
-        </Grid>
+	<UserControl.Background>
+		<ImageBrush ImageSource="/COES;component/Images/choose_items.jpg" Stretch="UniformToFill"/>
+	</UserControl.Background>
+    <Canvas>
+		<ListBox
+			ItemsSource="{Binding Menu.MenuItems}"
+			SelectedItem="{Binding CurrentMenuItem, Mode=TwoWay}" Width="350" Height="430" Canvas.Top="245" Canvas.Left="150" Style="{DynamicResource ListBoxStyle}"/>
+		<ListBox
+			ItemsSource="{Binding Order.MenuItems}"
+			SelectedItem="{Binding CurrentOrderItem, Mode=TwoWay}" Height="295" Canvas.Left="722" Canvas.Top="290" Width="345" Style="{DynamicResource ListBoxStyle}"/>
+		<TextBlock Text="{Binding Order.Total}" 
+			FontSize="{DynamicResource GroupBoxHeaderSize}" Height="35.914" Canvas.Left="722" Canvas.Top="635" Width="345"/>
+        <!--Items in Order-->
+        <!--Total-->
+		<Button Content=""
+			Command="{Binding AddToOrderCommand}" Height="65" Width="35" Canvas.Top="389.776" Canvas.Left="594" Style="{DynamicResource AddButtonStyle}"/>
+		<Button 
+			Height="{DynamicResource ButtonHeight}"
+			Command="{Binding CancelOrderCommand}" Style="{DynamicResource ButtonStyle}" Width="285" Canvas.Left="87" Canvas.Top="762"/>
+		<Button 
+			Height="{DynamicResource ButtonHeight}"
+			Command="{Binding ConfirmOrderCommand}" Style="{DynamicResource ButtonStyle}" Canvas.Left="823" Canvas.Top="762" Width="285" IsCancel="True"/>
 
         <!--Footer-->
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Content="Cancel (NYI)">
-
-            </Button>
-            <Button Content="Confirm Order (NYI)"
-                    Grid.Column="1">
-
-            </Button>
-
-
-        </Grid>
-    </Grid>
+	</Canvas>
 </UserControl>
