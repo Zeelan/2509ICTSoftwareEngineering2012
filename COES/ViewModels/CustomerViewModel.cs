@@ -86,16 +86,30 @@ namespace COES.ViewModels
         //----------------------------------------------------------------------
         #region --- Methods ---
         //----------------------------------------------------------------------
+        /// <summary>
+        /// Initializes the commands associated with this ViewModel.
+        /// </summary>
         private void InitializeCommands()
         {
             CreateOrderCommand = new RelayCommand(CreateOrder);
             CancelCommand = new RelayCommand(Cancel);
         }
 
+        /// <summary>
+        /// Registers the messages associated with this ViewModel.
+        /// </summary>
         private void RegisterMessages()
         {
             // Registers a message to update the customer when it has been created.
             Messenger.Default.Register<Customer>(this, "CustomerCreated", m => this.Customer = m);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void AddOrUpdateCustomer()
+        {
+            // TODO: Add or update customer to database.
         }
 
         /// <summary>
@@ -109,7 +123,6 @@ namespace COES.ViewModels
                 Messenger.Default.Send<int>(Customer.Id, "CreateOrder");
                 // Sends a message to navigate to the Order View.
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("NavigateOrder"), "Navigate");
-                //this.Cleanup();
             }
         }
 
@@ -129,7 +142,7 @@ namespace COES.ViewModels
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorLastName"), "Error");
                 return false;
             }
-            // NOTE: FIX THIS SO IT ERROR CHECKS FOR NON INT
+            // TODO: FIX THIS SO IT ERROR CHECKS FOR NON INT
             else if (Customer.Address.Number == 0)
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorAddressNumber"), "Error");
@@ -145,7 +158,7 @@ namespace COES.ViewModels
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorAddressSuburb"), "Error");
                 return false;
             }
-            // NOTE: FIX THIS SO IT ERRO CHECKS FOR NON INT
+            // TODO: FIX THIS SO IT ERROR CHECKS FOR NON INT
             else if (Customer.Address.PostCode == 0)
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorAddressPostCode"), "Error");
