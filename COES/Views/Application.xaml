@@ -9,7 +9,7 @@
         DataContext="{Binding Application, Source={StaticResource Locator}}"
         Width="{DynamicResource ViewWidth}" 
         Height="{DynamicResource ViewHeight}" 
-        WindowState="Maximized">
+        WindowState="Maximized" ResizeMode="CanMinimize" Title="The Pizza Place" Background="#FF674E44">
     <DockPanel>
         
         <ContentControl Content="{Binding CurrentViewModel}"></ContentControl>
