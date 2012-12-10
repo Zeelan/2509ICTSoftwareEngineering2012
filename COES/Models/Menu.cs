@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using GalaSoft.MvvmLight;
@@ -12,7 +13,7 @@ namespace COES.Models
         #region --- Fields ---
         //----------------------------------------------------------------------
         private int _id;
-        private List<MenuItem> _menuItems;
+        private ObservableCollection<MenuItem> _menuItems;
         private DateTime _dateCreated;
         //----------------------------------------------------------------------
         #endregion
@@ -34,9 +35,9 @@ namespace COES.Models
         /// <summary>
         /// Gets or sets the list of <see cref="MenuItems"/>.
         /// </summary>
-        public List<MenuItem> MenuItems
+        public ObservableCollection<MenuItem> MenuItems
         {
-            get { return _menuItems ?? (_menuItems = new List<MenuItem>()); }
+            get { return _menuItems ?? (_menuItems = new ObservableCollection<MenuItem>()); }
             set { Set(() => MenuItems, ref _menuItems, value); }
         }
 
