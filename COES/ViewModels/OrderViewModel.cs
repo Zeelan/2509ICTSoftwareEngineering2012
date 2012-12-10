@@ -1,5 +1,6 @@
 ﻿using COES.Models;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 
 namespace COES.ViewModels
@@ -70,13 +71,45 @@ namespace COES.ViewModels
 
 
         //----------------------------------------------------------------------
+        #region --- Commands ---
+        //----------------------------------------------------------------------
+        public RelayCommand AddToOrderCommand
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand RemoveFromOrderCommand
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand ConfirmOrderCommand
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand CancelOrderCommand
+        {
+            get;
+            private set;
+        }
+        //----------------------------------------------------------------------
+        #endregion
+        //----------------------------------------------------------------------
+
+
+        //----------------------------------------------------------------------
         #region --- Constructor ---
         //----------------------------------------------------------------------
         /// <summary>
-        /// Initializes a new instance of the AddOrderViewModel class.
+        /// Initializes a new instance of the OrderViewModel class.
         /// </summary>
         public OrderViewModel()
         {
+            InitializeCommands();
             RegisterMessages();
         }
         //----------------------------------------------------------------------
@@ -87,10 +120,74 @@ namespace COES.ViewModels
         //----------------------------------------------------------------------
         #region --- Methods ---
         //----------------------------------------------------------------------
+        /// <summary>
+        /// Initializes the commands associated with this ViewModel.
+        /// </summary>
+        private void InitializeCommands()
+        {
+            AddToOrderCommand = new RelayCommand(AddToOrder);
+            RemoveFromOrderCommand = new RelayCommand(RemoveFromOrder);
+            ConfirmOrderCommand = new RelayCommand(ConfirmOrder);
+            CancelOrderCommand = new RelayCommand(CancelOrder);
+        }
+        /// <summary>
+        /// Registers the messages associated with this ViewModel.
+        /// </summary>
         private void RegisterMessages()
         {
             Messenger.Default.Register<Menu>(this, "OrderCreated", m => this.Menu = m);
             Messenger.Default.Register<Order>(this, "OrderCreated", m => this.Order = m);
+        }
+
+        /// <summary>
+        /// Adds a <see cref="MenuItem"/> to the <see cref="Order"/>.
+        /// </summary>
+        private void AddToOrder()
+        {
+            
+            if (CurrentMenuItem != null)
+            {
+                if (Order.MenuItems.ContainsKey(CurrentMenuItem))
+                {
+                    Order.MenuItems[CurrentMenuItem]++;
+                }
+                else
+                    Order.MenuItems.Add(CurrentMenuItem, 1);
+            }
+        }
+
+        /// <summary>
+        /// Removes a <see cref="MenuItem"/> from the <see cref="Order"/>.
+        /// </summary>
+        private void RemoveFromOrder()
+        {
+            if (CurrentOrderItem != null)
+                Order.MenuItems.Remove(CurrentOrderItem);
+        }
+
+        /// <summary>
+        /// Confirms the order and updates the database.
+        /// </summary>
+        private void ConfirmOrder()
+        {
+            // Sends a message to alert that the Order has been confirmed.
+            Messenger.Default.Send<Order>(Order, "OrderConfirmed");
+        }
+
+        /// <summary>
+        /// Cancels the order.
+        /// </summary>
+        private void CancelOrder()
+        {
+            ClearOrder();
+        }
+
+        private void ClearOrder()
+        {
+            Menu = null;
+            Order = null;
+            CurrentMenuItem = null;
+            CurrentOrderItem = null;
         }
         //----------------------------------------------------------------------
         #endregion
