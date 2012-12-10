@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using COES.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Windows;
 
 namespace COES.ViewModels
 {
@@ -109,7 +111,30 @@ namespace COES.ViewModels
         /// </summary>
         private void AddOrUpdateCustomer()
         {
-            // TODO: Add or update customer to database.
+
+            Dictionary<String, String> cust = new Dictionary<string, string>();
+
+            cust.Add("first_name",this.Customer.FirstName);
+            cust.Add("last_name",this.Customer.LastName);
+            cust.Add("phone_number",this.Customer.PhoneNumber);
+            cust.Add("credit_card_name",this.Customer.CreditCard.Name);
+            cust.Add("credit_card_number",this.Customer.CreditCard.Number);
+            //cust.Add("credit_card_expiry",this.Customer.CreditCard.Expiry);
+            cust.Add("street_no",this.Customer.Address.Number);
+            cust.Add("street",this.Customer.Address.Street);
+            cust.Add("suburb_post_code",this.Customer.Address.PostCode);
+            cust.Add("status",this.Customer.Status);
+
+            DatabaseManager dbm = new DatabaseManager();
+
+            if (this._customer.Id == 0)
+            {
+                dbm.insert("customer",cust);
+            }
+            else
+            {
+                dbm.update("customer", cust, String.Format(" customer_id ={0} LIMIT 1; ", this.Customer.Id.ToString()));
+            }               
         }
 
         /// <summary>
@@ -119,6 +144,8 @@ namespace COES.ViewModels
         {
             if (CheckCustomerInfo())
             {
+                this.AddOrUpdateCustomer();
+
                 // Sends message with the customer id to create the new Order.
                 Messenger.Default.Send<int>(Customer.Id, "CreateOrder");
                 // Sends a message to navigate to the Order View.

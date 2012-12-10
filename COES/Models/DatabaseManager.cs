@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace COES.Models
 {
@@ -14,6 +15,8 @@ namespace COES.Models
     class DatabaseManager
     {
         SQLiteConnection con;
+        String dbFile = "database.s3db";
+        String dbConnectionString ;
 
 
         /// <summary>
@@ -21,18 +24,19 @@ namespace COES.Models
         /// </summary>
         public DatabaseManager()
         {
-            String dbFile = "database.s3db";
-            string dbConnectionString = String.Format("Data Source={0};Version=3",dbFile);
- 
+            dbConnectionString = String.Format("Data Source={0};Version=3", dbFile);
+
             //check if file exits.... else create and populate
             if (File.Exists(dbFile))
             {
                 con = new SQLiteConnection(dbConnectionString);
+                con.Open();
             }
             else
             {
                 // automatically creates a blank database file using the same name
                 con = new SQLiteConnection(dbConnectionString);
+                con.Open();
 
                 //now populate....
 
@@ -163,6 +167,9 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
 
 
             }
+
+
+
         }
 
         /// <summary>
@@ -170,7 +177,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         /// </summary>
         ~DatabaseManager()
         {
-            con.Close();
+            //con.Close();
         }
 
         /// <summary>
@@ -228,7 +235,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
                 }
                 // don't add the last comma
                 keys += String.Format(" {0} ", list[list.Count()-1].ToString());
-                values += String.Format(" '{0}'  ", tableData[(list.Count()-1).ToString()].ToString());
+                values += String.Format(" '{0}'  ", tableData[list[(list.Count()-1)]].ToString());
             }
 
             // construct the complete sql statement
@@ -285,7 +292,10 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
                 //build strings for sql
                 for (int i = 0; i < (list.Count() - 1); i++)
                 {
-                    keyvalues += String.Format(" {0} = '{1}] , ", list[i].ToString(), tableData[list[i].ToString()].ToString());
+                    //keyvalues += String.Format(" {0} = '{1}' , ", list[i].ToString(), tableData[list[i].ToString()].ToString());
+               
+                
+                
                 }
                 // don't add the last comma
                 keyvalues += String.Format(" {0} = '{1}] , ", list[(list.Count() - 1)].ToString(), tableData[list[(list.Count() - 1)].ToString()].ToString());

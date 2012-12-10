@@ -95,8 +95,10 @@ namespace COES.ViewModels
                 // connect to the database
                 DatabaseManager dbm = new DatabaseManager();
 
+
+                
                 // CHeck for a customer
-                String sqlcheck = " SELECT * from customer WHERE  phone_number = '" + result.ToString() +"; ";
+                String sqlcheck = " SELECT * from customer WHERE  phone_number = '" + result.ToString() +"'; ";
                 int customerMatches=dbm.quickQuery(sqlcheck);
 
                 if (customerMatches > 0)
@@ -148,13 +150,9 @@ namespace COES.ViewModels
                     Messenger.Default.Send<NotificationMessage>(new NotificationMessage("NavigateCustomer"), "Navigate");
                     NavigatedFrom();
 
-
-                    
-
                 }
                 else
                 {
-
 
                     RestaurantManager.CurrentCustomer = new Customer
                     {
@@ -169,7 +167,7 @@ namespace COES.ViewModels
                             Suburb = ""
                         },
                         Comments = "",
-                        Id = 1,
+                        Id = 0,
                         CreditCard = new CreditCard
                         {
                             Number = "",
@@ -187,55 +185,10 @@ namespace COES.ViewModels
                 }
 
 
+ 
 
 
 
-
-                // If exists
-                //
-
-                // else
-                //
-
-
-
-                //
-                // Testing
-                //
-                /*RestaurantManager.CurrentCustomer = new Customer
-                {
-                    FirstName = "Michael",
-                    LastName = "Cripps",
-                    PhoneNumber = result.ToString(),
-                    Address = new Address
-                    {
-                        Number = 83,
-                        PostCode = 4164,
-                        Street = "Morris Circuit",
-                        Suburb = "Thornlands"
-                    },
-                    Comments = "Test comment",
-                    Id = 1,
-                    CreditCard = new CreditCard
-                    {
-                        Number = 21438124,
-                    },
-                    Status = "Y"
-                };
-                 * 
-                 * 
-                RestaurantManager.CurrentCustomer.CreditCard.Name = RestaurantManager.CurrentCustomer.Name;
-                //
-                // Testing
-                //
-                
-                // Sends a message notifying that the current customer has changed (been created).
-                Messenger.Default.Send<Customer>(RestaurantManager.CurrentCustomer, "CreateCustomer");
-                // Sends a message to navigate to the Customer View.
-                Messenger.Default.Send <NotificationMessage>(new NotificationMessage("NavigateCustomer"), "Navigate");
-                NavigatedFrom();
-                 
-                 */
             }
             else // Incorect number format.
             {
