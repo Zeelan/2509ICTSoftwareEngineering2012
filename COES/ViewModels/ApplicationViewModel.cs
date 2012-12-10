@@ -1,4 +1,6 @@
-﻿using COES.Models;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using COES.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 
@@ -60,9 +62,17 @@ namespace COES.ViewModels
 
             RegisterMessages();
 
-            // DATABASEMANAGER TO LOAD MENU ETC.
+            RestaurantManager.Menu = LoadMenu();
+            RestaurantManager.Menu.MenuItems = LoadMenuItems();
+
+            //
+            // Testing
+            //
             RestaurantManager.Menu.MenuItems.Add(new MenuItem { Name = "Test item 1" });
             RestaurantManager.Menu.MenuItems.Add(new MenuItem { Name = "Test item 2" });
+            //
+            // Testing
+            //
         }
         //----------------------------------------------------------------------
         #endregion
@@ -83,11 +93,45 @@ namespace COES.ViewModels
             // Registers a message for when an order is to be created, using the customer's id.
             Messenger.Default.Register<int>(this, "CreateOrder", m => RestaurantManager.CurrentOrder = new Order(m));
 
+            // Registers a message for when an order is confirmed it is added to the list of active orders.
+            Messenger.Default.Register<Order>(this, "OrderConfirmed", m => OrderConfirmed(m));
+
             
 
 
             // Registers the notification messages (using this for changing the Views).
             Messenger.Default.Register<NotificationMessage>(this, "Navigate", m => Navigate(m));
+        }
+
+        /// <summary>
+        /// Loads the <see cref="Menu"/> from the database.
+        /// </summary>
+        /// <returns>The menu.</returns>
+        private Menu LoadMenu()
+        {
+            // TODO: Load menu from database.
+            return null;
+        }
+
+        /// <summary>
+        /// Loads the list of <see cref="MenuItem"/>s from the database.
+        /// </summary>
+        /// <returns>A list of menu items.</returns>
+        private ObservableCollection<MenuItem> LoadMenuItems()
+        {
+            // TODO: Load menu items from database.
+            return null;
+        }
+
+        /// <summary>
+        /// Adds the order to the list of Orders in the RestaurantManager, then removes the current order and customer.
+        /// </summary>
+        /// <param name="order">The Order to be added.</param>
+        private void OrderConfirmed(Order order)
+        {
+            RestaurantManager.Orders.Add(order);
+            RestaurantManager.CurrentOrder = null;
+            RestaurantManager.CurrentCustomer = null;
         }
 
         private void Navigate(NotificationMessage m)
