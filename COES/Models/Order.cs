@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using DrWPF.Windows.Data;
 using GalaSoft.MvvmLight;
 
 namespace COES.Models
@@ -14,7 +16,7 @@ namespace COES.Models
         private int _id;
         private int _customerId;
         private DateTime _dateCreated;
-        private List<MenuItem> _menuItems;
+        private ObservableDictionary<MenuItem, int> _menuItems;
         private double _cost;
         private bool _delivery;
         private string _status;
@@ -57,9 +59,9 @@ namespace COES.Models
         /// <summary>
         /// Gets or sets the items in the menu.
         /// </summary>
-        public List<MenuItem> MenuItems
+        public ObservableDictionary<MenuItem, int> MenuItems
         {
-            get { return _menuItems; }
+            get { return _menuItems ?? (_menuItems = new ObservableDictionary<MenuItem, int>()); }
             set { Set(() => MenuItems, ref _menuItems, value); }
         }
 
@@ -110,10 +112,10 @@ namespace COES.Models
         //----------------------------------------------------------------------
         public Order()
         {
-
+            DateCreated = DateTime.Now;
         }
 
-        public Order(int customerId)
+        public Order(int customerId) : this()
         {
             CustomerId = customerId;
         }
