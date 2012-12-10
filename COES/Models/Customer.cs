@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -132,6 +133,60 @@ namespace COES.Models
         {
             return Name;
         }
+
+
+        /// <summary>
+        /// Used to load a customer from the database by ID
+        /// </summary>
+        /// <param name="id">int representing customer id</param>
+        /// <returns>false if load fails, true if load successful</returns>
+        public bool loadID(int id)
+        {
+              // connect to the database
+                DatabaseManager dbm = new DatabaseManager();
+
+                // CHeck for a customer
+                String sqlcheck = String.Format(" SELECT * from customer WHERE  customer_id = {0} ; ",id.ToString());
+                int customerMatches=dbm.quickQuery(sqlcheck);
+
+                if (customerMatches > 0)
+                {
+                    String sql =  String.Format(" SELECT * from customer WHERE  customer_id = {0} ; ",id.ToString());
+
+                    DataTable dt = dbm.query(sql);
+
+                    //assume only 1 valid result
+                    DataRow dr = dt.Rows[0];
+                  
+                    // populate data.
+                    this._firstName = dr["first_name"].ToString();
+                    this._lastName = dr["last_name"].ToString();
+                    this._phoneNumber = dr["phone_number"].ToString();
+                    this._address = new Address
+                    {
+                        Number = dr["street_no"].ToString(),
+                        PostCode = dr["suburb_post_code"].ToString(),
+                        Street = dr["street"].ToString(),
+                        Suburb = dr["suburb"].ToString()
+                    };
+
+                    this._id = id;
+                    this._creditCard = new CreditCard
+                    {
+                        Number = dr["credit_card_number"].ToString(),
+                        Name = dr["credit_card_name"].ToString(),
+                        Expiry = dr["credit_card_expiry"].ToString()
+                    };
+
+                    this._status = dr["status"].ToString();
+                    
+                    return true;
+
+                }else{
+                    return false;
+                }
+        }
+
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------

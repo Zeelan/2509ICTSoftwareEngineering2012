@@ -1,5 +1,6 @@
 ﻿using System;
 using COES.Models;
+using System.Data;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -90,7 +91,106 @@ namespace COES.ViewModels
             if (long.TryParse(PhoneNumber, out result))
             {
                 // TODO: Database logic, search for existing phone number.
- 
+
+                // connect to the database
+                DatabaseManager dbm = new DatabaseManager();
+
+                // CHeck for a customer
+                String sqlcheck = " SELECT * from customer WHERE  phone_number = '" + result.ToString() +"; ";
+                int customerMatches=dbm.quickQuery(sqlcheck);
+
+                if (customerMatches > 0)
+                {
+                    String sql = "SELECT customer_id, " +
+                                "       first_name, " +
+                                "	    last_name, " +
+                                "	    credit_card_name, " +
+                                "	    credit_card_number, " +
+                                "	    credit_card_expiry, " +
+                                "	    street_no, " +
+                                "	    street, " +
+                                "	    suburb_post_code, " +
+                                "	    status " +
+                                "FROM   customer " +
+                                "WHERE  phone_number = '" + result.ToString() + "'; ";
+
+                    DataTable dt = dbm.query(sql);
+
+                    //assume only 1 valid result
+                    DataRow dr = dt.Rows[0];
+
+
+                    RestaurantManager.CurrentCustomer = new Customer
+                    {
+                        FirstName = dr["first_name"].ToString(),
+                        LastName = dr["last_name"].ToString(),
+                        PhoneNumber = result.ToString(),
+                        Address = new Address
+                        {
+                            Number = dr["street_no"].ToString(),
+                            PostCode = dr["suburb_post_code"].ToString(),
+                            Street = dr["street"].ToString(),
+                            Suburb = dr["suburb"].ToString()
+                        },
+                        Comments = "",          // no comments in schema
+                       // Id = dr[""].ToString(),
+                        CreditCard = new CreditCard
+                        {
+                            Number = dr["credit_card_number"].ToString(),
+                        },
+                        Status = "Y"
+                    };
+                    RestaurantManager.CurrentCustomer.CreditCard.Name = RestaurantManager.CurrentCustomer.Name;
+
+                    // Sends a message notifying that the current customer has changed (been created).
+                    Messenger.Default.Send<Customer>(RestaurantManager.CurrentCustomer, "CreateCustomer");
+                    // Sends a message to navigate to the Customer View.
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("NavigateCustomer"), "Navigate");
+                    NavigatedFrom();
+
+
+                    
+
+                }
+                else
+                {
+
+
+                    RestaurantManager.CurrentCustomer = new Customer
+                    {
+                        FirstName = "",
+                        LastName = "",
+                        PhoneNumber = result.ToString(),
+                        Address = new Address
+                        {
+                            Number = "",
+                            PostCode = "",
+                            Street = "",
+                            Suburb = ""
+                        },
+                        Comments = "",
+                        Id = 1,
+                        CreditCard = new CreditCard
+                        {
+                            Number = "",
+                        },
+                        Status = "Y"
+                    };
+                    RestaurantManager.CurrentCustomer.CreditCard.Name = RestaurantManager.CurrentCustomer.Name;
+
+                    // Sends a message notifying that the current customer has changed (been created).
+                    Messenger.Default.Send<Customer>(RestaurantManager.CurrentCustomer, "CreateCustomer");
+                    // Sends a message to navigate to the Customer View.
+                    Messenger.Default.Send<NotificationMessage>(new NotificationMessage("NavigateCustomer"), "Navigate");
+                    NavigatedFrom();
+
+                }
+
+
+
+
+
+
                 // If exists
                 //
 
@@ -102,7 +202,7 @@ namespace COES.ViewModels
                 //
                 // Testing
                 //
-                RestaurantManager.CurrentCustomer = new Customer
+                /*RestaurantManager.CurrentCustomer = new Customer
                 {
                     FirstName = "Michael",
                     LastName = "Cripps",
@@ -122,6 +222,8 @@ namespace COES.ViewModels
                     },
                     Status = "Y"
                 };
+                 * 
+                 * 
                 RestaurantManager.CurrentCustomer.CreditCard.Name = RestaurantManager.CurrentCustomer.Name;
                 //
                 // Testing
@@ -132,6 +234,8 @@ namespace COES.ViewModels
                 // Sends a message to navigate to the Customer View.
                 Messenger.Default.Send <NotificationMessage>(new NotificationMessage("NavigateCustomer"), "Navigate");
                 NavigatedFrom();
+                 
+                 */
             }
             else // Incorect number format.
             {

@@ -13,9 +13,9 @@ namespace COES.Models
         //----------------------------------------------------------------------
         #region --- Fields ---
         //----------------------------------------------------------------------
-        private int _number;
+        private string _number;
         private string _name;
-        private int _expiry;
+        private string _expiry;
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
@@ -26,7 +26,7 @@ namespace COES.Models
         /// <summary>
         /// Gets or sets the number.
         /// </summary>
-        public int Number
+        public string Number
         {
             get { return _number; }
             set { _number = value; }
@@ -44,7 +44,7 @@ namespace COES.Models
         /// <summary>
         /// Gets or sets the expiry date.
         /// </summary>
-        public int Expiry
+        public string Expiry
         {
             get { return _expiry; }
             set { _expiry = value; }
@@ -64,7 +64,7 @@ namespace COES.Models
         {
         }
 
-        public CreditCard(int number, string name, int expiry)
+        public CreditCard(string number, string name, string expiry)
         {
             this.Number = number;
             this.Name = name;

@@ -142,8 +142,8 @@ namespace COES.ViewModels
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorLastName"), "Error");
                 return false;
             }
-            // TODO: FIX THIS SO IT ERROR CHECKS FOR NON INT
-            else if (Customer.Address.Number == 0)
+            // CHANGED TO CHECK FOR 
+            else if (Customer.Address.Number == "")
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorAddressNumber"), "Error");
                 return false;
@@ -158,8 +158,8 @@ namespace COES.ViewModels
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorAddressSuburb"), "Error");
                 return false;
             }
-            // TODO: FIX THIS SO IT ERROR CHECKS FOR NON INT
-            else if (Customer.Address.PostCode == 0)
+            //          CHANGED TO CHECK FOR LENGTH OF 4
+            else if (Customer.Address.PostCode.ToString().Length<4)
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorAddressPostCode"), "Error");
                 return false;

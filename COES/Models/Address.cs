@@ -10,10 +10,10 @@ namespace COES.Models
         //----------------------------------------------------------------------
         #region --- Fields ---
         //----------------------------------------------------------------------
-        private int _number;
+        private string _number;
         private string _street;
         private string _suburb;
-        private int _postCode;
+        private string _postCode;
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
@@ -25,7 +25,7 @@ namespace COES.Models
         /// <summary>
         /// Gets or sets the street number.
         /// </summary>
-        public int Number
+        public string Number
         {
             get { return _number; }
             set { _number = value; }
@@ -52,7 +52,7 @@ namespace COES.Models
         /// <summary>
         /// Gets or sets the post code.
         /// </summary>
-        public int PostCode
+        public string PostCode
         {
             get { return _postCode; }
             set { _postCode = value; }
