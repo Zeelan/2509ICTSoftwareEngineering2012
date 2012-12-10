@@ -6,7 +6,7 @@
              xmlns:converters="clr-namespace:COES.Converters"
              DataContext="{Binding Customer, Source={StaticResource Locator}}"
              Height="{DynamicResource ViewHeight}"
-             Width="{DynamicResource ViewWidth}" VerticalAlignment="Top">
+             Width="{DynamicResource ViewWidth}" VerticalAlignment="Center">
     <UserControl.Resources>
         <converters:BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"
                                                  True="Visible"
@@ -16,253 +16,104 @@
                                                  False="Visible"/>
         <Thickness x:Key="BoxMargin">0,0,10,10</Thickness>
     </UserControl.Resources>
-    <Grid Margin="10,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="Customer" 
-                       HorizontalAlignment="Center" 
-                       Grid.ColumnSpan="2" 
-                       FontSize="{DynamicResource HeaderSize}">
+    <UserControl.Background>
+        <ImageBrush ImageSource="/COES;component/Images/customer_details.jpg" Stretch="UniformToFill"/>
+    </UserControl.Background>
+    <Canvas>
+        <!--First Name-->
+        <TextBox Text="{Binding Customer.FirstName, Mode=TwoWay}"
+                 FontSize="{DynamicResource GroupBoxHeaderSize}" 
+                 MaxLength="500" 
+                 Canvas.Left="104"
+                 Canvas.Top="275"
+                 Width="{DynamicResource TextBoxWidthSmall}" Style="{DynamicResource TextBoxStyle}">
+        </TextBox>
+        <!--Last Name-->
+        <TextBox Text="{Binding Customer.LastName, Mode=TwoWay}"
+                 FontSize="{DynamicResource GroupBoxHeaderSize}" 
+                 MaxLength="500"
+                 Canvas.Left="427"
+                 Canvas.Top="275"
+                 Width="{DynamicResource TextBoxWidthSmall}" Style="{DynamicResource TextBoxStyle}">
+        </TextBox>
+        <!--Address Number-->
+        <TextBox Text="{Binding Customer.Address.Number, Mode=TwoWay}"
+                 FontSize="{DynamicResource GroupBoxHeaderSize}" 
+                 PreviewKeyDown="NumericTextBox_KeyDown"
+                 Canvas.Left="104"
+                 Canvas.Top="405"
+                 Width="{DynamicResource TextBoxWidthSmall}" Style="{DynamicResource TextBoxStyle}">
+        </TextBox>
+        <!--Address Street-->
+        <TextBox Text="{Binding Customer.Address.Street, Mode=TwoWay}"
+                 FontSize="{DynamicResource GroupBoxHeaderSize}" 
+                 MaxLength="500"
+                 Canvas.Left="104"
+                 Canvas.Top="455"
+                 Width="{DynamicResource TextBoxWidthSmall}" Style="{DynamicResource TextBoxStyle}">
+        </TextBox>
+        <TextBox Text="{Binding Customer.CreditCard.Number, Mode=TwoWay}"
+        	FontSize="{DynamicResource GroupBoxHeaderSize}" 
+        	MaxLength="500"
+        	Canvas.Left="104"
+        	Canvas.Top="648.086"
+        	Width="{DynamicResource TextBoxWidthSmall}" Style="{DynamicResource TextBoxStyle}"/>
+        <!--Suburb-->
+        <TextBox Text="{Binding Customer.Address.Suburb, Mode=TwoWay}"
+                 FontSize="{DynamicResource GroupBoxHeaderSize}"
+                 Canvas.Left="427"
+                 Canvas.Top="405"
+                 Width="{DynamicResource TextBoxWidthSmall}" Style="{DynamicResource TextBoxStyle}">
+        </TextBox>
+        <!--Postcode-->
+        <TextBox Text="{Binding Customer.Address.PostCode, Mode=TwoWay}"
+                 Grid.Row="1" 
+                 FontSize="{DynamicResource GroupBoxHeaderSize}"
+                 PreviewKeyDown="NumericTextBox_KeyDown"
+                 MaxLength="4"
+                 Canvas.Left="427"
+                 Canvas.Top="515"
+                 Width="{DynamicResource TextBoxWidthSmall}" Style="{DynamicResource TextBoxStyle}" BorderBrush="{x:Null}">
+        </TextBox>
+        <TextBox Text="{Binding Customer.CreditCard.Name, Mode=TwoWay}"
+        	FontSize="{DynamicResource GroupBoxHeaderSize}"
+        	Canvas.Left="427"
+        	Canvas.Top="648.086"
+        	Width="{DynamicResource TextBoxWidthSmall}" Style="{DynamicResource TextBoxStyle}"/>
+        <!--Phone Number-->
+        <TextBlock Text="{Binding Customer.PhoneNumber, Mode=TwoWay}"
+                   FontSize="{DynamicResource GroupBoxHeaderSize}"
+                   Canvas.Left="817"
+                   Canvas.Top="281"
+                   Width="{DynamicResource TextBoxWidthSmall}">
         </TextBlock>
 
-        <!--Customer Grid-->
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <!--First Name-->
-            <Border BorderThickness="2" 
-                    BorderBrush="{DynamicResource HeaderBrush}" Margin="{DynamicResource BoxMargin}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Border Background="{DynamicResource HeaderBrush}">
-                        <TextBlock Text="First Name" 
-                                   FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                                   Foreground="White">
-                        </TextBlock>
-                    </Border>
-                    <TextBox Text="{Binding Customer.FirstName, Mode=TwoWay}"
-                             Grid.Row="1" 
-                             FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                             MaxLength="500">
-                    </TextBox>
-                </Grid>
-            </Border>
-            <!--Last Name-->
-            <Border Grid.Column="1"
-                    BorderThickness="2" 
-                    BorderBrush="{DynamicResource HeaderBrush}" 
-                    Margin="{DynamicResource BoxMargin}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Border Background="{DynamicResource HeaderBrush}">
-                        <TextBlock Text="Last Name" 
-                                   FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                                   Foreground="White">
-                        </TextBlock>
-                    </Border>
-                    <TextBox Text="{Binding Customer.LastName, Mode=TwoWay}"
-                             Grid.Row="1" 
-                             FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                             MaxLength="500">
-                    </TextBox>
-                </Grid>
-            </Border>
-            <!--Address-->
-            <Border Grid.Row="1" 
-                    Grid.RowSpan="2"
-                    BorderThickness="2" 
-                    BorderBrush="{DynamicResource HeaderBrush}"
-                    Margin="{DynamicResource BoxMargin}" VerticalAlignment="Top">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Border Background="{DynamicResource HeaderBrush}">
-                        <TextBlock Text="Address" 
-                                   FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                                   Foreground="White">
-                        </TextBlock>
-                    </Border>
-                    <TextBox Text="{Binding Customer.Address.Number, Mode=TwoWay}"
-                             Grid.Row="1" 
-                             FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                             Margin="0,0,0,5" 
-                             PreviewKeyDown="NumericTextBox_KeyDown">
-                    </TextBox>
-                    <TextBox Text="{Binding Customer.Address.Street, Mode=TwoWay}"
-                             Grid.Row="2" 
-                             FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                             Margin="0,5,0,0" 
-                             MaxLength="500">
-                    </TextBox>
-                </Grid>
-            </Border>
-            <!--Suburb-->
-            <Border Grid.Column="1"
-                    Grid.Row="1"
-                    BorderThickness="2" 
-                    BorderBrush="{DynamicResource HeaderBrush}" 
-                    Margin="{DynamicResource BoxMargin}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Border Background="{DynamicResource HeaderBrush}">
-                        <TextBlock Text="Suburb" 
-                                   FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                                   Foreground="White">
-                        </TextBlock>
-                    </Border>
-                    <TextBox Text="{Binding Customer.Address.Suburb, Mode=TwoWay}"
-                             Grid.Row="1" 
-                             FontSize="{DynamicResource GroupBoxHeaderSize}">
-                    </TextBox>
-                </Grid>
-            </Border>
-            <!--Post Code-->
-            <Border Grid.Column="1"
-                    Grid.Row="2"
-                    BorderThickness="2" 
-                    BorderBrush="{DynamicResource HeaderBrush}" 
-                    Margin="{DynamicResource BoxMargin}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Border Background="{DynamicResource HeaderBrush}">
-                        <TextBlock Text="Post Code" 
-                                   FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                                   Foreground="White">
-                        </TextBlock>
-                    </Border>
-                    <TextBox Text="{Binding Customer.Address.PostCode, Mode=TwoWay}"
-                             Grid.Row="1" 
-                             FontSize="{DynamicResource GroupBoxHeaderSize}"
-                             PreviewKeyDown="NumericTextBox_KeyDown">
-                    </TextBox>
-                </Grid>
-            </Border>
-            <!--Phone Number-->
-            <Border Grid.Row="3" 
-                    BorderThickness="2" 
-                    BorderBrush="{DynamicResource HeaderBrush}"
-                    Margin="{DynamicResource BoxMargin}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Border Background="{DynamicResource HeaderBrush}">
-                        <TextBlock Text="Phone Number" 
-                                   FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                                   Foreground="White">
-                        </TextBlock>
-                    </Border>
-                    <TextBlock Text="{Binding Customer.PhoneNumber, Mode=TwoWay}"
-                             Grid.Row="1" 
-                             FontSize="{DynamicResource GroupBoxHeaderSize}">
-                    </TextBlock>
-                </Grid>
-            </Border>
-            <!--Status-->
-            <Border Grid.Row="3" 
-                    Grid.Column="1"
-                    BorderThickness="2" 
-                    BorderBrush="{DynamicResource HeaderBrush}"
-                    Margin="{DynamicResource BoxMargin}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Border Background="{DynamicResource HeaderBrush}"
-                            Grid.ColumnSpan="2">
-                        <TextBlock Text="Status" 
-                                   FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                                   Foreground="White">
-                        </TextBlock>
-                    </Border>
-                    <RadioButton Grid.Row="1" 
-                                 Content="Cancelled" 
-                                 FontSize="{DynamicResource GroupBoxHeaderSize}" VerticalContentAlignment="Center"/>
-                    <RadioButton Grid.Row="1"
-                                 Grid.Column="1"
-                                 Content="Active" 
-                                 FontSize="{DynamicResource GroupBoxHeaderSize}" VerticalContentAlignment="Center"/>
-                </Grid>
-            </Border>
-            <!--Comments-->
-            <Border Grid.Row="4" 
-                    Grid.ColumnSpan="2"
-                    BorderThickness="2" 
-                    BorderBrush="{DynamicResource HeaderBrush}"
-                    Margin="{DynamicResource BoxMargin}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Border Background="{DynamicResource HeaderBrush}">
-                        <TextBlock Text="Comments" 
-                                   FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                                   Foreground="White">
-                        </TextBlock>
-                    </Border>
-                    <TextBox Text="{Binding Customer.Comments, Mode=TwoWay}"
-                             Grid.Row="1" 
-                             FontSize="{DynamicResource GroupBoxHeaderSize}" 
-                             Height="126" 
-                             TextWrapping="Wrap" 
-                             MaxLength="500">
-                    </TextBox>
-                </Grid>
-            </Border>
+        <!--Active-->
 
-        </Grid>
-        
-        <!--Footer-->
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Content="Cancel"
-                    Command="{Binding CancelCommand}">
-                
-            </Button>
-            <Button Content="Create Order"
-                    Grid.Column="1"
-                    Command="{Binding CreateOrderCommand}"/>
+        <!--Comments-->
+        <TextBox Text="{Binding Customer.Comments, Mode=TwoWay}"
+                 FontSize="{DynamicResource GroupBoxHeaderSize}" 
+                 Height="80" 
+                 TextWrapping="Wrap" 
+                 MaxLength="500"
+                 Canvas.Left="817" 
+                 Canvas.Top="610" Width="{DynamicResource TextBoxWidthSmall}" Style="{DynamicResource TextBoxStyle}" >
+        </TextBox>
+        <!--Cancel Order Button-->
+        <Button Command="{Binding CancelCommand}" 
+                Height="{DynamicResource ButtonHeight}" 
+                Canvas.Left="86.815" 
+                Canvas.Top="772.332" 
+                Background="{DynamicResource ButtonBackgroundClear}" Style="{DynamicResource ButtonStyle}" Width="285"/>
+        <!--Create Order Button-->
+        <Button Height="{DynamicResource ButtonHeight}"
+                Grid.Column="1"
+                Command="{Binding CreateOrderCommand}" 
+                Canvas.Left="822.828" 
+                Canvas.Top="772.332" 
+                Width="285" 
+                Background="{DynamicResource ButtonBackgroundClear}" Style="{DynamicResource ButtonStyle}"/>
+    </Canvas>
 
 
-        </Grid>
-    </Grid>
 </UserControl>
