@@ -68,8 +68,12 @@ namespace COES.ViewModels
             //
             // Testing
             //
-            RestaurantManager.Menu.MenuItems.Add(new MenuItem { Name = "Test item 1" });
-            RestaurantManager.Menu.MenuItems.Add(new MenuItem { Name = "Test item 2" });
+            RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 1", Cost = 1 });
+            RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 2", Cost = 2 });
+
+            foreach (MenuItem menuItem in RestaurantManager.MenuItems)
+                RestaurantManager.Menu.MenuItems.Add(menuItem);
+            RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 3", Cost = 3 });
             //
             // Testing
             //
@@ -87,14 +91,10 @@ namespace COES.ViewModels
             // Registers a message for when the current customer is changed.
             Messenger.Default.Register<Customer>(this, "CreateCustomer", m => RestaurantManager.CurrentCustomer = m);
 
-            // Registers a message for when the current order is changed.
-            //Messenger.Default.Register<GenericMessage<Order>>(this, m => RestaurantManager.CurrentOrder = m.Content);
-
             // Registers a message for when an order is to be created, using the customer's id.
-            Messenger.Default.Register<int>(this, "CreateOrder", m => RestaurantManager.CurrentOrder = new Order(m));
+            Messenger.Default.Register<int>(this, "CreateOrder", m => OrderCreated(m));
 
-            // Registers a message for when an order is confirmed it is added to the list of active orders.
-            Messenger.Default.Register<Order>(this, "OrderConfirmed", m => OrderConfirmed(m));
+            //Messenger.Default.Register<Order>(this, "PaymentComplete", 
 
             
 
@@ -123,15 +123,10 @@ namespace COES.ViewModels
             return null;
         }
 
-        /// <summary>
-        /// Adds the order to the list of Orders in the RestaurantManager, then removes the current order and customer.
-        /// </summary>
-        /// <param name="order">The Order to be added.</param>
-        private void OrderConfirmed(Order order)
+        private void OrderCreated(int customerId)
         {
-            RestaurantManager.Orders.Add(order);
-            RestaurantManager.CurrentOrder = null;
-            RestaurantManager.CurrentCustomer = null;
+            RestaurantManager.CurrentOrder = new Order(customerId);
+            RestaurantManager.Orders.Add(RestaurantManager.CurrentOrder);
         }
 
         private void Navigate(NotificationMessage m)
@@ -153,7 +148,26 @@ namespace COES.ViewModels
                     }
                 case ("NavigatePayment"):
                     {
-
+                        CurrentViewModel = ViewModelLocator.PaymentStatic;
+                        Messenger.Default.Send<Order>(RestaurantManager.CurrentOrder, "PaymentReady");
+                        Messenger.Default.Send<Customer>(RestaurantManager.CurrentCustomer, "PaymentReady");
+                        break;
+                    }
+                case ("PaymentComplete"):
+                    {
+                        CurrentViewModel = ViewModelLocator.HomeStatic;
+                        break;
+                    }
+                case ("NavigateReporting"):
+                    {
+                        CurrentViewModel = ViewModelLocator.ReportingStatic;
+                        break;
+                    }
+                case ("NavigateEditMenu"):
+                    {
+                        CurrentViewModel = ViewModelLocator.EditMenuStatic;
+                        Messenger.Default.Send<Menu>(RestaurantManager.Menu, "EditMenu");
+                        Messenger.Default.Send<ObservableCollection<MenuItem>>(RestaurantManager.MenuItems, "EditMenu");
                         break;
                     }
                 case ("Cancel"):

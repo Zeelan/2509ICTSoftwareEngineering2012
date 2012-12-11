@@ -26,9 +26,9 @@
 			SelectedItem="{Binding CurrentMenuItem, Mode=TwoWay}" Width="350" Height="430" Canvas.Top="245" Canvas.Left="150" Style="{DynamicResource ListBoxStyle}"/>
 		<ListBox
 			ItemsSource="{Binding Order.MenuItems}"
-			SelectedItem="{Binding CurrentOrderItem, Mode=TwoWay}" Height="295" Canvas.Left="722" Canvas.Top="290" Width="345" Style="{DynamicResource ListBoxStyle}"/>
-		<TextBlock Text="{Binding Order.Total}" 
-			FontSize="{DynamicResource GroupBoxHeaderSize}" Height="35.914" Canvas.Left="722" Canvas.Top="635" Width="345"/>
+			SelectedItem="{Binding CurrentOrderItem, Mode=TwoWay}" Height="295" Canvas.Left="722" Canvas.Top="290" Width="345" Style="{DynamicResource ListBoxStyle}" ItemContainerStyle="{DynamicResource MenuItemListBoxItemStyle}" ItemTemplate="{DynamicResource MenuItemTemplate}" IsHitTestVisible="False"/>
+		<TextBlock Text="{Binding Order.Cost}" 
+			FontSize="{DynamicResource GroupBoxHeaderSize}" Height="35.914" Canvas.Left="795" Canvas.Top="631" Width="272"/>
         <!--Items in Order-->
         <!--Total-->
 		<Button Content=""

@@ -29,6 +29,9 @@ namespace COES.ViewModels
         private static HomeViewModel _home;
         private static CustomerViewModel _customer;
         private static OrderViewModel _order;
+        private static PaymentViewModel _payment;
+        private static ReportingViewModel _reporting;
+        private static EditMenuViewModel _editMenu;
 
         static ViewModelLocator()
         {
@@ -87,6 +90,36 @@ namespace COES.ViewModels
         public static OrderViewModel OrderStatic
         {
             get { return _order ?? (_order = new OrderViewModel()); }
+        }
+
+        public PaymentViewModel Payment
+        {
+            get { return PaymentStatic; }
+        }
+
+        public static PaymentViewModel PaymentStatic
+        {
+            get { return _payment ?? (_payment = new PaymentViewModel()); }
+        }
+
+        public ReportingViewModel Reporting
+        {
+            get { return ReportingStatic; }
+        }
+
+        public static ReportingViewModel ReportingStatic
+        {
+            get { return _reporting ?? (_reporting = new ReportingViewModel()); }
+        }
+
+        public EditMenuViewModel EditMenu
+        {
+            get { return EditMenuStatic; }
+        }
+
+        public static EditMenuViewModel EditMenuStatic
+        {
+            get { return _editMenu ?? (_editMenu = new EditMenuViewModel()); }
         }
 
         //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",

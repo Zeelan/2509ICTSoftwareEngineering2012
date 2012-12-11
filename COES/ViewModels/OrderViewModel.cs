@@ -153,6 +153,7 @@ namespace COES.ViewModels
                 }
                 else
                     Order.MenuItems.Add(CurrentMenuItem, 1);
+                Order.Cost += CurrentMenuItem.Cost;
             }
         }
 
@@ -170,8 +171,15 @@ namespace COES.ViewModels
         /// </summary>
         private void ConfirmOrder()
         {
-            // Sends a message to alert that the Order has been confirmed.
-            Messenger.Default.Send<Order>(Order, "OrderConfirmed");
+            if (Order.MenuItems.Count == 0)
+            {
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorOrder"), "Error");
+            }
+            else
+            {
+                NavigatedFrom();
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("NavigatePayment"), "Navigate");
+            }
         }
 
         /// <summary>
@@ -179,10 +187,14 @@ namespace COES.ViewModels
         /// </summary>
         private void CancelOrder()
         {
-            ClearOrder();
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Cancel"), "Navigate");
+            NavigatedFrom();
         }
 
-        private void ClearOrder()
+        /// <summary>
+        /// Called when the ViewModel is no longer the current ViewModel.
+        /// </summary>
+        private void NavigatedFrom()
         {
             Menu = null;
             Order = null;

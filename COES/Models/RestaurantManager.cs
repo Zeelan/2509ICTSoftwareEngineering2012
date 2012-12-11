@@ -15,6 +15,7 @@ namespace COES.Models
         //private ObservableCollection<Customer> _customers;
         private ObservableCollection<Order> _orders;
         private Menu _menu;
+        private ObservableCollection<MenuItem> _menuItems;
         private Customer _currentCustomer;
         private Order _currentOrder;
         //----------------------------------------------------------------------
@@ -51,6 +52,15 @@ namespace COES.Models
         {
             get { return _menu ?? (_menu = new Menu()); }
             set { Set(() => Menu, ref _menu, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets all the available <see cref="MenuItem"/>s.
+        /// </summary>
+        public ObservableCollection<MenuItem> MenuItems
+        {
+            get { return _menuItems ?? (_menuItems = new ObservableCollection<MenuItem>()); }
+            set { Set(() => MenuItems, ref _menuItems, value); }
         }
 
         /// <summary>

@@ -59,6 +59,7 @@ namespace DrWPF.Windows.Data
             _keyedEntryCollection = new KeyedDictionaryEntryCollection<TKey>();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ObservableDictionary(IDictionary<TKey, TValue> dictionary)
         {
             _keyedEntryCollection = new KeyedDictionaryEntryCollection<TKey>();
@@ -72,6 +73,7 @@ namespace DrWPF.Windows.Data
             _keyedEntryCollection = new KeyedDictionaryEntryCollection<TKey>(comparer);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ObservableDictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer)
         {
             _keyedEntryCollection = new KeyedDictionaryEntryCollection<TKey>(comparer);
@@ -565,6 +567,7 @@ namespace DrWPF.Windows.Data
 
         #region ISerializable
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2123:OverrideLinkDemandsShouldBeIdenticalToBase")]
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)

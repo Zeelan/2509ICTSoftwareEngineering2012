@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="COES.Views.Reporting"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             DataContext="{Binding Reporting, Source={StaticResource Locator}}"
+             Height="{DynamicResource ViewHeight}" 
+             Width="{DynamicResource ViewWidth}">
+    <UserControl.Background>
+        <ImageBrush ImageSource="/COES;component/Images/reporting.jpg" Stretch="UniformToFill"/>
+    </UserControl.Background>
+    <Canvas>
+        <ListBox
+			ItemsSource="{Binding Time}"
+			SelectedItem="{Binding SelectedTime, Mode=TwoWay}" Height="353" Canvas.Left="430" Canvas.Top="238" Width="345" Style="{DynamicResource ListBoxStyle}"/>
+        <!--Items in Order-->
+        <!--Total-->
+        <Button 
+			Height="{DynamicResource ButtonHeight}"
+			Command="{Binding CancelCommand}" 
+            Style="{DynamicResource ButtonStyle}" 
+            Width="285" 
+            Canvas.Left="85" 
+            Canvas.Top="767"/>
+        <Button 
+			Height="{DynamicResource ButtonHeight}"
+			Command="{Binding RunReportCommand}" 
+            Style="{DynamicResource ButtonStyle}" 
+            Canvas.Left="825" 
+            Canvas.Top="768" 
+            Width="285" />
+
+        <!--Footer-->
+    </Canvas>
+</UserControl>

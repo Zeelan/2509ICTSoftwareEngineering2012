@@ -46,12 +46,16 @@
         <Button Height="{DynamicResource ButtonHeight}" 
                 Canvas.Left="112.332" 
                 Canvas.Top="550" 
-                Width="{DynamicResource ButtonWidth}" Background="{DynamicResource ButtonBackgroundClear}" Style="{DynamicResource ButtonStyle}"/>
+                Width="{DynamicResource ButtonWidth}" 
+                Background="{DynamicResource ButtonBackgroundClear}" 
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding ReportingCommand}"/>
         <Button Height="{DynamicResource ButtonHeight}" 
                 Canvas.Left="462.999" 
                 Canvas.Top="550" 
                 Background="{DynamicResource ButtonBackgroundClear}" 
-                Width="{DynamicResource ButtonWidth}" Style="{DynamicResource ButtonStyle}"/>
+                Width="{DynamicResource ButtonWidth}" Style="{DynamicResource ButtonStyle}"
+                Command="{Binding EditMenuCommand}"/>
         <Button Height="{DynamicResource ButtonHeight}" 
                 Canvas.Left="812.999" 
                 Canvas.Top="550" 

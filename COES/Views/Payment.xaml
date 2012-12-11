@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="COES.Views.Payment"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             DataContext="{Binding Payment, Source={StaticResource Locator}}"
+             Height="{DynamicResource ViewHeight}" 
+             Width="{DynamicResource ViewWidth}">
+    <UserControl.Background>
+        <ImageBrush ImageSource="/COES;component/Images/payment_details.jpg" Stretch="UniformToFill"/>
+    </UserControl.Background>
+    <Canvas>
+        <ListBox
+			ItemsSource="{Binding Order.MenuItems}"
+			SelectedItem="{Binding CurrentOrderItem, Mode=TwoWay}" Height="210" Canvas.Left="615" Canvas.Top="305" Width="345" Style="{DynamicResource ListBoxStyle}" ItemTemplate="{DynamicResource MenuItemTemplate}"/>
+        <!--Items in Order-->
+        <!--Total-->
+        <Button 
+			Height="{DynamicResource ButtonHeight}"
+			Command="{Binding PayLaterCommand}" 
+            Style="{DynamicResource ButtonStyle}" 
+            Width="285" 
+            Canvas.Left="90" 
+            Canvas.Top="772"/>
+        <Button 
+			Height="{DynamicResource ButtonHeight}"
+			Command="{Binding PayNowCommand}" 
+            Style="{DynamicResource ButtonStyle}" 
+            Canvas.Left="820" 
+            Canvas.Top="772" 
+            Width="285" />
+        <TextBlock Height="39" 
+                   Canvas.Left="844" 
+                   Canvas.Top="524" 
+                   Width="116" 
+                   Text="{Binding Order.Cost}"/>
+        <RadioButton Content="Credit Card" Canvas.Left="229" Canvas.Top="316" Width="352" IsChecked="True" FontSize="{DynamicResource GroupBoxHeaderSize}" Style="{DynamicResource RadioButtonStyle}"/>
+        <RadioButton Content="Cash" Canvas.Left="229" Canvas.Top="438" Width="352" FontSize="{DynamicResource GroupBoxHeaderSize}" Style="{DynamicResource RadioButtonStyle}"/>
+        <TextBlock Canvas.Left="229" TextWrapping="Wrap" Text="{Binding Customer.CreditCard.Name}" Canvas.Top="355.913" Width="352" FontSize="{DynamicResource GroupBoxHeaderSize}" Foreground="#FF8D1F1F"/>
+        <TextBlock Canvas.Left="229" TextWrapping="Wrap" Text="{Binding Customer.CreditCard.Number}" Canvas.Top="395" Width="352" FontSize="{DynamicResource GroupBoxHeaderSize}" Foreground="#FF8D1F1F"/>
+
+        <!--Footer-->
+    </Canvas>
+</UserControl>

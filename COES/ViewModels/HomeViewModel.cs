@@ -51,6 +51,24 @@ namespace COES.ViewModels
             get;
             private set;
         }
+
+        public RelayCommand ReportingCommand
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand EditMenuCommand
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand RestaurantManagerCommand
+        {
+            get;
+            private set;
+        }
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
@@ -80,6 +98,9 @@ namespace COES.ViewModels
         private void InitializeCommands()
         {
             SearchPhoneNumberCommand = new RelayCommand(SearchPhoneNumber);
+            ReportingCommand = new RelayCommand(OpenReporting);
+            EditMenuCommand = new RelayCommand(OpenEditMenu);
+            RestaurantManagerCommand = new RelayCommand(OpenRestaurantManager);
         }
 
         /// <summary>
@@ -194,6 +215,24 @@ namespace COES.ViewModels
             {
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorPhoneNumber"), "Error");
             }
+        }
+
+        private void OpenReporting()
+        {
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("NavigateReporting"), "Navigate");
+            NavigatedFrom();
+        }
+
+        private void OpenEditMenu()
+        {
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("NavigateEditMenu"), "Navigate");
+            NavigatedFrom();
+        }
+
+        private void OpenRestaurantManager()
+        {
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("NavigateRestaurantManager"), "Navigate");
+            NavigatedFrom();
         }
 
         private void NavigatedFrom()

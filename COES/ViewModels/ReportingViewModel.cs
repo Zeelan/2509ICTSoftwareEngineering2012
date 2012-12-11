@@ -1,5 +1,4 @@
-﻿using COES.Models;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 
@@ -11,13 +10,13 @@ namespace COES.ViewModels
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class PaymentViewModel : ViewModelBase
+    public class ReportingViewModel : ViewModelBase
     {
         //----------------------------------------------------------------------
         #region --- Fields ---
         //----------------------------------------------------------------------
-        private Order _order;
-        private Customer _customer;
+        private string[] _time;
+        private string _selectedTime;
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
@@ -26,22 +25,16 @@ namespace COES.ViewModels
         //----------------------------------------------------------------------
         #region --- Properties ---
         //----------------------------------------------------------------------
-        /// <summary>
-        /// Gets or sets the <see cref="Order"/> to be paid.
-        /// </summary>
-        public Order Order
+        public string[] Time
         {
-            get { return _order; }
-            set { Set(() => Order, ref _order, value); }
+            get { return _time ?? (_time = new string[] { "Day", "Week", "Month", "Year", "All Time" }); }
+            set { Set(() => Time, ref _time, value); }
         }
 
-        /// <summary>
-        /// Gets or sets the <see cref="Customer"/>.
-        /// </summary>
-        public Customer Customer
+        public string SelectedTime
         {
-            get { return _customer; }
-            set { Set(() => Customer, ref _customer, value); }
+            get { return _selectedTime; }
+            set { Set(() => SelectedTime, ref _selectedTime, value); }
         }
         //----------------------------------------------------------------------
         #endregion
@@ -51,13 +44,13 @@ namespace COES.ViewModels
         //----------------------------------------------------------------------
         #region --- Commands ---
         //----------------------------------------------------------------------
-        public RelayCommand PayNowCommand
+        public RelayCommand CancelCommand
         {
             get;
             private set;
         }
 
-        public RelayCommand PayLaterCommand
+        public RelayCommand RunReportCommand
         {
             get;
             private set;
@@ -71,12 +64,11 @@ namespace COES.ViewModels
         #region --- Constructor ---
         //----------------------------------------------------------------------
         /// <summary>
-        /// Initializes a new instance of the PaymentViewModel class.
+        /// Initializes a new instance of the ReportingViewModel class.
         /// </summary>
-        public PaymentViewModel()
+        public ReportingViewModel()
         {
             InitializeCommands();
-            RegisterMessages();
         }
         //----------------------------------------------------------------------
         #endregion
@@ -87,46 +79,22 @@ namespace COES.ViewModels
         #region --- Methods ---
         //----------------------------------------------------------------------
         /// <summary>
-        /// Initalizes the commands associated with this ViewModel.
+        /// Initializes the commands associated with this ViewModel.
         /// </summary>
         private void InitializeCommands()
         {
-            PayNowCommand = new RelayCommand(PayNow);
-            PayLaterCommand = new RelayCommand(PayLater);
+            CancelCommand = new RelayCommand(Cancel);
+            RunReportCommand = new RelayCommand(RunReport);
         }
 
-        private void RegisterMessages()
+        private void Cancel()
         {
-            Messenger.Default.Register<Order>(this, "PaymentReady", m => Order = m);
-            Messenger.Default.Register<Customer>(this, "PaymentReady", m => Customer = m);
+            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Cancel"), "Navigate");
         }
 
-        private void PayNow()
+        private void RunReport()
         {
-            Order.Paid = true;
-            // TODO: db logic, update order in db
-            PaymentComplete();
-        }
 
-        private void PayLater()
-        {
-            Order.Paid = false;
-            // TODO: db logic, update order in db
-            PaymentComplete();
-        }
-
-        private void PaymentComplete()
-        {
-            NavigatedFrom();
-            Messenger.Default.Send<NotificationMessage>(new NotificationMessage("PaymentComplete"), "Navigate");
-        }
-
-        /// <summary>
-        /// Called when the ViewModel is no longer the current ViewModel.
-        /// </summary>
-        private void NavigatedFrom()
-        {
-            Order = null;
         }
         //----------------------------------------------------------------------
         #endregion

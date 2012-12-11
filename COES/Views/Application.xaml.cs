@@ -46,6 +46,9 @@ namespace COES.Views
                 case "ErrorAddressPostCode":
                     MessageBox.Show("Post code cannot be blank and must be a whole number.", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     break;
+                case "ErrorOrder":
+                    MessageBox.Show("Order must have at least 1 item.", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    break;
             }
         }
     }
