@@ -114,9 +114,22 @@ namespace COES.ViewModels
         {
             DatabaseManager dbm = new DatabaseManager();
 
+            String sql = "select * from menu;";
+            DataTable dt = dbm.query(sql);
+
+            // ok i'll use a foreach :-(
+            foreach (DataRow dr in dt.Rows)
+            {
+                MenuItem mi = new MenuItem();
+                mi.loadID(int.Parse(dr["menu_id"].ToString()));
+                RestaurantManager.Menu.MenuItems.Add(mi);
+            }
+
+
 
             return null;
         }
+
 
         /// <summary>
         /// Loads the list of <see cref="MenuItem"/>s from the database.
