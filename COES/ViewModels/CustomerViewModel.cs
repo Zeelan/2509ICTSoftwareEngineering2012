@@ -123,18 +123,18 @@ namespace COES.ViewModels
             cust.Add("street_no",this.Customer.Address.Number);
             cust.Add("street",this.Customer.Address.Street);
             cust.Add("suburb_post_code",this.Customer.Address.PostCode);
-            cust.Add("status",this.Customer.Status);
+            cust.Add("status",this.Customer.Status.ToString());
             cust.Add("suburb", this.Customer.Address.Suburb);
             cust.Add("comments", this.Customer.Comments);
             
 
             if (Customer.Id == 0)
             {
-                DatabaseManager.Insert("customer", cust);
+                DatabaseManager.Insert2("customer", cust);
             }
             else
             {
-                DatabaseManager.Update("customer", cust, String.Format(" customer_id ={0} LIMIT 1; ", this.Customer.Id.ToString()));
+                DatabaseManager.Update2("customer", cust, String.Format(" customer_id ={0}  ", this.Customer.Id.ToString()));
             }               
         }
 

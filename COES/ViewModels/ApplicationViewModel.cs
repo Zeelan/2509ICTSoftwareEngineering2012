@@ -86,9 +86,6 @@ namespace COES.ViewModels
 
             //Messenger.Default.Register<Order>(this, "PaymentComplete", 
 
-            
-
-
             // Registers the notification messages (using this for changing the Views).
             Messenger.Default.Register<NotificationMessage>(this, "Navigate", m => Navigate(m));
         }
@@ -108,8 +105,6 @@ namespace COES.ViewModels
             {
                 MenuItem mi = new MenuItem();
                 mi.loadID(int.Parse(dr["menu_id"].ToString()));
-
-                MessageBox.Show(mi.Name.ToString());
                 menu.MenuItems.Add(mi);
             }
             return menu;
@@ -124,7 +119,6 @@ namespace COES.ViewModels
         {
             ObservableCollection<MenuItem> menuItems = new ObservableCollection<MenuItem>();
 
-
             //populate the menu items
 
             String sql = "select * from menu_item ;";
@@ -133,7 +127,6 @@ namespace COES.ViewModels
             // ok i'll use a foreach :-(
             foreach (DataRow dr in dt.Rows)
             {
-
                 MenuItem mi = new MenuItem
                 {
                     Cost=double.Parse(dr["item_cost"].ToString()),
@@ -141,11 +134,8 @@ namespace COES.ViewModels
                     Description= dr["description"].ToString(),
                     Name=dr["menu_item_name"].ToString()
                 };
-
                 menuItems.Add(mi);
-
             }
-
             return menuItems;
         }
 

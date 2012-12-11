@@ -316,11 +316,11 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
                     keyvalues += String.Format(" {0} = '{1}' , ", list[i].ToString(), tableData[list[i].ToString()].ToString());
                 }
                 // don't add the last comma
-                keyvalues += String.Format(" {0} = '{1}] , ", list[(list.Count() - 1)].ToString(), tableData[list[(list.Count() - 1)].ToString()].ToString());
+                keyvalues += String.Format(" {0} = '{1}' ", list[(list.Count() - 1)].ToString(), tableData[list[(list.Count() - 1)].ToString()].ToString());
             }
 
             // construct the complete sql statement
-            String sql = String.Format("UPDATE {0} SET ({1}) WHERE ({2}) ; ", table, keyvalues, where);
+            String sql = String.Format("UPDATE {0} SET {1} WHERE {2} ; ", table, keyvalues, where);
 
             try
             {
@@ -332,6 +332,121 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
             }
             return true;
         }
+
+
+
+        /// <summary> 
+        /// used to update a dictionery of values into the specified table,, handles escape chars
+        /// </summary>
+        /// <param name="table">Name of the table to update data in</param>
+        /// <param name="tableData">A dictionery of type String,String  key,value, to update</param>
+        /// <returns>true if successful false if not</returns>
+        public static bool Update2(String table, Dictionary<String, String> tableData, String where = " 1=1 ")
+        {
+            
+            //build SQL
+            String kv = "";
+
+            // grab a list of keys
+            List<String> list = new List<String>(tableData.Keys);
+           // check we have list values
+            if (list.Count() > 0)
+            {
+                //build strings for sql
+                for (int i = 0; i < (list.Count() - 1); i++)
+                {
+                    kv += String.Format(" {0} = @{0} , ", list[i].ToString() );
+                }
+                // don't add the last comma
+                kv += String.Format(" {0} = @{0} ", list[(list.Count() - 1)].ToString(), list[(list.Count() - 1)].ToString() );
+            }
+
+            // construct the complete sql statement
+            String sql = String.Format("UPDATE {0} SET {1} WHERE {2} ; ", table, kv, where);
+            
+            //start the commandbuilder
+            SQLiteCommand mycom = new SQLiteCommand(sql, con);
+
+            if (list.Count() > 0)
+            {
+                for (int i = 0; i < (list.Count() - 1); i++)
+                {
+                    mycom.Parameters.AddWithValue(String.Format("@{0}", list[i].ToString()), tableData[list[i].ToString()].ToString() );
+                }
+                // don't add the last comma
+                 mycom.Parameters.AddWithValue(String.Format("@{0}", list[(list.Count() - 1)].ToString()), tableData[list[(list.Count() - 1)].ToString()].ToString());
+            }
+            try
+            {
+                mycom.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+
+
+
+        public static bool Insert2(String table, Dictionary<String, String> tableData)
+        {
+            // build the string to insert into the database
+
+            String keys = "";
+            String values = "";
+
+            // grab a list of keys
+            List<String> list = new List<String>(tableData.Keys);
+
+            // check we have list values
+            if (list.Count() > 0)
+            {
+                //build strings for sql
+                for (int i = 0; i < (list.Count() - 1); i++)
+                {
+                    keys += String.Format(" {0}, ", list[i].ToString() );
+                    values += String.Format(" @{0} , ", list[i].ToString() );
+                }
+                // don't add the last comma
+                keys += String.Format(" {0} ", list[list.Count() - 1].ToString() );
+                values += String.Format(" @{0}  ", list[list.Count() - 1].ToString() );
+            }
+
+            // construct the complete sql statement
+            String sql = String.Format("INSERT INTO {0} ({1}) VALUES ({2}); ", table, keys, values);
+            
+            //start the commandbuilder
+            SQLiteCommand mycom = new SQLiteCommand(sql, con);
+
+            if (list.Count() > 0)
+            {
+                for (int i = 0; i < (list.Count() - 1); i++)
+                {
+                    mycom.Parameters.AddWithValue(String.Format("@{0}", list[i].ToString()), tableData[list[i].ToString()].ToString());
+                }
+                // don't add the last comma
+                mycom.Parameters.AddWithValue(String.Format("@{0}", list[(list.Count() - 1)].ToString()), tableData[list[(list.Count() - 1)].ToString()].ToString());
+            }
+
+            try
+            {
+                mycom.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
+        }
+
+
+
+
+
     }
 }
 

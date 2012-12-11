@@ -1,8 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using COES.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Data;
+using System.Windows;
 
 namespace COES.ViewModels
 {
@@ -152,24 +156,98 @@ namespace COES.ViewModels
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Cancel"), "Navigate");
         }
 
+        /// <summary>
+        /// Deketes the current menu item
+        /// 
+        /// </summary>
         private void DeleteItem()
         {
-            // TODO: remove item from db.
-        }
-
-        private void CreateItem()
-        {
-            if (!ItemSaved)
+            if (CurrentMenuItem != null)
             {
-                Save();
-                CurrentMenuItem = new MenuItem();
+                String sql = String.Format("DELETE FROM menu_item WHERE menu_item_id = {0}  LIMIT 1; ",CurrentMenuItem.Id.ToString());
+                DatabaseManager.QuickQuery(sql);
+                RefreshMenuItems();
+            }
+            else
+            {
+                MessageBox.Show("Please select an item");
             }
         }
 
+
+
+        private void CreateItem()
+        {
+            //if (!ItemSaved)
+            //{
+            if ( (CurrentMenuItem.Name.Length > 0) && (CurrentMenuItem.Cost>=0))
+            {
+                Save();
+            }
+               // CurrentMenuItem = new MenuItem();
+            //}
+        }
+
+
+        /// <summary>
+        /// SAVE new MENU item to database
+        /// </summary>
         private void Save()
         {
-            ItemSaved = true;
+            //ItemSaved = true;
             // TODO: update db, return the menuitem id
+
+            Dictionary<String, String> item = new Dictionary<string, string>();
+            item.Add("menu_item_name",CurrentMenuItem.Name.ToString());
+            item.Add("item_cost",CurrentMenuItem.Cost.ToString());
+
+            MessageBox.Show(CurrentMenuItem.Name.ToString() + " " + CurrentMenuItem.Cost.ToString());
+
+
+            RefreshMenuItems();
+        }
+
+
+        /// <summary>
+        /// Save MENU to database
+        /// 
+        /// </summary>
+        private void SaveMenuToDatabase()
+        {
+            Dictionary<String, String> items = new Dictionary<string, string>();
+            foreach(MenuItem mi in Menu.MenuItems)
+            {
+                items.Add("menu_item_id",mi.Id.ToString());
+            }
+
+            // Clear the menu in the database
+            String sql = "DELETE FROM menu WHERE 1=1 ; ";
+            DatabaseManager.QuickQuery(sql);
+
+            //now save the new list
+            DatabaseManager.Insert("menu", items);
+
+        }
+
+
+        private void RefreshMenuItems()
+        {
+            MenuItems.Clear();
+            String sql = "select * from menu_item ;";
+            DataTable dt = DatabaseManager.Query(sql);
+
+            // ok i'll use a foreach :-(
+            foreach (DataRow dr in dt.Rows)
+            {
+                MenuItem mi = new MenuItem
+                {
+                    Cost = double.Parse(dr["item_cost"].ToString()),
+                    Id = int.Parse(dr["menu_item_id"].ToString()),
+                    Description = dr["description"].ToString(),
+                    Name = dr["menu_item_name"].ToString()
+                };
+                MenuItems.Add(mi);
+            }
         }
 
         private void AddItem()
