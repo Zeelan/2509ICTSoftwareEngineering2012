@@ -124,7 +124,9 @@ namespace COES.ViewModels
             cust.Add("street",this.Customer.Address.Street);
             cust.Add("suburb_post_code",this.Customer.Address.PostCode);
             cust.Add("status",this.Customer.Status);
-
+            cust.Add("suburb", this.Customer.Address.Suburb);
+            cust.Add("comments", this.Customer.Comments);
+            
             DatabaseManager dbm = new DatabaseManager();
 
             if (this._customer.Id == 0)

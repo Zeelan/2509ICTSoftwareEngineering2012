@@ -120,6 +120,20 @@ namespace COES.ViewModels
         {
 
         }
+
+
+        /// <summary>
+        /// Used to save the current menu
+        /// </summary>
+        public void saveMenu()
+        {
+            DatabaseManager dbm = new DatabaseManager();
+
+            dbm.
+
+        }
+
+
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------

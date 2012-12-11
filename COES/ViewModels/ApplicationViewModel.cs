@@ -122,6 +122,8 @@ namespace COES.ViewModels
             {
                 MenuItem mi = new MenuItem();
                 mi.loadID(int.Parse(dr["menu_id"].ToString()));
+
+                MessageBox.Show(mi.Name.ToString());
                 RestaurantManager.Menu.MenuItems.Add(mi);
             }
 

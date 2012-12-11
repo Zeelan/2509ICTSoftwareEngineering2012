@@ -132,9 +132,6 @@ namespace COES.ViewModels
                     //assume only 1 valid result
                     DataRow dr = dt.Rows[0];
 
-                    MessageBox.Show(dr["first_name"].ToString());
-
-
                     RestaurantManager.CurrentCustomer = new Customer
                     {
                         FirstName = dr["first_name"].ToString(),
