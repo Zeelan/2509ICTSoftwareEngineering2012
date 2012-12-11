@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using COES.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using System.Data;
 
 namespace COES.ViewModels
 {
@@ -61,7 +59,19 @@ namespace COES.ViewModels
             private set;
         }
 
-        public RelayCommand RunReportCommand
+        public RelayCommand DeleteItemCommand
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand CreateItemCommand
+        {
+            get;
+            private set;
+        }
+
+        public RelayCommand SaveCommand
         {
             get;
             private set;
@@ -96,10 +106,9 @@ namespace COES.ViewModels
         private void InitializeCommands()
         {
             CancelCommand = new RelayCommand(Cancel);
-            RunReportCommand = new RelayCommand(RunReport);
-
-
-
+            DeleteItemCommand = new RelayCommand(DeleteItem);
+            CreateItemCommand = new RelayCommand(CreateItem);
+            SaveCommand = new RelayCommand(Save);
         }
 
         /// <summary>
@@ -116,22 +125,20 @@ namespace COES.ViewModels
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("Cancel"), "Navigate");
         }
 
-        private void RunReport()
+        private void DeleteItem()
         {
 
         }
 
-
-        /// <summary>
-        /// Used to save the current menu
-        /// </summary>
-        public void saveMenu()
+        private void CreateItem()
         {
-           
-
+            CurrentMenuItem = new MenuItem();
         }
 
-
+        private void Save()
+        {
+            // TODO: update db, return the menuitem id
+        }
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------

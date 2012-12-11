@@ -252,6 +252,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         /// </summary>
         /// <param name="table">Complete SQL statment to run</param>
         /// <returns>true if successful false if not</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         public static int quickQuery(String sql)
         {         
             //Setup the sql command
@@ -269,6 +270,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         /// <param name="table"></param>
         /// <param name="where"></param>
         /// <returns>Count of rows matching query</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         public static int countQuery(String table, String where = " 1=1; ")
         {
             String sql = String.Format("SELECT count(*) as counter FROM {0} WHERE {1} ;", table, where);
