@@ -127,15 +127,14 @@ namespace COES.ViewModels
             cust.Add("suburb", this.Customer.Address.Suburb);
             cust.Add("comments", this.Customer.Comments);
             
-            DatabaseManager dbm = new DatabaseManager();
 
             if (this._customer.Id == 0)
             {
-                dbm.insert("customer",cust);
+                DatabaseManager.insert("customer", cust);
             }
             else
             {
-                dbm.update("customer", cust, String.Format(" customer_id ={0} LIMIT 1; ", this.Customer.Id.ToString()));
+                DatabaseManager.update("customer", cust, String.Format(" customer_id ={0} LIMIT 1; ", this.Customer.Id.ToString()));
             }               
         }
 

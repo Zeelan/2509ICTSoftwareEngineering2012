@@ -12,17 +12,17 @@ namespace COES.Models
     /// <summary>
     /// Manages the database connection and queries.
     /// </summary>
-    class DatabaseManager
+    static class DatabaseManager
     {
-        SQLiteConnection con;
-        String dbFile = "database.s3db";
-        String dbConnectionString ;
+        static SQLiteConnection con;
+        static String dbFile = "database.s3db";
+        static String dbConnectionString ;
 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DatabaseManager"/> class.
         /// </summary>
-        public DatabaseManager()
+        static DatabaseManager()
         {
             dbConnectionString = String.Format("Data Source={0};Version=3", dbFile);
 
@@ -163,7 +163,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
 	";		    // end of literal string for sql create of database.
 		
                  //run as quickquery
-                this.quickQuery(sql);
+                quickQuery(sql);
 
 
             }
@@ -173,20 +173,12 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         }
 
         /// <summary>
-        /// Close the connection<see cref="DatabaseManager"/> class.
-        /// </summary>
-        ~DatabaseManager()
-        {
-            //con.Close();
-        }
-
-        /// <summary>
         /// Performs a given query on a database and returns a <see cref="DataTable"/> containing the result.
         /// </summary>
         /// <param name="query">The SQL query.</param>
         /// <returns>The <see cref="DataTable"/>.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
-        public DataTable query(string query)
+        public static DataTable query(string query)
         {
             DataTable resultsTable = new DataTable();
             try
@@ -194,7 +186,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
                 // Open a connection to the database file.
                 
                 // Setup command to handle sql.
-                SQLiteCommand command = new SQLiteCommand(query, this.con);
+                SQLiteCommand command = new SQLiteCommand(query,con);
 
                 // Read the results then transfer using the reader into a generic DataTable.
                 SQLiteDataReader reader = command.ExecuteReader();
@@ -214,7 +206,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         /// <param name="table">Name of the table to insert data into</param>
         /// <param name="tableData">A dictionery of type String,String  key,value, to insert</param>
         /// <returns>true if successful false if not</returns>
-        public bool insert(String table, Dictionary<String, String> tableData)
+        public static bool insert(String table, Dictionary<String, String> tableData)
         {
             // build the string to insert into the database
 
@@ -243,7 +235,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
 
             try
             {
-                this.quickQuery(sql);
+                quickQuery(sql);
             }
             catch (Exception fail)
             {
@@ -260,10 +252,10 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         /// </summary>
         /// <param name="table">Complete SQL statment to run</param>
         /// <returns>true if successful false if not</returns>
-        public int quickQuery(String sql)
+        public static int quickQuery(String sql)
         {         
             //Setup the sql command
-            SQLiteCommand mycom = new SQLiteCommand(sql,this.con);
+            SQLiteCommand mycom = new SQLiteCommand(sql,con);
 
             //execute the command
             int result = mycom.ExecuteNonQuery();
@@ -277,10 +269,10 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         /// <param name="table"></param>
         /// <param name="where"></param>
         /// <returns>Count of rows matching query</returns>
-        public int countQuery(String table, String where = " 1=1; ")
+        public static int countQuery(String table, String where = " 1=1; ")
         {
             String sql = String.Format("SELECT count(*) as counter FROM {0} WHERE {1} ;", table, where);
-            SQLiteCommand mycom = new SQLiteCommand(sql, this.con);
+            SQLiteCommand mycom = new SQLiteCommand(sql, con);
             DataTable ct = new DataTable();
 
             try{
@@ -304,7 +296,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         /// <param name="table">Name of the table to update data in</param>
         /// <param name="tableData">A dictionery of type String,String  key,value, to update</param>
         /// <returns>true if successful false if not</returns>
-        public bool update(String table, Dictionary<String, String> tableData, String where = " 1=1 " )
+        public static bool update(String table, Dictionary<String, String> tableData, String where = " 1=1 " )
         {
             // build the string to insert into the database
 
@@ -330,7 +322,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
 
             try
             {
-                this.quickQuery(sql);
+                quickQuery(sql);
             }
             catch (Exception fail)
             {

@@ -112,10 +112,8 @@ namespace COES.ViewModels
         /// <returns>The menu.</returns>
         private Menu LoadMenu()
         {
-            DatabaseManager dbm = new DatabaseManager();
-
             String sql = "select * from menu;";
-            DataTable dt = dbm.query(sql);
+            DataTable dt = DatabaseManager.query(sql);
 
             // ok i'll use a foreach :-(
             foreach (DataRow dr in dt.Rows)
@@ -146,10 +144,8 @@ namespace COES.ViewModels
 
             //populate the menu items
 
-            DatabaseManager dbm = new DatabaseManager();
-
             String sql = "select * from menu_item ;";
-            DataTable dt = dbm.query(sql);
+            DataTable dt = DatabaseManager.query(sql);
 
             // ok i'll use a foreach :-(
             foreach (DataRow dr in dt.Rows)

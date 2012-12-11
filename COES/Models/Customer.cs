@@ -143,17 +143,16 @@ namespace COES.Models
         public bool loadID(int id)
         {
               // connect to the database
-                DatabaseManager dbm = new DatabaseManager();
 
                 // CHeck for a customer
                 String sqlcheck = String.Format(" SELECT * from customer WHERE  customer_id = {0} ; ",id.ToString());
-                int customerMatches=dbm.quickQuery(sqlcheck);
+                int customerMatches = DatabaseManager.quickQuery(sqlcheck);
 
                 if (customerMatches > 0)
                 {
                     String sql =  String.Format(" SELECT * from customer WHERE  customer_id = {0} ; ",id.ToString());
 
-                    DataTable dt = dbm.query(sql);
+                    DataTable dt = DatabaseManager.query(sql);
 
                     //assume only 1 valid result
                     DataRow dr = dt.Rows[0];

@@ -127,9 +127,7 @@ namespace COES.ViewModels
         /// </summary>
         public void saveMenu()
         {
-            DatabaseManager dbm = new DatabaseManager();
-
-            dbm.
+           
 
         }
 
