@@ -1,8 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using COES.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Data;
 
 namespace COES.ViewModels
 {
@@ -95,6 +97,9 @@ namespace COES.ViewModels
         {
             CancelCommand = new RelayCommand(Cancel);
             RunReportCommand = new RelayCommand(RunReport);
+
+
+
         }
 
         /// <summary>

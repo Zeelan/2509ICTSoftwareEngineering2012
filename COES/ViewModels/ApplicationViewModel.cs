@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using COES.Models;
 using GalaSoft.MvvmLight;
@@ -70,12 +71,12 @@ namespace COES.ViewModels
             //
             // Testing
             //
-            RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 1", Cost = 1 });
-            RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 2", Cost = 2 });
+           // RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 1", Cost = 1 });
+            //RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 2", Cost = 2 });
 
-            foreach (MenuItem menuItem in RestaurantManager.MenuItems)
-                RestaurantManager.Menu.MenuItems.Add(menuItem);
-            RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 3", Cost = 3 });
+           // foreach (MenuItem menuItem in RestaurantManager.MenuItems)
+            //    RestaurantManager.Menu.MenuItems.Add(menuItem);
+          //  RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 3", Cost = 3 });
             //
             // Testing
             //
@@ -124,6 +125,33 @@ namespace COES.ViewModels
         private ObservableCollection<MenuItem> LoadMenuItems()
         {
             // TODO: Load menu items from database.
+
+            //RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 1", Cost = 1 });
+
+
+            //populate the menu items
+
+            DatabaseManager dbm = new DatabaseManager();
+
+            String sql = "select * from menu_item ;";
+            DataTable dt = dbm.query(sql);
+
+            // ok i'll use a foreach :-(
+            foreach (DataRow dr in dt.Rows)
+            {
+
+                MenuItem mi = new MenuItem
+                {
+                    Cost=double.Parse(dr["item_cost"].ToString()),
+                    Id= int.Parse(dr["menu_item_id"].ToString()),
+                    Description= dr["description"].ToString(),
+                    Name=dr["menu_item_name"].ToString()
+                };
+
+                this.RestaurantManager.MenuItems.Add(mi);
+
+            }
+            
             return null;
         }
 
