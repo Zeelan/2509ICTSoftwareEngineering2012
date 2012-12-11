@@ -25,7 +25,7 @@
             Width="345" 
             Style="{DynamicResource ListBoxStyle}" 
             ItemsSource="{Binding MenuItems}"/>
-        <TextBox TextWrapping="Wrap" Canvas.Left="692" Canvas.Top="281" Height="38.96" Width="318.46" Text="{Binding CurrentMenuItem.Name}"/>
+        <TextBox TextWrapping="Wrap" Canvas.Left="692" Canvas.Top="281" Height="38.96" Width="318.46" Text="{Binding CurrentMenuItem.Name}" Style="{DynamicResource TextBoxStyle}"/>
         <!--Total-->
         <Button 
 			Height="{DynamicResource ButtonHeight}"
@@ -55,7 +55,7 @@
             Canvas.Left="820" 
             Canvas.Top="766" 
             Width="285" />
-        <TextBox Text="{Binding CurrentMenuItem.Cost}" Canvas.Left="692" Canvas.Top="400" Height="38.96" Width="318.46"/>
+        <TextBox Text="{Binding CurrentMenuItem.Cost}" Canvas.Left="692" Canvas.Top="400" Height="38.96" Width="318.46" Style="{DynamicResource TextBoxStyle}"/>
         <Button 
         	Height="64"
         	Command="{Binding AddItemCommand}" 

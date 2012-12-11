@@ -159,8 +159,7 @@ namespace COES.ViewModels
         }
 
         /// <summary>
-        /// Deketes the current menu item
-        /// 
+        /// Deletes the current menu item
         /// </summary>
         private void DeleteItem()
         {
