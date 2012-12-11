@@ -30,7 +30,7 @@
 			Command="{Binding CompleteCommand}" Height="{DynamicResource ButtonHeight}" Width="285" Canvas.Top="765" Canvas.Left="456" Style="{DynamicResource AddButtonStyle}"/>
 		<Button 
 			Height="{DynamicResource ButtonHeight}"
-			Command="{Binding CancelOrderCommand}" Style="{DynamicResource ButtonStyle}" Width="285" Canvas.Left="91" Canvas.Top="765"/>
+			Command="{Binding CancelCommand}" Style="{DynamicResource ButtonStyle}" Width="285" Canvas.Left="91" Canvas.Top="765"/>
 		<Button 
 			Height="{DynamicResource ButtonHeight}"
 			Command="{Binding PayNowCommand}" Style="{DynamicResource ButtonStyle}" Canvas.Left="821" Canvas.Top="765" Width="285" IsCancel="True"/>

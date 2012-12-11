@@ -49,6 +49,9 @@ namespace COES.Views
                 case "ErrorOrder":
                     MessageBox.Show("Order must have at least 1 item.", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     break;
+                case "ErrorMenuItemAlreadyExists":
+                    MessageBox.Show("Item already exists in menu", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    break;
             }
         }
     }

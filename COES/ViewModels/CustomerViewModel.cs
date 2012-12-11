@@ -128,7 +128,7 @@ namespace COES.ViewModels
             cust.Add("comments", this.Customer.Comments);
             
 
-            if (this._customer.Id == 0)
+            if (Customer.Id == 0)
             {
                 DatabaseManager.Insert("customer", cust);
             }

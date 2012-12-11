@@ -60,6 +60,8 @@
                 Canvas.Left="812.999" 
                 Canvas.Top="550" 
                 Width="{DynamicResource ButtonWidth}" 
-                Background="{DynamicResource ButtonBackgroundClear}" Style="{DynamicResource ButtonStyle}"/>
+                Background="{DynamicResource ButtonBackgroundClear}" 
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding RestaurantManagerCommand}"/>
     </Canvas>
 </UserControl>

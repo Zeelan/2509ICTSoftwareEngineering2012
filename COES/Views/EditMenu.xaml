@@ -10,10 +10,22 @@
 	</UserControl.Background>
     <Canvas>
         <ListBox
-        SelectedItem="{Binding CurrentMenuItem, Mode=TwoWay}" Height="442" Width="345" Style="{DynamicResource ListBoxStyle}" ItemsSource="{Binding Menu.MenuItems}" Canvas.Left="204" Canvas.Top="281"/>
+            SelectedItem="{Binding CurrentMenuMenuItem, Mode=TwoWay}" 
+            Height="442" 
+            Width="345" 
+            Style="{DynamicResource ListBoxStyle}" 
+            ItemsSource="{Binding Menu.MenuItems}" 
+            Canvas.Left="204" 
+            Canvas.Top="281"/>
         <ListBox
-			SelectedItem="{Binding CurrentMenuItem, Mode=TwoWay}" Height="200" Canvas.Left="677" Canvas.Top="523" Width="345" Style="{DynamicResource ListBoxStyle}" ItemsSource="{Binding MenuItems}"/>
-        <TextBlock TextWrapping="Wrap" Canvas.Left="692" Canvas.Top="281" Height="38.96" Width="318.46" Text="{Binding CurrentMenuItem.Name}"/>
+			SelectedItem="{Binding CurrentMenuItem, Mode=TwoWay}" 
+            Height="200" 
+            Canvas.Left="677" 
+            Canvas.Top="523" 
+            Width="345" 
+            Style="{DynamicResource ListBoxStyle}" 
+            ItemsSource="{Binding MenuItems}"/>
+        <TextBox TextWrapping="Wrap" Canvas.Left="692" Canvas.Top="281" Height="38.96" Width="318.46" Text="{Binding CurrentMenuItem.Name}"/>
         <!--Total-->
         <Button 
 			Height="{DynamicResource ButtonHeight}"
@@ -43,7 +55,7 @@
             Canvas.Left="820" 
             Canvas.Top="766" 
             Width="285" />
-        <TextBlock TextWrapping="Wrap" Text="{Binding CurrentMenuItem.Cost}" Canvas.Left="692" Canvas.Top="400" Height="38.96" Width="318.46"/>
+        <TextBox Text="{Binding CurrentMenuItem.Cost}" Canvas.Left="692" Canvas.Top="400" Height="38.96" Width="318.46"/>
 
         <!--Footer-->
     </Canvas>

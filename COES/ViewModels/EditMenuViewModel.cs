@@ -19,7 +19,9 @@ namespace COES.ViewModels
         //----------------------------------------------------------------------
         private Menu _menu;
         private ObservableCollection<MenuItem> _menuItems;
+        private MenuItem _currentMenuMenuItem;
         private MenuItem _currentMenuItem;
+        private bool _itemSaved;
         //----------------------------------------------------------------------
         #endregion
         //----------------------------------------------------------------------
@@ -40,10 +42,25 @@ namespace COES.ViewModels
             set { Set(() => MenuItems, ref _menuItems, value); }
         }
 
+        public MenuItem CurrentMenuMenuItem
+        {
+            get { return _currentMenuMenuItem; }
+            set { Set(() => CurrentMenuMenuItem, ref _currentMenuMenuItem, value); }
+        }
+
         public MenuItem CurrentMenuItem
         {
             get { return _currentMenuItem; }
             set { Set(() => CurrentMenuItem, ref _currentMenuItem, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets whether the current <see cref="MenuItem"/> has been saved.
+        /// </summary>
+        public bool ItemSaved
+        {
+            get { return _itemSaved; }
+            set { Set(() => ItemSaved, ref _itemSaved, value); }
         }
         //----------------------------------------------------------------------
         #endregion
@@ -72,6 +89,16 @@ namespace COES.ViewModels
         }
 
         public RelayCommand SaveCommand
+        {
+            get;
+            private set;
+        }
+        public RelayCommand AddItemCommand
+        {
+            get;
+            private set;
+        }
+        public RelayCommand RemoveItemCommand
         {
             get;
             private set;
@@ -127,17 +154,35 @@ namespace COES.ViewModels
 
         private void DeleteItem()
         {
-
+            // TODO: remove item from db.
         }
 
         private void CreateItem()
         {
-            CurrentMenuItem = new MenuItem();
+            if (!ItemSaved)
+            {
+                Save();
+                CurrentMenuItem = new MenuItem();
+            }
         }
 
         private void Save()
         {
+            ItemSaved = true;
             // TODO: update db, return the menuitem id
+        }
+
+        private void AddItem()
+        {
+            if (!Menu.MenuItems.Contains(CurrentMenuItem))
+                Menu.MenuItems.Add(CurrentMenuItem);
+            else
+                Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorMenuItemAlreadyExists", "Error"));
+        }
+        private void RemoveItem()
+        {
+            if (CurrentMenuMenuItem != null)
+                Menu.MenuItems.Remove(CurrentMenuMenuItem);
         }
         //----------------------------------------------------------------------
         #endregion
