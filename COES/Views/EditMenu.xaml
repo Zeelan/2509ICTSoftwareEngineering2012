@@ -13,7 +13,7 @@
         SelectedItem="{Binding CurrentMenuItem, Mode=TwoWay}" Height="442" Width="345" Style="{DynamicResource ListBoxStyle}" ItemsSource="{Binding Menu.MenuItems}" Canvas.Left="204" Canvas.Top="281"/>
         <ListBox
 			SelectedItem="{Binding CurrentMenuItem, Mode=TwoWay}" Height="200" Canvas.Left="677" Canvas.Top="523" Width="345" Style="{DynamicResource ListBoxStyle}" ItemsSource="{Binding MenuItems}"/>
-        <TextBlock TextWrapping="Wrap" Canvas.Left="692" Canvas.Top="281" Height="38.96" Width="318.46"/>
+        <TextBlock TextWrapping="Wrap" Canvas.Left="692" Canvas.Top="281" Height="38.96" Width="318.46" Text="{Binding CurrentMenuItem.Name}"/>
         <!--Total-->
         <Button 
 			Height="{DynamicResource ButtonHeight}"
@@ -22,6 +22,20 @@
             Width="285" 
             Canvas.Left="93" 
             Canvas.Top="767"/>
+        <Button 
+        	Height="62"
+        	Command="{Binding DeleteItemCommand}" 
+        	Style="{DynamicResource ButtonStyle}" 
+        	Width="177" 
+        	Canvas.Left="411" 
+        	Canvas.Top="795"/>
+        <Button 
+        	Height="62"
+        	Command="{Binding CreateItemCommand}" 
+        	Style="{DynamicResource ButtonStyle}" 
+        	Width="177" 
+        	Canvas.Left="611" 
+        	Canvas.Top="795"/>
         <Button 
 			Height="{DynamicResource ButtonHeight}"
 			Command="{Binding RunReportCommand}" 

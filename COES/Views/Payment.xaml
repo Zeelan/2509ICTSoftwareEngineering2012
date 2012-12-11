@@ -34,7 +34,7 @@
                    Canvas.Left="844" 
                    Canvas.Top="524" 
                    Width="116" 
-                   Text="{Binding Order.Cost}"/>
+                   Text="{Binding Order.Cost}" FontSize="{DynamicResource GroupBoxHeaderSize}"/>
         <RadioButton Content="Credit Card" Canvas.Left="229" Canvas.Top="316" Width="352" IsChecked="True" FontSize="{DynamicResource GroupBoxHeaderSize}" Style="{DynamicResource RadioButtonStyle}"/>
         <RadioButton Content="Cash" Canvas.Left="229" Canvas.Top="438" Width="352" FontSize="{DynamicResource GroupBoxHeaderSize}" Style="{DynamicResource RadioButtonStyle}"/>
         <TextBlock Canvas.Left="229" TextWrapping="Wrap" Text="{Binding Customer.CreditCard.Name}" Canvas.Top="355.913" Width="352" FontSize="{DynamicResource GroupBoxHeaderSize}" Foreground="#FF8D1F1F"/>
