@@ -164,7 +164,7 @@ namespace COES.ViewModels
         {
             if (CurrentMenuItem != null)
             {
-                String sql = String.Format("DELETE FROM menu_item WHERE menu_item_id = {0}  LIMIT 1; ",CurrentMenuItem.Id.ToString());
+                String sql = String.Format("DELETE FROM menu_item WHERE menu_item_id = {0} ; ",CurrentMenuItem.Id.ToString());
                 DatabaseManager.QuickQuery(sql);
                 RefreshMenuItems();
             }
@@ -180,12 +180,21 @@ namespace COES.ViewModels
         {
             //if (!ItemSaved)
             //{
-            if ( (CurrentMenuItem.Name.Length > 0) && (CurrentMenuItem.Cost>=0))
+
+            if (CurrentMenuItem != null)
             {
-                Save();
+                
+                if ((CurrentMenuItem.Name.Length > 0) && (CurrentMenuItem.Cost >= 0))
+                {
+                    Save();
+                }
             }
-               // CurrentMenuItem = new MenuItem();
-            //}
+            else
+            {
+                CurrentMenuItem = new MenuItem();
+               
+            }
+
         }
 
 

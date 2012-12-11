@@ -440,12 +440,18 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
 
                 return false;
             }
+
             return true;
         }
 
-
-
-
+        /// <summary>
+        /// get the last autoincrement value.
+        /// </summary>
+        /// <returns>the last auto increment value</returns>
+        public static long GetLastAutoID()
+        {
+            return con.LastInsertRowId;
+        }
 
     }
 }

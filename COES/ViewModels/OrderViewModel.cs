@@ -2,6 +2,10 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Data;
+using System;
+using System.Collections.Generic;
+using System.Windows;
 
 namespace COES.ViewModels
 {
@@ -155,6 +159,8 @@ namespace COES.ViewModels
                     Order.MenuItems.Add(CurrentMenuItem, 1);
                 Order.Cost += CurrentMenuItem.Cost;
             }
+
+     
         }
 
         /// <summary>
@@ -177,6 +183,33 @@ namespace COES.ViewModels
             }
             else
             {
+                // create the order in the database
+                Dictionary<String, String> order = new Dictionary<string, string>();
+                order.Add("customer_id", Order.CustomerId.ToString());
+                order.Add("paid_status", "N");
+                order.Add("delivery_flag", "N");
+                order.Add("status", "N");
+                order.Add("total_cost", Order.Cost.ToString());
+
+                DatabaseManager.Insert2("customer_order",order);
+
+                long lastid = DatabaseManager.GetLastAutoID();
+
+                String sql = String.Format("update customer_order set order_date=datetime('now'), created_date=datetime('now') where customer_id={0} ; ", lastid.ToString());
+                DatabaseManager.QuickQuery(sql);
+                
+                foreach (MenuItem mi in Order.MenuItems.Keys)
+                {
+                    for (int i = 0; i < Order.MenuItems[mi]; i++)
+                    {
+                        Dictionary<String, String> oitem = new Dictionary<string, string>();
+                        oitem.Add("order_id", lastid.ToString());
+                        oitem.Add("item_cost", mi.Cost.ToString());
+                        oitem.Add("menu_item_id", mi.Id.ToString());
+                        DatabaseManager.Insert2("order_item", oitem);
+                    }
+                }
+
                 NavigatedFrom();
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("NavigatePayment"), "Navigate");
             }
