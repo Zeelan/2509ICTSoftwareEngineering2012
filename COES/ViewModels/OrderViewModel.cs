@@ -1,4 +1,5 @@
-﻿using COES.Models;
+﻿using System.Windows;
+using COES.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -148,16 +149,19 @@ namespace COES.ViewModels
         /// </summary>
         private void AddToOrder()
         {
-            
             if (CurrentMenuItem != null)
             {
-                if (Order.MenuItems.ContainsKey(CurrentMenuItem))
+                var confirm = MessageBox.Show("Do you wish to confirm this item?", "Confirm", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
+                if (confirm == MessageBoxResult.OK)
                 {
-                    Order.MenuItems[CurrentMenuItem]++;
+                    if (Order.MenuItems.ContainsKey(CurrentMenuItem))
+                    {
+                        Order.MenuItems[CurrentMenuItem]++;
+                    }
+                    else
+                        Order.MenuItems.Add(CurrentMenuItem, 1);
+                    Order.Cost += CurrentMenuItem.Cost;
                 }
-                else
-                    Order.MenuItems.Add(CurrentMenuItem, 1);
-                Order.Cost += CurrentMenuItem.Cost;
             }
 
      

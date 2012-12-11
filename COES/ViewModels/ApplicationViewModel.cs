@@ -84,6 +84,8 @@ namespace COES.ViewModels
             // Registers a message for when an order is to be created, using the customer's id.
             Messenger.Default.Register<int>(this, "CreateOrder", m => OrderCreated(m));
 
+            Messenger.Default.Register<Order>(this, "OrderComplete", m => RestaurantManager.Orders.Remove(m));
+
             //Messenger.Default.Register<Order>(this, "PaymentComplete", 
 
             // Registers the notification messages (using this for changing the Views).
