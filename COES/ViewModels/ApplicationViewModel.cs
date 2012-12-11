@@ -66,7 +66,7 @@ namespace COES.ViewModels
             RegisterMessages();
 
             RestaurantManager.Menu = LoadMenu();
-            RestaurantManager.Menu.MenuItems = LoadMenuItems();
+            RestaurantManager.MenuItems = LoadMenuItems();
 
             //
             // Testing
@@ -112,6 +112,7 @@ namespace COES.ViewModels
         /// <returns>The menu.</returns>
         private Menu LoadMenu()
         {
+            Menu menu = new Menu();
             String sql = "select * from menu;";
             DataTable dt = DatabaseManager.query(sql);
 
@@ -122,12 +123,9 @@ namespace COES.ViewModels
                 mi.loadID(int.Parse(dr["menu_id"].ToString()));
 
                 MessageBox.Show(mi.Name.ToString());
-                RestaurantManager.Menu.MenuItems.Add(mi);
+                menu.MenuItems.Add(mi);
             }
-
-
-
-            return null;
+            return menu;
         }
 
 
@@ -137,9 +135,7 @@ namespace COES.ViewModels
         /// <returns>A list of menu items.</returns>
         private ObservableCollection<MenuItem> LoadMenuItems()
         {
-            // TODO: Load menu items from database.
-
-            //RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 1", Cost = 1 });
+            ObservableCollection<MenuItem> menuItems = new ObservableCollection<MenuItem>();
 
 
             //populate the menu items
@@ -159,11 +155,11 @@ namespace COES.ViewModels
                     Name=dr["menu_item_name"].ToString()
                 };
 
-                this.RestaurantManager.MenuItems.Add(mi);
+                menuItems.Add(mi);
 
             }
-            
-            return null;
+
+            return menuItems;
         }
 
         private void OrderCreated(int customerId)
