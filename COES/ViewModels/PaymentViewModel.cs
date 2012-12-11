@@ -105,6 +105,7 @@ namespace COES.ViewModels
         {
             Order.Paid = true;
             // TODO: db logic, update order in db
+            Messenger.Default.Send<Order>(Order, "OrderComplete");
             PaymentComplete();
         }
 
@@ -116,9 +117,9 @@ namespace COES.ViewModels
         }
 
         private void PaymentComplete()
-        {
-            NavigatedFrom();
+        { 
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("PaymentComplete"), "Navigate");
+            NavigatedFrom();
         }
 
         /// <summary>
@@ -127,6 +128,7 @@ namespace COES.ViewModels
         private void NavigatedFrom()
         {
             Order = null;
+            Customer = null;
         }
         //----------------------------------------------------------------------
         #endregion

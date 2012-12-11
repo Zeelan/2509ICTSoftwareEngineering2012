@@ -140,6 +140,8 @@ namespace COES.ViewModels
             DeleteItemCommand = new RelayCommand(DeleteItem);
             CreateItemCommand = new RelayCommand(CreateItem);
             SaveCommand = new RelayCommand(Save);
+            AddItemCommand = new RelayCommand(AddItem);
+            RemoveItemCommand = new RelayCommand(RemoveItem);
         }
 
         /// <summary>
@@ -252,6 +254,10 @@ namespace COES.ViewModels
 
         private void AddItem()
         {
+            foreach (MenuItem menuItem in Menu.MenuItems)
+            {
+
+            }
             if (!Menu.MenuItems.Contains(CurrentMenuItem))
                 Menu.MenuItems.Add(CurrentMenuItem);
             else

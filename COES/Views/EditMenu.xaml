@@ -50,12 +50,26 @@
         	Canvas.Top="795"/>
         <Button 
 			Height="{DynamicResource ButtonHeight}"
-			Command="{Binding RunReportCommand}" 
+			Command="{Binding SaveCommand}" 
             Style="{DynamicResource ButtonStyle}" 
             Canvas.Left="820" 
             Canvas.Top="766" 
             Width="285" />
         <TextBox Text="{Binding CurrentMenuItem.Cost}" Canvas.Left="692" Canvas.Top="400" Height="38.96" Width="318.46"/>
+        <Button 
+        	Height="64"
+        	Command="{Binding AddItemCommand}" 
+        	Style="{DynamicResource ButtonStyle}" 
+        	Width="37" 
+        	Canvas.Left="562" 
+        	Canvas.Top="616"/>
+        <Button 
+        	Height="64"
+        	Command="{Binding RemoveItemCommand}" 
+        	Style="{DynamicResource ButtonStyle}" 
+        	Width="37" 
+        	Canvas.Left="627" 
+        	Canvas.Top="616"/>
 
         <!--Footer-->
     </Canvas>
