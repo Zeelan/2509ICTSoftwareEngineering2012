@@ -4,6 +4,7 @@ using System.Data;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Windows;
 
 namespace COES.ViewModels
 {
@@ -119,35 +120,27 @@ namespace COES.ViewModels
 
                 
                 // CHeck for a customer
-                String sqlcheck = " SELECT * from customer WHERE  phone_number = '" + result.ToString() +"'; ";
-                int customerMatches=dbm.quickQuery(sqlcheck);
+                String sqlcheck = "phone_number like '" + this.PhoneNumber +"'; ";
+                int customerMatches=dbm.countQuery("customer",sqlcheck);
 
                 if (customerMatches > 0)
                 {
-                    String sql = "SELECT customer_id, " +
-                                "       first_name, " +
-                                "	    last_name, " +
-                                "	    credit_card_name, " +
-                                "	    credit_card_number, " +
-                                "	    credit_card_expiry, " +
-                                "	    street_no, " +
-                                "	    street, " +
-                                "	    suburb_post_code, " +
-                                "	    status " +
-                                "FROM   customer " +
-                                "WHERE  phone_number = '" + result.ToString() + "'; ";
+                    String sql = "SELECT * from customer WHERE  phone_number like '" + this.PhoneNumber.ToString() + "'; ";
 
                     DataTable dt = dbm.query(sql);
 
                     //assume only 1 valid result
                     DataRow dr = dt.Rows[0];
 
+                    MessageBox.Show(dr["first_name"].ToString());
+
 
                     RestaurantManager.CurrentCustomer = new Customer
                     {
                         FirstName = dr["first_name"].ToString(),
                         LastName = dr["last_name"].ToString(),
-                        PhoneNumber = result.ToString(),
+                        PhoneNumber = this.PhoneNumber,
+                        Id = int.Parse(dr["customer_id"].ToString()),
                         Address = new Address
                         {
                             Number = dr["street_no"].ToString(),
@@ -155,8 +148,7 @@ namespace COES.ViewModels
                             Street = dr["street"].ToString(),
                             Suburb = dr["suburb"].ToString()
                         },
-                        Comments = "",          // no comments in schema
-                       // Id = dr[""].ToString(),
+                        //Comments = "",          // no comments in schema
                         CreditCard = new CreditCard
                         {
                             Number = dr["credit_card_number"].ToString(),
@@ -179,7 +171,7 @@ namespace COES.ViewModels
                     {
                         FirstName = "",
                         LastName = "",
-                        PhoneNumber = result.ToString(),
+                        PhoneNumber = this.PhoneNumber,
                         Address = new Address
                         {
                             Number = "",

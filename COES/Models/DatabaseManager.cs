@@ -271,6 +271,33 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
             return result;
         }
 
+        /// <summary>
+        /// count the number of results
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="where"></param>
+        /// <returns>Count of rows matching query</returns>
+        public int countQuery(String table, String where = " 1=1; ")
+        {
+            String sql = String.Format("SELECT count(*) as counter FROM {0} WHERE {1} ;", table, where);
+            SQLiteCommand mycom = new SQLiteCommand(sql, this.con);
+            DataTable ct = new DataTable();
+
+            try{
+            
+            SQLiteDataReader reader = mycom.ExecuteReader();
+                ct.Load(reader);
+                reader.Close();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+            DataRow cr = ct.Rows[0];
+            return int.Parse(cr["counter"].ToString());
+        }
+
         /// <summary> 
         /// used to update a dictionery of values into the specified table
         /// </summary>
@@ -292,10 +319,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
                 //build strings for sql
                 for (int i = 0; i < (list.Count() - 1); i++)
                 {
-                    //keyvalues += String.Format(" {0} = '{1}' , ", list[i].ToString(), tableData[list[i].ToString()].ToString());
-               
-                
-                
+                    keyvalues += String.Format(" {0} = '{1}' , ", list[i].ToString(), tableData[list[i].ToString()].ToString());
                 }
                 // don't add the last comma
                 keyvalues += String.Format(" {0} = '{1}] , ", list[(list.Count() - 1)].ToString(), tableData[list[(list.Count() - 1)].ToString()].ToString());

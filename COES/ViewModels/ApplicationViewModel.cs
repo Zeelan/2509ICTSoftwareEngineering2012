@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using COES.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
+using System.Data;
+using System.Windows;
 
 namespace COES.ViewModels
 {
@@ -109,7 +111,9 @@ namespace COES.ViewModels
         /// <returns>The menu.</returns>
         private Menu LoadMenu()
         {
-            // TODO: Load menu from database.
+            DatabaseManager dbm = new DatabaseManager();
+
+
             return null;
         }
 
