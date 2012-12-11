@@ -35,6 +35,9 @@
             <DataTemplate DataType="{x:Type vm:EditMenuViewModel}">
                 <views:EditMenu />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:RestaurantManagerViewModel}">
+                <views:RestaurantManager />
+            </DataTemplate>
 
 
             <!--Double-->

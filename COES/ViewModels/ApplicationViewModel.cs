@@ -213,6 +213,12 @@ namespace COES.ViewModels
                         Messenger.Default.Send<ObservableCollection<MenuItem>>(RestaurantManager.MenuItems, "EditMenu");
                         break;
                     }
+                case ("NavigateRestaurantManager"):
+                    {
+                        CurrentViewModel = ViewModelLocator.RestaurantManagerStatic;
+                        Messenger.Default.Send<ObservableCollection<Order>>(RestaurantManager.Orders, "RestaurantManagerOpened");
+                        break;
+                    }
                 case ("Cancel"):
                     {
                         CurrentViewModel = ViewModelLocator.HomeStatic;

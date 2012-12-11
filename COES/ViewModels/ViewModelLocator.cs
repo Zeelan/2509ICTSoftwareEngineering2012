@@ -32,6 +32,7 @@ namespace COES.ViewModels
         private static PaymentViewModel _payment;
         private static ReportingViewModel _reporting;
         private static EditMenuViewModel _editMenu;
+        private static RestaurantManagerViewModel _restaurantManager;
 
         static ViewModelLocator()
         {
@@ -49,7 +50,7 @@ namespace COES.ViewModels
             //SimpleIoc.Default.Register<HomeViewModel>();
             //SimpleIoc.Default.Register<CustomerViewModel>();
             //SimpleIoc.Default.Register<OrderViewModel>();
-            
+
         }
 
         public ApplicationViewModel Application
@@ -120,6 +121,16 @@ namespace COES.ViewModels
         public static EditMenuViewModel EditMenuStatic
         {
             get { return _editMenu ?? (_editMenu = new EditMenuViewModel()); }
+        }
+
+        public RestaurantManagerViewModel RestaurantManager
+        {
+            get { return RestaurantManagerStatic; }
+        }
+
+        public static RestaurantManagerViewModel RestaurantManagerStatic
+        {
+            get { return _restaurantManager ?? (_restaurantManager = new RestaurantManagerViewModel()); }
         }
 
         //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
