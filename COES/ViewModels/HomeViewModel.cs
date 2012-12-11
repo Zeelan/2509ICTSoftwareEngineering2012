@@ -148,12 +148,12 @@ namespace COES.ViewModels
                             Street = dr["street"].ToString(),
                             Suburb = dr["suburb"].ToString()
                         },
-                        //Comments = "",          // no comments in schema
+                        Comments = dr["comments"].ToString(),          // no comments in schema
                         CreditCard = new CreditCard
                         {
                             Number = dr["credit_card_number"].ToString(),
                         },
-                        Status = "Y"
+                        Status = dr["status"].ToString()
                     };
                     RestaurantManager.CurrentCustomer.CreditCard.Name = RestaurantManager.CurrentCustomer.Name;
 
