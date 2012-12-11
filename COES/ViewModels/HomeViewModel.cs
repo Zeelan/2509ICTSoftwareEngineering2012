@@ -118,13 +118,13 @@ namespace COES.ViewModels
                 
                 // CHeck for a customer
                 String sqlcheck = "phone_number like '" + this.PhoneNumber +"'; ";
-                int customerMatches = DatabaseManager.countQuery("customer", sqlcheck);
+                int customerMatches = DatabaseManager.CountQuery("customer", sqlcheck);
 
                 if (customerMatches > 0)
                 {
                     String sql = "SELECT * from customer WHERE  phone_number like '" + this.PhoneNumber.ToString() + "'; ";
 
-                    DataTable dt = DatabaseManager.query(sql);
+                    DataTable dt = DatabaseManager.Query(sql);
 
                     //assume only 1 valid result
                     DataRow dr = dt.Rows[0];

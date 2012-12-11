@@ -163,7 +163,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
 	";		    // end of literal string for sql create of database.
 		
                  //run as quickquery
-                quickQuery(sql);
+                QuickQuery(sql);
 
 
             }
@@ -178,7 +178,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         /// <param name="query">The SQL query.</param>
         /// <returns>The <see cref="DataTable"/>.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
-        public static DataTable query(string query)
+        public static DataTable Query(string query)
         {
             DataTable resultsTable = new DataTable();
             try
@@ -206,7 +206,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         /// <param name="table">Name of the table to insert data into</param>
         /// <param name="tableData">A dictionery of type String,String  key,value, to insert</param>
         /// <returns>true if successful false if not</returns>
-        public static bool insert(String table, Dictionary<String, String> tableData)
+        public static bool Insert(String table, Dictionary<String, String> tableData)
         {
             // build the string to insert into the database
 
@@ -235,9 +235,9 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
 
             try
             {
-                quickQuery(sql);
+                QuickQuery(sql);
             }
-            catch (Exception fail)
+            catch (Exception)
             {
                 
                 return false;
@@ -253,7 +253,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         /// <param name="table">Complete SQL statment to run</param>
         /// <returns>true if successful false if not</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
-        public static int quickQuery(String sql)
+        public static int QuickQuery(String sql)
         {         
             //Setup the sql command
             SQLiteCommand mycom = new SQLiteCommand(sql,con);
@@ -271,7 +271,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         /// <param name="where"></param>
         /// <returns>Count of rows matching query</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
-        public static int countQuery(String table, String where = " 1=1; ")
+        public static int CountQuery(String table, String where = " 1=1; ")
         {
             String sql = String.Format("SELECT count(*) as counter FROM {0} WHERE {1} ;", table, where);
             SQLiteCommand mycom = new SQLiteCommand(sql, con);
@@ -298,7 +298,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         /// <param name="table">Name of the table to update data in</param>
         /// <param name="tableData">A dictionery of type String,String  key,value, to update</param>
         /// <returns>true if successful false if not</returns>
-        public static bool update(String table, Dictionary<String, String> tableData, String where = " 1=1 " )
+        public static bool Update(String table, Dictionary<String, String> tableData, String where = " 1=1 " )
         {
             // build the string to insert into the database
 
@@ -324,9 +324,9 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
 
             try
             {
-                quickQuery(sql);
+                QuickQuery(sql);
             }
-            catch (Exception fail)
+            catch (Exception)
             {
                 return false;
             }

@@ -67,19 +67,6 @@ namespace COES.ViewModels
 
             RestaurantManager.Menu = LoadMenu();
             RestaurantManager.MenuItems = LoadMenuItems();
-
-            //
-            // Testing
-            //
-           // RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 1", Cost = 1 });
-            //RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 2", Cost = 2 });
-
-           // foreach (MenuItem menuItem in RestaurantManager.MenuItems)
-            //    RestaurantManager.Menu.MenuItems.Add(menuItem);
-          //  RestaurantManager.MenuItems.Add(new MenuItem { Name = "Test item 3", Cost = 3 });
-            //
-            // Testing
-            //
         }
         //----------------------------------------------------------------------
         #endregion
@@ -114,7 +101,7 @@ namespace COES.ViewModels
         {
             Menu menu = new Menu();
             String sql = "select * from menu;";
-            DataTable dt = DatabaseManager.query(sql);
+            DataTable dt = DatabaseManager.Query(sql);
 
             // ok i'll use a foreach :-(
             foreach (DataRow dr in dt.Rows)
@@ -141,7 +128,7 @@ namespace COES.ViewModels
             //populate the menu items
 
             String sql = "select * from menu_item ;";
-            DataTable dt = DatabaseManager.query(sql);
+            DataTable dt = DatabaseManager.Query(sql);
 
             // ok i'll use a foreach :-(
             foreach (DataRow dr in dt.Rows)

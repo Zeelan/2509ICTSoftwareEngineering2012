@@ -146,13 +146,13 @@ namespace COES.Models
 
                 // CHeck for a customer
                 String sqlcheck = String.Format(" SELECT * from customer WHERE  customer_id = {0} ; ",id.ToString());
-                int customerMatches = DatabaseManager.quickQuery(sqlcheck);
+                int customerMatches = DatabaseManager.QuickQuery(sqlcheck);
 
                 if (customerMatches > 0)
                 {
                     String sql =  String.Format(" SELECT * from customer WHERE  customer_id = {0} ; ",id.ToString());
 
-                    DataTable dt = DatabaseManager.query(sql);
+                    DataTable dt = DatabaseManager.Query(sql);
 
                     //assume only 1 valid result
                     DataRow dr = dt.Rows[0];

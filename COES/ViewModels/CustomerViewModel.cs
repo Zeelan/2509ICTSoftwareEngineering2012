@@ -130,11 +130,11 @@ namespace COES.ViewModels
 
             if (this._customer.Id == 0)
             {
-                DatabaseManager.insert("customer", cust);
+                DatabaseManager.Insert("customer", cust);
             }
             else
             {
-                DatabaseManager.update("customer", cust, String.Format(" customer_id ={0} LIMIT 1; ", this.Customer.Id.ToString()));
+                DatabaseManager.Update("customer", cust, String.Format(" customer_id ={0} LIMIT 1; ", this.Customer.Id.ToString()));
             }               
         }
 

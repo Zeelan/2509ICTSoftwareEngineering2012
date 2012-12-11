@@ -109,7 +109,7 @@ namespace COES.Models
         {
 
             String sql = string.Format("select * from menu_item where menu_item_id = {0} ;",id.ToString());
-            DataTable dt = DatabaseManager.query(sql);
+            DataTable dt = DatabaseManager.Query(sql);
 
             if (dt.Rows.Count > 0)
             {
