@@ -95,6 +95,33 @@ namespace COES.ViewModels
         private void RunReport()
         {
             // TODO: db logic to run report.
+            switch (SelectedTime)
+            {
+                case "Day":
+                    {
+                        //
+                        break;
+                    }
+                case "Week":
+                    {
+                        //
+                        break;
+                    }
+                case "Month":
+                    {
+                        //
+                        break;
+                    }
+                case "Year":
+                    {
+                        //
+                        break;
+                    }
+                case "All Time":
+                    {
+                        break;
+                    }
+            }
         }
         //----------------------------------------------------------------------
         #endregion
