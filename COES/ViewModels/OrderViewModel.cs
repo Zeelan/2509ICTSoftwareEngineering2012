@@ -6,7 +6,6 @@ using GalaSoft.MvvmLight.Messaging;
 using System.Data;
 using System;
 using System.Collections.Generic;
-using System.Windows;
 
 namespace COES.ViewModels
 {

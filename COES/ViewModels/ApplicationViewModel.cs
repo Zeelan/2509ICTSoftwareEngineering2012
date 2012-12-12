@@ -67,6 +67,8 @@ namespace COES.ViewModels
 
             RestaurantManager.Menu = LoadMenu();
             RestaurantManager.MenuItems = LoadMenuItems();
+
+            Populate();
         }
         //----------------------------------------------------------------------
         #endregion
@@ -145,6 +147,32 @@ namespace COES.ViewModels
         {
             RestaurantManager.CurrentOrder = new Order(customerId);
             RestaurantManager.Orders.Add(RestaurantManager.CurrentOrder);
+        }
+
+
+        private void Populate()
+        {
+            String sql = "select * from customer_order where paid_status like 'N' ; ";
+            DataTable dt = DatabaseManager.Query(sql);
+
+            //clear current
+            RestaurantManager.Orders.Clear();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                DataRow dr = dt.Rows[i];
+                Order ot = new Order();
+                ot.Id = int.Parse(dr["customer_order_id"].ToString());
+                ot.Cost = double.Parse(dr["total_cost"].ToString());
+                ot.CustomerId = int.Parse(dr["customer_id"].ToString());
+
+                if (dr["delivery_flag"] == "Y") { ot.Delivery = true; } else { ot.Delivery = false; }
+                if (dr["paid_status"] == "Y") { ot.Paid = true; } else { ot.Paid = false; }
+                ot.DateCreated = DateTime.Parse(dr["created_date"].ToString());
+                RestaurantManager.Orders.Add(ot);
+
+            }
+
+
         }
 
         private void Navigate(NotificationMessage m)

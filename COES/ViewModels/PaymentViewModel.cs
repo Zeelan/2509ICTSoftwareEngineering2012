@@ -2,6 +2,8 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System;
+using System.Collections.Generic;
 
 namespace COES.ViewModels
 {
@@ -107,7 +109,11 @@ namespace COES.ViewModels
         private void PayNow()
         {
             Order.Paid = true;
-            // TODO: db logic, update order in db
+            Dictionary<String, String> items = new Dictionary<String, String>();
+            items.Add("paid_status", "Y");
+            DatabaseManager.Update2("customer_order",items,String.Format(" customer_order_id={0} ",Order.Id.ToString() ));
+
+
             Messenger.Default.Send<Order>(Order, "OrderComplete");
             PaymentComplete();
         }

@@ -217,6 +217,7 @@ namespace COES.ViewModels
 
         private void OpenRestaurantManager()
         {
+            RestaurantManager.Populate();
             Messenger.Default.Send<NotificationMessage>(new NotificationMessage("NavigateRestaurantManager"), "Navigate");
             NavigatedFrom();
         }

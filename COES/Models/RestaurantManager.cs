@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -99,6 +100,29 @@ namespace COES.Models
         //----------------------------------------------------------------------
         #region --- Methods ---
         //----------------------------------------------------------------------
+        public void Populate()
+        {
+            String sql = "select * from customer_order where paid_status like 'N' ; ";
+            DataTable dt = DatabaseManager.Query(sql);
+
+            //clear current
+            Orders.Clear();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                DataRow dr = dt.Rows[i];
+                Order ot = new Order();
+                ot.Id = int.Parse(dr["customer_order_id"].ToString());
+                ot.Cost = double.Parse(dr["total_cost"].ToString());
+                ot.CustomerId = int.Parse(dr["customer_id"].ToString());
+
+                if (dr["delivery_flag"].ToString() == "Y") { ot.Delivery = true; } else { ot.Delivery = false; }
+                if (dr["paid_status"].ToString() == "Y") { ot.Paid = true; } else { ot.Paid = false; }
+                ot.DateCreated = DateTime.Parse(dr["created_date"].ToString());
+                Orders.Add(ot);
+
+            }
+        }
+
 
         //----------------------------------------------------------------------
         #endregion

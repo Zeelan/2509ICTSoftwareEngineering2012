@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+                xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
              mc:Ignorable="d" 
              DataContext="{Binding Reporting, Source={StaticResource Locator}}"
              Height="{DynamicResource ViewHeight}" 
@@ -11,9 +13,6 @@
         <ImageBrush ImageSource="/COES;component/Images/reporting.jpg" Stretch="UniformToFill"/>
     </UserControl.Background>
     <Canvas>
-        <ListBox
-			ItemsSource="{Binding Time}"
-			SelectedItem="{Binding SelectedTime, Mode=TwoWay}" Height="353" Canvas.Left="430" Canvas.Top="238" Width="345" Style="{DynamicResource ListBoxStyle}"/>
         <!--Items in Order-->
         <!--Total-->
         <Button 
@@ -25,12 +24,18 @@
             Canvas.Top="767"/>
         <Button 
 			Height="{DynamicResource ButtonHeight}"
-			Command="{Binding RunReportCommand}" 
             Style="{DynamicResource ButtonStyle}" 
             Canvas.Left="825" 
             Canvas.Top="768" 
-            Width="285" />
-
+            Width="285" Click="Button_Click_1" />
+        <wfi:WindowsFormsHost Height="516.941" Width="680.149" Canvas.Left="429.851" Canvas.Top="225.537">
+        <wf:DataGrid x:Name="myDG">
+            </wf:DataGrid>
+                </wfi:WindowsFormsHost>
+        <Rectangle Fill="#FFF4F4F5" Height="365.463" Canvas.Left="85" Stroke="Black" Canvas.Top="225.537" Width="339.851"/>
+        <ListBox x:Name="reportSel"
+			ItemsSource="{Binding Time}"
+			SelectedItem="{Binding SelectedTime, Mode=TwoWay}" Height="353" Canvas.Left="104.627" Canvas.Top="238" Width="345" Style="{DynamicResource ListBoxStyle}"/>
         <!--Footer-->
     </Canvas>
 </UserControl>

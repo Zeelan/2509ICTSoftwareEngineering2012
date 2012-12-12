@@ -99,7 +99,10 @@ namespace COES.ViewModels
             {
                 case "Day":
                     {
-                        //
+
+                       
+
+
                         break;
                     }
                 case "Week":
