@@ -198,6 +198,7 @@ namespace COES.ViewModels
                 DatabaseManager.Insert2("customer_order",order);
 
                 long lastid = DatabaseManager.GetLastAutoID();
+                Order.Id = (int)lastid;
 
                 String sql = String.Format("update customer_order set order_date=datetime('now'), created_date=datetime('now') where customer_id={0} ; ", lastid.ToString());
                 DatabaseManager.QuickQuery(sql);

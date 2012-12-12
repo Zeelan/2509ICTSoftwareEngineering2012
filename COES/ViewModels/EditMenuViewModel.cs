@@ -22,9 +22,9 @@ namespace COES.ViewModels
         #region --- Fields ---
         //----------------------------------------------------------------------
         private Menu _menu;
-        private ObservableCollection<MenuItem> _menuItems;
-        private MenuItem _currentMenuMenuItem;
+        private ObservableCollection<MenuItem> _allMenuItems;
         private MenuItem _currentMenuItem;
+        private MenuItem _currentAllMenuItem;
         private bool _itemSaved;
         //----------------------------------------------------------------------
         #endregion
@@ -40,22 +40,22 @@ namespace COES.ViewModels
             set { Set(() => Menu, ref _menu, value); }
         }
 
-        public ObservableCollection<MenuItem> MenuItems
+        public ObservableCollection<MenuItem> AllMenuItems
         {
-            get { return _menuItems; }
-            set { Set(() => MenuItems, ref _menuItems, value); }
-        }
-
-        public MenuItem CurrentMenuMenuItem
-        {
-            get { return _currentMenuMenuItem; }
-            set { Set(() => CurrentMenuMenuItem, ref _currentMenuMenuItem, value); }
+            get { return _allMenuItems; }
+            set { Set(() => AllMenuItems, ref _allMenuItems, value); }
         }
 
         public MenuItem CurrentMenuItem
         {
             get { return _currentMenuItem; }
             set { Set(() => CurrentMenuItem, ref _currentMenuItem, value); }
+        }
+
+        public MenuItem CurrentAllMenuItem
+        {
+            get { return _currentAllMenuItem; }
+            set { Set(() => CurrentAllMenuItem, ref _currentAllMenuItem, value); }
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace COES.ViewModels
         private void RegisterMessages()
         {
             Messenger.Default.Register<Menu>(this, "EditMenu", m => Menu = m);
-            Messenger.Default.Register<ObservableCollection<MenuItem>>(this, "EditMenu", m => MenuItems = m);
+            Messenger.Default.Register<ObservableCollection<MenuItem>>(this, "EditMenu", m => AllMenuItems = m);
         }
 
         private void Cancel()
@@ -163,9 +163,9 @@ namespace COES.ViewModels
         /// </summary>
         private void DeleteItem()
         {
-            if (CurrentMenuItem != null)
+            if (CurrentAllMenuItem != null)
             {
-                String sql = String.Format("DELETE FROM menu_item WHERE menu_item_id = {0} ; ",CurrentMenuItem.Id.ToString());
+                String sql = String.Format("DELETE FROM menu_item WHERE menu_item_id = {0} ; ",CurrentAllMenuItem.Id.ToString());
                 DatabaseManager.QuickQuery(sql);
                 RefreshMenuItems();
             }
@@ -182,17 +182,17 @@ namespace COES.ViewModels
             //if (!ItemSaved)
             //{
 
-            if (CurrentMenuItem != null)
+            if (CurrentAllMenuItem != null)
             {
                 
-                if ((CurrentMenuItem.Name.Length > 0) && (CurrentMenuItem.Cost >= 0))
+                if ((CurrentAllMenuItem.Name.Length > 0) && (CurrentAllMenuItem.Cost >= 0))
                 {
                     Save();
                 }
             }
             else
             {
-                CurrentMenuItem = new MenuItem();
+                CurrentAllMenuItem = new MenuItem();
                
             }
 
@@ -207,27 +207,26 @@ namespace COES.ViewModels
             //ItemSaved = true;
             // TODO: update db, return the menuitem id
 
-            Dictionary<String, String> item = new Dictionary<string, string>();
-            item.Add("menu_item_name",CurrentMenuItem.Name.ToString());
-            item.Add("item_cost",CurrentMenuItem.Cost.ToString());
+            //Dictionary<String, String> item = new Dictionary<string, string>();
+            //item.Add("menu_item_name",CurrentMenuItem.Name.ToString());
+            //item.Add("item_cost",CurrentMenuItem.Cost.ToString());
 
-            MessageBox.Show(CurrentMenuItem.Name.ToString() + " " + CurrentMenuItem.Cost.ToString());
+            //MessageBox.Show(CurrentMenuItem.Name.ToString() + " " + CurrentMenuItem.Cost.ToString());
 
-
+            SaveMenuToDatabase();
             RefreshMenuItems();
         }
 
 
         /// <summary>
         /// Save MENU to database
-        /// 
         /// </summary>
         private void SaveMenuToDatabase()
         {
-            Dictionary<String, String> items = new Dictionary<string, string>();
+            Dictionary<string, string> items = new Dictionary<string, string>();
             foreach(MenuItem mi in Menu.MenuItems)
             {
-                items.Add("menu_item_id",mi.Id.ToString());
+                items.Add("menu_item_id", mi.Id.ToString());
             }
 
             // Clear the menu in the database
@@ -237,12 +236,14 @@ namespace COES.ViewModels
             //now save the new list
             DatabaseManager.Insert("menu", items);
 
+            MessageBox.Show("Menu updated.", "Menu", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
         }
 
 
         private void RefreshMenuItems()
         {
-            MenuItems.Clear();
+            AllMenuItems.Clear();
             String sql = "select * from menu_item ;";
             DataTable dt = DatabaseManager.Query(sql);
 
@@ -256,25 +257,32 @@ namespace COES.ViewModels
                     Description = dr["description"].ToString(),
                     Name = dr["menu_item_name"].ToString()
                 };
-                MenuItems.Add(mi);
+                AllMenuItems.Add(mi);
             }
         }
 
         private void AddItem()
         {
-            foreach (MenuItem menuItem in Menu.MenuItems)
+            // poor way of doing this but because of how we set it up i cant compare the object itself -_______-
+            bool found = false;
+            foreach (MenuItem mi in Menu.MenuItems)
             {
-
+                if (CurrentAllMenuItem != null && mi.Name == CurrentAllMenuItem.Name)
+                {
+                    found = true;
+                    MessageBox.Show("Item already exists in menu", "Menu", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    break;
+                }
             }
-            if (!Menu.MenuItems.Contains(CurrentMenuItem))
-                Menu.MenuItems.Add(CurrentMenuItem);
+            if (!found)
+                Menu.MenuItems.Add(CurrentAllMenuItem);        
             else
                 Messenger.Default.Send<NotificationMessage>(new NotificationMessage("ErrorMenuItemAlreadyExists", "Error"));
         }
         private void RemoveItem()
         {
-            if (CurrentMenuMenuItem != null)
-                Menu.MenuItems.Remove(CurrentMenuMenuItem);
+            if (CurrentMenuItem != null)
+                Menu.MenuItems.Remove(CurrentMenuItem);
         }
         //----------------------------------------------------------------------
         #endregion

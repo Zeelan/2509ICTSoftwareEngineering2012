@@ -94,7 +94,7 @@ namespace COES.ViewModels
 
         private void RunReport()
         {
-
+            // TODO: db logic to run report.
         }
         //----------------------------------------------------------------------
         #endregion

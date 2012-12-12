@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using COES.Models;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -102,8 +103,14 @@ namespace COES.ViewModels
         {
             if (!SelectedOrder.Paid)
             {
-                Messenger.Default.Send<Order>(SelectedOrder, "RestaurantManagerPayOrder");
+                MessageBoxResult result = MessageBox.Show("Do you wish to finalize payment for this order?", "Payment", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
+                if (result == MessageBoxResult.OK)
+                {
+                    SelectedOrder.Paid = true;
+                    CompleteOrder();
+                }
             }
+            
         }
 
         private void CompleteOrder()

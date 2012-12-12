@@ -95,6 +95,9 @@ namespace COES.ViewModels
             PayLaterCommand = new RelayCommand(PayLater);
         }
 
+        /// <summary>
+        /// Registers the messages associated with this ViewModel.
+        /// </summary>
         private void RegisterMessages()
         {
             Messenger.Default.Register<Order>(this, "PaymentReady", m => Order = m);

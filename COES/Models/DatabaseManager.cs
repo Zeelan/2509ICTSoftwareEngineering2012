@@ -341,6 +341,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
         /// <param name="table">Name of the table to update data in</param>
         /// <param name="tableData">A dictionery of type String,String  key,value, to update</param>
         /// <returns>true if successful false if not</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2241:Provide correct arguments to formatting methods")]
         public static bool Update2(String table, Dictionary<String, String> tableData, String where = " 1=1 ")
         {
             
@@ -391,6 +392,7 @@ CREATE TRIGGER admin_staff_ai AFTER INSERT ON admin_staff
 
 
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
         public static bool Insert2(String table, Dictionary<String, String> tableData)
         {
             // build the string to insert into the database

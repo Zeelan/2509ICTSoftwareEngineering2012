@@ -13,7 +13,7 @@
     <Canvas>
         <ListBox
 			ItemsSource="{Binding Order.MenuItems}"
-			SelectedItem="{Binding CurrentOrderItem, Mode=TwoWay}" Height="210" Canvas.Left="615" Canvas.Top="305" Width="345" Style="{DynamicResource ListBoxStyle}" ItemTemplate="{DynamicResource MenuItemTemplate}"/>
+			SelectedItem="{Binding CurrentOrderItem, Mode=TwoWay}" Height="210" Canvas.Left="615" Canvas.Top="305" Width="345" Style="{DynamicResource ListBoxStyle}" ItemTemplate="{DynamicResource MenuItemTemplate}" FontSize="18.667"/>
         <!--Items in Order-->
         <!--Total-->
         <Button 

@@ -19,13 +19,15 @@
         <DataTemplate x:Key="RestaurantManagerListBoxItemStyle">
         	<Grid>
         		<Grid.ColumnDefinitions>
-        			<ColumnDefinition/>
+        			<ColumnDefinition Width="Auto"/>
+        			<ColumnDefinition Width="Auto"/>
         			<ColumnDefinition Width="Auto"/>
         			<ColumnDefinition/>
         		</Grid.ColumnDefinitions>
-        		<TextBlock Margin="0,0,0,4.04" TextWrapping="Wrap" Text="{Binding Id}" d:LayoutOverrides="Width, Height"/>
-        		<TextBlock Margin="0,0,0,4.04" TextWrapping="Wrap" Text="$" d:LayoutOverrides="Width, Height" Grid.Column="1"/>
-        		<TextBlock Margin="0,0,0,4.04" TextWrapping="Wrap" Text="{Binding Cost}" d:LayoutOverrides="Width, Height" Grid.Column="2"/>
+        		<TextBlock TextWrapping="Wrap" Text="Order #" d:LayoutOverrides="Width, Height"/>
+        		<TextBlock TextWrapping="Wrap" Text="{Binding Id}" d:LayoutOverrides="Width, Height" Margin="5,0" Grid.Column="1"/>
+        		<TextBlock Margin="5,0,0,0" TextWrapping="Wrap" Text="$" d:LayoutOverrides="Width, Height" Grid.Column="2"/>
+        		<TextBlock Margin="0" TextWrapping="Wrap" Text="{Binding Cost}" d:LayoutOverrides="Width, Height" Grid.Column="3"/>
         	</Grid>
         </DataTemplate>
     </UserControl.Resources>
@@ -35,17 +37,20 @@
     <Canvas>
 		<ListBox
 			ItemsSource="{Binding Orders}"
-			SelectedItem="{Binding SelectedOrder, Mode=TwoWay}" Width="350" Height="460" Canvas.Top="243" Canvas.Left="417" Style="{DynamicResource ListBoxStyle}" ItemTemplate="{DynamicResource RestaurantManagerListBoxItemStyle}"/>
+			SelectedItem="{Binding SelectedOrder, Mode=TwoWay}" Width="350" Height="460" Canvas.Top="243" Canvas.Left="417" Style="{DynamicResource ListBoxStyle}" ItemTemplate="{DynamicResource RestaurantManagerListBoxItemStyle}" FontSize="18.667"/>
+		<Border Height="{DynamicResource ButtonHeight}" Canvas.Left="456" Canvas.Top="765" Width="285" Background="#8C000000" >
+<!--Total-->
+			<Button Content=""
+				Command="{Binding CompleteCommand}" Style="{DynamicResource AddButtonStyle}" IsHitTestVisible="False"/>
+		</Border>
         <!--Items in Order-->
         <!--Total-->
-		<Button Content=""
-			Command="{Binding CompleteCommand}" Height="{DynamicResource ButtonHeight}" Width="285" Canvas.Top="765" Canvas.Left="456" Style="{DynamicResource AddButtonStyle}"/>
 		<Button 
 			Height="{DynamicResource ButtonHeight}"
 			Command="{Binding CancelCommand}" Style="{DynamicResource ButtonStyle}" Width="285" Canvas.Left="91" Canvas.Top="765"/>
 		<Button 
 			Height="{DynamicResource ButtonHeight}"
-			Command="{Binding PayNowCommand}" Style="{DynamicResource ButtonStyle}" Canvas.Left="821" Canvas.Top="765" Width="285" IsCancel="True"/>
+			Command="{Binding PayOrderCommand}" Style="{DynamicResource ButtonStyle}" Canvas.Left="821" Canvas.Top="765" Width="285" IsCancel="True"/>
 
         <!--Footer-->
 	</Canvas>

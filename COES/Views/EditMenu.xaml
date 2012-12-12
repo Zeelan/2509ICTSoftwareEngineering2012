@@ -10,7 +10,7 @@
 	</UserControl.Background>
     <Canvas>
         <ListBox
-            SelectedItem="{Binding CurrentMenuMenuItem, Mode=TwoWay}" 
+            SelectedItem="{Binding CurrentMenuItem, Mode=TwoWay}" 
             Height="442" 
             Width="345" 
             Style="{DynamicResource ListBoxStyle}" 
@@ -18,14 +18,14 @@
             Canvas.Left="204" 
             Canvas.Top="281"/>
         <ListBox
-			SelectedItem="{Binding CurrentMenuItem, Mode=TwoWay}" 
+			SelectedItem="{Binding CurrentAllMenuItem, Mode=TwoWay}" 
             Height="200" 
             Canvas.Left="677" 
             Canvas.Top="523" 
             Width="345" 
             Style="{DynamicResource ListBoxStyle}" 
-            ItemsSource="{Binding MenuItems}"/>
-        <TextBox TextWrapping="Wrap" Canvas.Left="692" Canvas.Top="281" Height="38.96" Width="318.46" Text="{Binding CurrentMenuItem.Name}" Style="{DynamicResource TextBoxStyle}"/>
+            ItemsSource="{Binding AllMenuItems}"/>
+        <TextBox TextWrapping="Wrap" Canvas.Left="692" Canvas.Top="281" Height="38.96" Width="318.46" Text="{Binding CurrentAllMenuItem.Name}" Style="{DynamicResource TextBoxStyle}"/>
         <!--Total-->
         <Button 
 			Height="{DynamicResource ButtonHeight}"
@@ -34,20 +34,28 @@
             Width="285" 
             Canvas.Left="93" 
             Canvas.Top="767"/>
-        <Button 
-        	Height="62"
-        	Command="{Binding DeleteItemCommand}" 
-        	Style="{DynamicResource ButtonStyle}" 
-        	Width="177" 
+        <Border 
+        	Height="62" 
         	Canvas.Left="411" 
-        	Canvas.Top="795"/>
-        <Button 
-        	Height="62"
-        	Command="{Binding CreateItemCommand}" 
-        	Style="{DynamicResource ButtonStyle}" 
-        	Width="177" 
+        	Canvas.Top="795" 
+        	Width="177" Background="#8C000000" 
+        	>
+        	<Button
+        		Command="{Binding DeleteItemCommand}" 
+        		Style="{DynamicResource ButtonStyle}" 
+        		IsHitTestVisible="False"/>
+        </Border>
+        <Border 
+        	Height="62" 
         	Canvas.Left="611" 
-        	Canvas.Top="795"/>
+        	Canvas.Top="795" 
+        	Width="177" Background="#8C000000" 
+        	>
+        	<Button
+        		Command="{Binding CreateItemCommand}" 
+        		Style="{DynamicResource ButtonStyle}" 
+        		IsHitTestVisible="False"/>
+        </Border>
         <Button 
 			Height="{DynamicResource ButtonHeight}"
 			Command="{Binding SaveCommand}" 
@@ -55,7 +63,7 @@
             Canvas.Left="820" 
             Canvas.Top="766" 
             Width="285" />
-        <TextBox Text="{Binding CurrentMenuItem.Cost}" Canvas.Left="692" Canvas.Top="400" Height="38.96" Width="318.46" Style="{DynamicResource TextBoxStyle}"/>
+        <TextBox Text="{Binding CurrentAllMenuItem.Cost}" Canvas.Left="692" Canvas.Top="400" Height="38.96" Width="318.46" Style="{DynamicResource TextBoxStyle}"/>
         <Button 
         	Height="64"
         	Command="{Binding AddItemCommand}" 

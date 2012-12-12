@@ -21,12 +21,6 @@
     </UserControl.Background>
     <Canvas>
         <!--Phone Number Grid-->
-        <TextBlock Text="2" 
-                   HorizontalAlignment="Right" 
-                   FontSize="{DynamicResource GroupBoxHeaderSize}" Canvas.Left="955.223" Canvas.Top="135.82"/>
-        <TextBlock Text="3"
-                   HorizontalAlignment="Right" 
-                   FontSize="{DynamicResource GroupBoxHeaderSize}" Canvas.Left="1095.521" Canvas.Top="135.82"/>
         <TextBox Text="{Binding PhoneNumber, Mode=TwoWay}"
                  FontSize="30" 
                  MaxLength="{DynamicResource PhoneNumberMaxLength}" 
