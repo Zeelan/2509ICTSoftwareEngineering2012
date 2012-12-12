@@ -197,6 +197,10 @@ namespace COES.ViewModels
                 case ("Cancel"):
                     {
                         CurrentViewModel = ViewModelLocator.HomeStatic;
+                        if (RestaurantManager.Orders.Contains(RestaurantManager.CurrentOrder))
+                            RestaurantManager.Orders.Remove(RestaurantManager.CurrentOrder);
+                        RestaurantManager.CurrentCustomer = null;
+                        RestaurantManager.CurrentOrder = null;
                         break;
                     }
 
