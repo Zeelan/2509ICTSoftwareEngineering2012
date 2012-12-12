@@ -106,7 +106,7 @@ namespace COES.ViewModels
             foreach (DataRow dr in dt.Rows)
             {
                 MenuItem mi = new MenuItem();
-                mi.loadID(int.Parse(dr["menu_id"].ToString()));
+                mi.loadID(int.Parse(dr["menu_item_id"].ToString()));
                 menu.MenuItems.Add(mi);
             }
             return menu;

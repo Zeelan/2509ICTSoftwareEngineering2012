@@ -223,18 +223,23 @@ namespace COES.ViewModels
         /// </summary>
         private void SaveMenuToDatabase()
         {
-            Dictionary<string, string> items = new Dictionary<string, string>();
-            foreach(MenuItem mi in Menu.MenuItems)
-            {
-                items.Add("menu_item_id", mi.Id.ToString());
-            }
 
             // Clear the menu in the database
-            String sql = "DELETE FROM menu WHERE 1=1 ; ";
+            String sql = "DELETE FROM menu ; ";
             DatabaseManager.QuickQuery(sql);
 
+            foreach(MenuItem mi in Menu.MenuItems)
+            {
+                Dictionary<string, string> items = new Dictionary<string, string>();
+                items.Add("menu_item_id", mi.Id.ToString());
+
+                //MessageBox.Show(mi.Id.ToString() + " " + mi.Name.ToString());
+                DatabaseManager.Insert2("menu", items);
+            }
+
+
+
             //now save the new list
-            DatabaseManager.Insert("menu", items);
 
             MessageBox.Show("Menu updated.", "Menu", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
